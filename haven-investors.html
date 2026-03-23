@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Haven Home Wellness — Investor Overview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #1B3A6B;
+  --sage: #7EAF7E;
+  --cream: #F9F8F4;
+  --navy-deep: #122647;
+  --navy-mid: #2A5298;
+  --sage-light: #A8C9A8;
+  --sage-pale: #EDF5ED;
+  --warm-ink: #1A1A18;
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body: 'Outfit', system-ui, sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-body); color: var(--warm-ink); background: var(--cream); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+
+/* ── UTILITIES ── */
+.container { max-width: 1120px; margin: 0 auto; padding: 0 2rem; }
+.fade-up { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.fade-up.visible { opacity: 1; transform: none; }
+
+/* ── NAV ── */
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1.25rem 2rem; transition: all 0.4s ease; }
+nav.scrolled { background: rgba(18, 38, 71, 0.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: 0.75rem 2rem; }
+nav .nav-inner { max-width: 1120px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+nav .logo { font-family: var(--font-display); font-size: 1.35rem; color: #fff; text-decoration: none; letter-spacing: -0.01em; }
+nav .logo span { color: var(--sage-light); }
+nav .nav-links { display: flex; gap: 2rem; align-items: center; }
+nav .nav-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 0.85rem; font-weight: 400; letter-spacing: 0.03em; transition: color 0.3s; }
+nav .nav-links a:hover { color: #fff; }
+nav .nav-cta { background: var(--sage); color: #fff; padding: 0.55rem 1.4rem; border-radius: 100px; font-size: 0.82rem; font-weight: 500; text-decoration: none; transition: all 0.3s; letter-spacing: 0.02em; }
+nav .nav-cta:hover { background: var(--sage-light); color: var(--navy-deep); }
+
+/* ── HERO ── */
+.hero { min-height: 100vh; background: var(--navy-deep); position: relative; display: flex; align-items: center; overflow: hidden; }
+.hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 70% 30%, rgba(42,82,152,0.4) 0%, transparent 60%), radial-gradient(ellipse at 20% 80%, rgba(126,175,126,0.12) 0%, transparent 50%); }
+.hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px); background-size: 80px 80px; }
+.hero .container { position: relative; z-index: 2; padding-top: 8rem; padding-bottom: 6rem; }
+.hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(126,175,126,0.15); border: 1px solid rgba(126,175,126,0.25); border-radius: 100px; padding: 0.4rem 1rem; margin-bottom: 2rem; }
+.hero-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--sage); animation: pulse 2s infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+.hero-badge span { font-size: 0.78rem; color: var(--sage-light); font-weight: 400; letter-spacing: 0.06em; text-transform: uppercase; }
+.hero h1 { font-family: var(--font-display); font-size: clamp(2.8rem, 6vw, 4.8rem); color: #fff; line-height: 1.08; margin-bottom: 1.5rem; max-width: 720px; }
+.hero h1 em { font-style: italic; color: var(--sage-light); }
+.hero-sub { font-size: 1.15rem; color: rgba(255,255,255,0.6); line-height: 1.7; max-width: 540px; margin-bottom: 3rem; font-weight: 300; }
+.hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+.btn-primary { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--sage); color: #fff; padding: 0.9rem 2rem; border-radius: 100px; font-size: 0.9rem; font-weight: 500; text-decoration: none; transition: all 0.3s; letter-spacing: 0.02em; }
+.btn-primary:hover { background: #8FBF8F; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(126,175,126,0.3); }
+.btn-outline { display: inline-flex; align-items: center; gap: 0.5rem; background: transparent; color: rgba(255,255,255,0.8); padding: 0.9rem 2rem; border-radius: 100px; font-size: 0.9rem; font-weight: 400; text-decoration: none; border: 1px solid rgba(255,255,255,0.2); transition: all 0.3s; }
+.btn-outline:hover { border-color: rgba(255,255,255,0.5); color: #fff; }
+.hero-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; margin-top: 5rem; background: rgba(255,255,255,0.08); border-radius: 16px; overflow: hidden; }
+.hero-stat { padding: 1.75rem 1.5rem; background: rgba(18,38,71,0.6); backdrop-filter: blur(10px); }
+.hero-stat .num { font-family: var(--font-display); font-size: 2rem; color: #fff; margin-bottom: 0.25rem; }
+.hero-stat .num.accent { color: var(--sage-light); }
+.hero-stat .desc { font-size: 0.78rem; color: rgba(255,255,255,0.5); line-height: 1.5; font-weight: 300; }
+
+/* ── SECTIONS ── */
+section { padding: 7rem 0; }
+.section-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sage); margin-bottom: 1rem; }
+.section-title { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3rem); color: var(--navy-deep); line-height: 1.15; margin-bottom: 1rem; }
+.section-desc { font-size: 1.05rem; color: #555; line-height: 1.7; max-width: 600px; font-weight: 300; }
+
+/* ── PROBLEM ── */
+.problem { background: #fff; }
+.problem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; margin-top: 3.5rem; }
+.stat-stack { display: flex; flex-direction: column; gap: 1.25rem; }
+.stat-card { padding: 1.5rem 1.75rem; border-radius: 14px; border: 1px solid rgba(0,0,0,0.06); background: var(--cream); transition: all 0.3s; }
+.stat-card:hover { transform: translateX(6px); border-color: var(--sage); }
+.stat-card .stat-num { font-family: var(--font-display); font-size: 1.75rem; color: var(--navy); margin-bottom: 0.25rem; }
+.stat-card .stat-num.red { color: #A32D2D; }
+.stat-card .stat-text { font-size: 0.85rem; color: #666; line-height: 1.5; }
+.problem-narrative { padding-left: 1rem; }
+.problem-narrative h3 { font-family: var(--font-display); font-size: 1.5rem; color: var(--navy-deep); margin-bottom: 1rem; }
+.problem-narrative p { font-size: 0.95rem; color: #555; line-height: 1.8; margin-bottom: 1.25rem; font-weight: 300; }
+.problem-narrative .highlight { border-left: 3px solid var(--sage); padding-left: 1.25rem; font-style: italic; color: var(--navy); font-weight: 400; }
+
+/* ── HOW IT WORKS ── */
+.how { background: var(--cream); }
+.how-visual { display: grid; grid-template-columns: 1fr 60px 1fr; align-items: center; gap: 0; margin-top: 3.5rem; }
+.how-col { padding: 2.5rem; background: #fff; border-radius: 20px; border: 1px solid rgba(0,0,0,0.05); position: relative; }
+.how-col .tech-badge { display: inline-block; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.3rem 0.8rem; border-radius: 100px; margin-bottom: 1rem; }
+.how-col .tech-badge.wifi { background: rgba(27,58,107,0.08); color: var(--navy); }
+.how-col .tech-badge.radar { background: var(--sage-pale); color: #3B6D11; }
+.how-col h3 { font-family: var(--font-display); font-size: 1.5rem; color: var(--navy-deep); margin-bottom: 0.5rem; }
+.how-col .tagline { font-size: 0.9rem; color: var(--sage); font-weight: 500; margin-bottom: 1.25rem; }
+.how-col p { font-size: 0.88rem; color: #666; line-height: 1.7; font-weight: 300; }
+.how-col ul { list-style: none; margin-top: 1rem; }
+.how-col ul li { font-size: 0.85rem; color: #555; padding: 0.4rem 0; padding-left: 1.25rem; position: relative; }
+.how-col ul li::before { content: ''; position: absolute; left: 0; top: 0.75rem; width: 6px; height: 6px; border-radius: 50%; background: var(--sage); }
+.how-connector { display: flex; align-items: center; justify-content: center; }
+.how-connector span { font-size: 1.5rem; color: var(--sage); font-weight: 300; }
+
+/* ── PREDICTIVE ── */
+.predictive { background: var(--navy-deep); color: #fff; position: relative; overflow: hidden; }
+.predictive::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 80% 50%, rgba(126,175,126,0.08) 0%, transparent 50%); }
+.predictive .container { position: relative; z-index: 2; }
+.predictive .section-label { color: var(--sage-light); }
+.predictive .section-title { color: #fff; }
+.predictive .section-desc { color: rgba(255,255,255,0.55); }
+.timeline { margin-top: 3.5rem; position: relative; }
+.timeline::before { content: ''; position: absolute; left: 24px; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--sage), rgba(126,175,126,0.2)); }
+.tl-item { display: flex; gap: 2rem; margin-bottom: 2.5rem; position: relative; }
+.tl-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--sage); border: 3px solid var(--navy-deep); flex-shrink: 0; margin-top: 0.35rem; position: relative; z-index: 2; margin-left: 19px; }
+.tl-content h4 { font-family: var(--font-display); font-size: 1.15rem; color: #fff; margin-bottom: 0.35rem; }
+.tl-content p { font-size: 0.88rem; color: rgba(255,255,255,0.5); line-height: 1.7; font-weight: 300; max-width: 580px; }
+.vs-bar { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; margin-top: 3.5rem; border-radius: 16px; overflow: hidden; background: rgba(255,255,255,0.08); }
+.vs-side { padding: 2rem 2.5rem; }
+.vs-side.others { background: rgba(163,45,45,0.12); }
+.vs-side.haven { background: rgba(126,175,126,0.12); }
+.vs-side h4 { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1rem; }
+.vs-side.others h4 { color: #E07070; }
+.vs-side.haven h4 { color: var(--sage-light); }
+.vs-side ul { list-style: none; }
+.vs-side ul li { font-size: 0.88rem; color: rgba(255,255,255,0.65); padding: 0.5rem 0; font-weight: 300; }
+
+/* ── PLATFORMS ── */
+.platforms { background: #fff; }
+.platform-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; margin-top: 3.5rem; }
+.p-card { padding: 2rem 1.5rem; border-radius: 16px; border: 1px solid rgba(0,0,0,0.06); background: var(--cream); transition: all 0.4s; position: relative; overflow: hidden; }
+.p-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--navy); opacity: 0; transition: opacity 0.3s; }
+.p-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(27,58,107,0.08); }
+.p-card:hover::before { opacity: 1; }
+.p-card .p-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 1.25rem; color: #fff; }
+.p-card:nth-child(1) .p-icon { background: var(--navy); }
+.p-card:nth-child(2) .p-icon { background: var(--navy-mid); }
+.p-card:nth-child(3) .p-icon { background: var(--sage); }
+.p-card:nth-child(4) .p-icon { background: var(--navy-deep); }
+.p-card h3 { font-family: var(--font-display); font-size: 1.25rem; color: var(--navy-deep); margin-bottom: 0.35rem; }
+.p-card .p-tech { font-size: 0.75rem; color: var(--sage); font-weight: 500; margin-bottom: 0.75rem; letter-spacing: 0.03em; }
+.p-card p { font-size: 0.82rem; color: #666; line-height: 1.65; font-weight: 300; }
+
+/* ── EVIDENCE ── */
+.evidence { background: var(--cream); }
+.evidence-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-top: 3.5rem; }
+.ev-card { padding: 1.75rem; border-radius: 14px; background: #fff; border: 1px solid rgba(0,0,0,0.05); }
+.ev-card .ev-num { font-family: var(--font-display); font-size: 2.25rem; color: var(--navy); margin-bottom: 0.25rem; }
+.ev-card .ev-label { font-size: 0.85rem; color: #555; line-height: 1.5; font-weight: 300; }
+.ev-card .ev-source { font-size: 0.72rem; color: var(--sage); margin-top: 0.75rem; font-weight: 500; }
+
+/* ── REGULATORY ── */
+.regulatory { background: #fff; }
+.reg-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 3.5rem; }
+.reg-block { padding: 2.5rem; border-radius: 20px; }
+.reg-block.fda { background: linear-gradient(135deg, var(--navy-deep), var(--navy)); color: #fff; }
+.reg-block.medicare { background: var(--sage-pale); }
+.reg-block h3 { font-family: var(--font-display); font-size: 1.35rem; margin-bottom: 0.75rem; }
+.reg-block.fda h3 { color: #fff; }
+.reg-block.medicare h3 { color: var(--navy-deep); }
+.reg-block p { font-size: 0.88rem; line-height: 1.7; font-weight: 300; }
+.reg-block.fda p { color: rgba(255,255,255,0.65); }
+.reg-block.medicare p { color: #555; }
+.reg-tag { display: inline-block; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.3rem 0.8rem; border-radius: 100px; margin-bottom: 1rem; }
+.reg-block.fda .reg-tag { background: rgba(126,175,126,0.2); color: var(--sage-light); }
+.reg-block.medicare .reg-tag { background: rgba(27,58,107,0.08); color: var(--navy); }
+
+/* ── TEAM ── */
+.team { background: var(--cream); }
+.team-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 3.5rem; max-width: 700px; }
+.t-card { display: flex; gap: 1.25rem; align-items: flex-start; padding: 2rem; background: #fff; border-radius: 16px; border: 1px solid rgba(0,0,0,0.05); }
+.t-avatar { width: 56px; height: 56px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 1.25rem; color: #fff; flex-shrink: 0; }
+.t-card:nth-child(1) .t-avatar { background: var(--navy); }
+.t-card:nth-child(2) .t-avatar { background: var(--sage); }
+.t-info h4 { font-family: var(--font-display); font-size: 1.1rem; color: var(--navy-deep); margin-bottom: 0.15rem; }
+.t-info .t-role { font-size: 0.78rem; color: var(--sage); font-weight: 500; margin-bottom: 0.5rem; }
+.t-info p { font-size: 0.82rem; color: #666; line-height: 1.6; font-weight: 300; }
+
+/* ── THE ASK ── */
+.ask { background: var(--navy-deep); color: #fff; text-align: center; padding: 6rem 0; position: relative; overflow: hidden; }
+.ask::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 0%, rgba(42,82,152,0.3) 0%, transparent 60%); }
+.ask .container { position: relative; z-index: 2; }
+.ask .section-label { color: var(--sage-light); }
+.ask .section-title { color: #fff; margin: 0 auto 1rem; }
+.ask .section-desc { color: rgba(255,255,255,0.55); margin: 0 auto 2.5rem; text-align: center; }
+.ask-numbers { display: flex; justify-content: center; gap: 4rem; margin-bottom: 3rem; }
+.ask-num .val { font-family: var(--font-display); font-size: 2.5rem; color: var(--sage-light); }
+.ask-num .lbl { font-size: 0.78rem; color: rgba(255,255,255,0.45); margin-top: 0.25rem; }
+.ask .btn-primary { font-size: 1rem; padding: 1rem 2.5rem; }
+
+/* ── FOOTER ── */
+footer { background: var(--navy-deep); border-top: 1px solid rgba(255,255,255,0.06); padding: 2rem 0; text-align: center; }
+footer p { font-size: 0.75rem; color: rgba(255,255,255,0.3); }
+footer a { color: rgba(255,255,255,0.45); text-decoration: none; }
+
+/* ── MODAL ── */
+.modal-overlay { position: fixed; inset: 0; background: rgba(18,38,71,0.55); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 200; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; }
+.modal-overlay.open { display: flex; opacity: 1; }
+.modal { background: #fff; border-radius: 20px; padding: 2.5rem; width: 90%; max-width: 440px; position: relative; transform: translateY(20px); animation: modalIn 0.35s ease forwards; box-shadow: 0 25px 80px rgba(18,38,71,0.2); }
+@keyframes modalIn { to { transform: none; } }
+.modal-close { position: absolute; top: 1.25rem; right: 1.25rem; background: none; border: none; font-size: 1.5rem; color: #999; cursor: pointer; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.2s; font-family: var(--font-body); }
+.modal-close:hover { background: var(--cream); color: var(--navy-deep); }
+.modal-header { margin-bottom: 1.75rem; }
+.form-group { margin-bottom: 1.25rem; }
+.form-group label { display: block; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--navy); margin-bottom: 0.4rem; }
+.form-group input { width: 100%; padding: 0.75rem 1rem; font-size: 0.92rem; font-family: var(--font-body); border: 1.5px solid rgba(0,0,0,0.1); border-radius: 10px; background: var(--cream); color: var(--warm-ink); transition: all 0.25s; outline: none; }
+.form-group input::placeholder { color: #aaa; font-weight: 300; }
+.form-group input:focus { border-color: var(--sage); background: #fff; box-shadow: 0 0 0 3px rgba(126,175,126,0.15); }
+.form-group input.error { border-color: #E07070; background: #FFF8F8; }
+.form-error { font-size: 0.75rem; color: #A32D2D; margin-top: 0.3rem; display: none; }
+.form-error.show { display: block; }
+.form-submit { width: 100%; padding: 0.85rem; font-size: 0.95rem; font-weight: 500; font-family: var(--font-body); background: var(--sage); color: #fff; border: none; border-radius: 100px; cursor: pointer; transition: all 0.3s; letter-spacing: 0.02em; margin-top: 0.5rem; }
+.form-submit:hover { background: #8FBF8F; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(126,175,126,0.3); }
+.form-submit:active { transform: scale(0.98); }
+.form-submit:disabled { opacity: 0.6; cursor: default; transform: none; box-shadow: none; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .hero-stats { grid-template-columns: repeat(2, 1fr); }
+  .problem-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .how-visual { grid-template-columns: 1fr; }
+  .how-connector { transform: rotate(90deg); padding: 1rem 0; }
+  .platform-cards { grid-template-columns: repeat(2, 1fr); }
+  .evidence-grid { grid-template-columns: 1fr; }
+  .reg-cols { grid-template-columns: 1fr; }
+  .team-cards { grid-template-columns: 1fr; }
+  .vs-bar { grid-template-columns: 1fr; }
+  .ask-numbers { gap: 2rem; }
+  .nav-links { display: none; }
+}
+@media (max-width: 600px) {
+  .hero-stats { grid-template-columns: 1fr; }
+  .platform-cards { grid-template-columns: 1fr; }
+  .ask-numbers { flex-direction: column; gap: 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="#" class="logo">Haven <span>Home Wellness</span></a>
+    <div class="nav-links">
+      <a href="#problem">Problem</a>
+      <a href="#solution">Solution</a>
+      <a href="#platforms">Platform</a>
+      <a href="#evidence">Evidence</a>
+      <a href="#ask">The Ask</a>
+      <a href="#" class="nav-cta" onclick="event.preventDefault();openModal()">Contact Us</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="container">
+    <div class="hero-badge"><div class="dot"></div><span>Pre-seed &nbsp;·&nbsp; $500K–$750K raise</span></div>
+    <h1>Predicting falls <em>before</em> they happen</h1>
+    <p class="hero-sub">Haven Home Wellness uses contactless RF sensing to detect subtle gait changes weeks before a fall occurs — no cameras, no wearables, no privacy compromise.</p>
+    <div class="hero-actions">
+      <a href="#ask" class="btn-primary">View the opportunity →</a>
+      <a href="#solution" class="btn-outline">How it works</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="num">14M</div>
+        <div class="desc">Adults 65+ fall every year in the U.S.</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num accent">$80B</div>
+        <div class="desc">Annual healthcare cost of non-fatal falls</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num">38K+</div>
+        <div class="desc">Annual deaths from falls in adults 65+</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num accent">$101B+</div>
+        <div class="desc">Projected cost by 2030</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PROBLEM ── -->
+<section class="problem" id="problem">
+  <div class="container">
+    <div class="section-label">The problem</div>
+    <div class="section-title">Falls are the #1 killer of older adults.<br>Current solutions only react.</div>
+    <div class="section-desc">Every existing fall detection product works the same way: wait for someone to hit the ground, then send an alert. Haven is building the first system that sees it coming.</div>
+    <div class="problem-grid">
+      <div class="stat-stack fade-up">
+        <div class="stat-card">
+          <div class="stat-num">1 in 4</div>
+          <div class="stat-text">Adults over 65 fall each year — and less than half tell their doctor</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num red">+41%</div>
+          <div class="stat-text">Increase in fall death rates from 2012 to 2021</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">$18,658</div>
+          <div class="stat-text">Average cost per inpatient hospital visit from a fall injury</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">67%</div>
+          <div class="stat-text">Of fall-related costs are paid by Medicare ($53.3B annually)</div>
+        </div>
+      </div>
+      <div class="problem-narrative fade-up">
+        <h3>A growing crisis with no predictive solution</h3>
+        <p>Over 10,000 Americans turn 65 every day. The aging population is accelerating, and fall-related injuries and deaths are rising faster than the population itself.</p>
+        <p>Today's fall detection products — wearable pendants, camera systems, smart watches — share a fundamental limitation: they are reactive. They detect impact after it happens. By then, the damage is done.</p>
+        <p class="highlight">Research shows that gait abnormalities are established predictors of fall risk. Subtle changes in walking speed, stride length, and balance appear weeks or months before a fall occurs. The technology to detect these changes contactlessly exists — it just hasn't been commercialized.</p>
+        <p>Until now.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── HOW IT WORKS ── -->
+<section class="how" id="solution">
+  <div class="container">
+    <div class="section-label">The solution</div>
+    <div class="section-title">Invisible sensing. Zero effort.</div>
+    <div class="section-desc">Haven uses two proven RF technologies — already in your home — to monitor mobility without invading privacy.</div>
+    <div class="how-visual fade-up">
+      <div class="how-col">
+        <div class="tech-badge wifi">Wi-Fi CSI</div>
+        <h3>Steadfast</h3>
+        <div class="tagline">Presence & fall detection</div>
+        <p>Your Wi-Fi router already sends signals throughout your home. When someone moves through those signals, they create measurable disruptions. Steadfast reads those disruptions to detect presence, activity, and falls — using hardware you already own.</p>
+        <ul>
+          <li>Uses existing Wi-Fi infrastructure</li>
+          <li>Sensor cost under $10</li>
+          <li>No cameras, no wearables</li>
+          <li>Works through walls</li>
+        </ul>
+      </div>
+      <div class="how-connector"><span>+</span></div>
+      <div class="how-col">
+        <div class="tech-badge radar">mmWave Radar</div>
+        <h3>Stride</h3>
+        <div class="tagline">Predictive gait analysis</div>
+        <p>A small radar sensor — the size of a smoke detector — sends invisible radio waves that bounce off the body. It measures walking speed, step length, gait symmetry, and balance with clinical precision. Then it tracks changes over time.</p>
+        <ul>
+          <li>96–98% accuracy in published research</li>
+          <li>Builds personal gait baselines</li>
+          <li>Detects degradation before it's visible</li>
+          <li>Privacy-preserving by design</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PREDICTIVE ── -->
+<section class="predictive" id="predictive">
+  <div class="container">
+    <div class="section-label">The moat</div>
+    <div class="section-title">From detection to prediction</div>
+    <div class="section-desc">Haven doesn't just catch falls — it catches the warning signs weeks before they happen.</div>
+    <div class="timeline fade-up">
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <h4>Weeks 1–4: Learn the baseline</h4>
+          <p>Stride passively observes how each person walks — speed, cadence, symmetry, arm swing — and builds a personal gait fingerprint unique to them.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <h4>Ongoing: Continuous, invisible monitoring</h4>
+          <p>Every walk through the home is compared against the baseline. No cameras. No wearables. The resident doesn't know the system is there.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <h4>Early warning: Gait degradation detected</h4>
+          <p>Stride length shortens by 8%. Walking speed drops 0.15 m/s over three weeks. Left-right asymmetry increases. Too subtle for clinical observation — but Stride catches it.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <h4>Intervention: The fall never happens</h4>
+          <p>Beacon alerts the caregiver or clinician. Physical therapy is ordered. Medication is reviewed. Home modifications are made. The ER visit that would have cost $18,658 never occurs.</p>
+        </div>
+      </div>
+    </div>
+    <div class="vs-bar fade-up">
+      <div class="vs-side others">
+        <h4>Everyone else</h4>
+        <ul>
+          <li>Detects falls after impact</li>
+          <li>Requires wearables or cameras</li>
+          <li>Binary signal: fell / didn't fall</li>
+          <li>Reactive — damage already done</li>
+          <li>User must remember to wear device</li>
+        </ul>
+      </div>
+      <div class="vs-side haven">
+        <h4>Haven</h4>
+        <ul>
+          <li>Predicts falls before they happen</li>
+          <li>Completely contactless and passive</li>
+          <li>Continuous gait fingerprint data</li>
+          <li>Proactive — enables intervention</li>
+          <li>Zero user effort required</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PLATFORMS ── -->
+<section class="platforms" id="platforms">
+  <div class="container">
+    <div class="section-label">The platform</div>
+    <div class="section-title">Four products. One integrated system.</div>
+    <div class="section-desc">Each platform addresses a different layer of fall prevention — and each can be sold independently or bundled.</div>
+    <div class="platform-cards fade-up">
+      <div class="p-card">
+        <div class="p-icon">SF</div>
+        <h3>Steadfast</h3>
+        <div class="p-tech">Wi-Fi CSI Sensing</div>
+        <p>Always-on presence detection, activity recognition, and reactive fall detection using existing Wi-Fi infrastructure. The foundation layer.</p>
+      </div>
+      <div class="p-card">
+        <div class="p-icon">ST</div>
+        <h3>Stride</h3>
+        <div class="p-tech">mmWave Radar Analysis</div>
+        <p>Predictive gait analysis engine. Builds personal baselines, detects degradation trends, and generates early warnings. Haven's competitive moat.</p>
+      </div>
+      <div class="p-card">
+        <div class="p-icon">BC</div>
+        <h3>Beacon</h3>
+        <div class="p-tech">Alert System</div>
+        <p>Multi-channel notifications for caregivers, family members, and clinicians. Translates sensor data into actionable, prioritized alerts.</p>
+      </div>
+      <div class="p-card">
+        <div class="p-icon">VG</div>
+        <h3>Vigil</h3>
+        <div class="p-tech">Analytics Dashboard</div>
+        <p>Longitudinal health analytics for facility operators. Trend visualization, risk scoring, and population-level mobility insights.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── EVIDENCE ── -->
+<section class="evidence" id="evidence">
+  <div class="container">
+    <div class="section-label">Technical evidence</div>
+    <div class="section-title">Peer-reviewed. Published. Validated.</div>
+    <div class="section-desc">Haven's approach builds on a growing body of academic research validating RF-based sensing for human activity recognition and gait analysis.</div>
+    <div class="evidence-grid fade-up">
+      <div class="ev-card">
+        <div class="ev-num">98%</div>
+        <div class="ev-label">Fall detection accuracy using mmWave radar with semi-supervised learning</div>
+        <div class="ev-source">mmFall — IEEE Trans. Automation Science & Engineering</div>
+      </div>
+      <div class="ev-card">
+        <div class="ev-num">96%</div>
+        <div class="ev-label">Gait step time measurement accuracy using FMCW radar in real environments</div>
+        <div class="ev-source">PMC / Sensors, 2022</div>
+      </div>
+      <div class="ev-card">
+        <div class="ev-num">>90%</div>
+        <div class="ev-label">Activity recognition accuracy across 8 environments using Wi-Fi CSI</div>
+        <div class="ev-source">EHUNAM — Nature Scientific Data, 2025</div>
+      </div>
+      <div class="ev-card">
+        <div class="ev-num">125</div>
+        <div class="ev-label">Volunteers tested (ages 6–63) in mmWave gait recognition system</div>
+        <div class="ev-source">RDGait — ACM IMWUT/UbiComp, 2024</div>
+      </div>
+      <div class="ev-card">
+        <div class="ev-num">1.2TB</div>
+        <div class="ev-label">Public CSI+BFI dataset for 20 activities across LOS and NLOS scenarios</div>
+        <div class="ev-source">CSI-BFI-HAR — IEEE DataPort, 2025</div>
+      </div>
+      <div class="ev-card">
+        <div class="ev-num">510(k)</div>
+        <div class="ev-label">FDA clearance already obtained by Xandar Kardian for radar-based vital monitoring</div>
+        <div class="ev-source">FDA K202464 — April 2021</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── REGULATORY ── -->
+<section class="regulatory" id="regulatory">
+  <div class="container">
+    <div class="section-label">Regulatory & reimbursement</div>
+    <div class="section-title">The path is proven</div>
+    <div class="section-desc">Haven doesn't need to pioneer a regulatory pathway. A competitor already cleared it.</div>
+    <div class="reg-cols fade-up">
+      <div class="reg-block fda">
+        <div class="reg-tag">FDA pathway</div>
+        <h3>510(k) substantial equivalence</h3>
+        <p>Xandar Kardian's XK300 — a radar-based, contactless vital sign monitor — received FDA 510(k) clearance as a Class II medical device in April 2021. Haven's Stride engine uses a related RF modality for a complementary application, positioning it for clearance through the same substantial equivalence pathway.</p>
+        <p style="margin-top:1rem">Xandar Kardian holds 32 patents granted, 11 pending, and has deployed across 50+ healthcare facilities in the United States.</p>
+      </div>
+      <div class="reg-block medicare">
+        <div class="reg-tag">Reimbursement</div>
+        <h3>Medicare CPT Code 99454</h3>
+        <p>The XK300 already qualifies for Medicare reimbursement under CPT Code 99454 (Remote Patient Monitoring). Once Haven achieves 510(k) clearance, the same reimbursement code applies — meaning the customer doesn't pay out of pocket. Medicare does.</p>
+        <p style="margin-top:1rem">In 2020, Medicare paid $53.3 billion of the $80 billion in fall-related healthcare costs. Haven aligns with Medicare's structural incentive to fund prevention over treatment.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TEAM ── -->
+<section class="team" id="team">
+  <div class="container">
+    <div class="section-label">The team</div>
+    <div class="section-title">Built to execute</div>
+    <div class="team-cards fade-up">
+      <div class="t-card">
+        <div class="t-avatar">N</div>
+        <div class="t-info">
+          <h4>Nick</h4>
+          <div class="t-role">CEO & Co-Founder</div>
+          <p>Enterprise sales professional with direct experience selling API-driven platforms to institutional buyers. Leads fundraising, go-to-market strategy, and business development.</p>
+        </div>
+      </div>
+      <div class="t-card">
+        <div class="t-avatar">D</div>
+        <div class="t-info">
+          <h4>David A. Taylor</h4>
+          <div class="t-role">CTO & Co-Founder</div>
+          <p>Technical architect and UX designer leading product development, RF sensing research, and the Stride engine build. Owns the hardware-to-software pipeline.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── THE ASK ── -->
+<section class="ask" id="ask">
+  <div class="container">
+    <div class="section-label">The opportunity</div>
+    <div class="section-title">Pre-seed: $500K–$750K</div>
+    <div class="section-desc">The science is validated. The regulatory path is proven. Medicare will pay for it.<br>We need to build it. That's what this raise is for.</div>
+    <div class="ask-numbers">
+      <div class="ask-num">
+        <div class="val">$22B+</div>
+        <div class="lbl">Total addressable market</div>
+      </div>
+      <div class="ask-num">
+        <div class="val">3</div>
+        <div class="lbl">Revenue models (DTC, OEM/ISP, B2B)</div>
+      </div>
+      <div class="ask-num">
+        <div class="val">0</div>
+        <div class="lbl">Competitors with predictive gait analysis</div>
+      </div>
+    </div>
+    <button class="btn-primary" id="contact" onclick="openModal()" style="border:none;cursor:pointer;font-family:var(--font-body);">Let's talk →</button>
+  </div>
+</section>
+
+<!-- ── CONTACT MODAL ── -->
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()" aria-label="Close">&times;</button>
+    <div class="modal-header">
+      <div class="section-label" style="color:var(--sage);text-align:left;margin-bottom:0.5rem;">Get in touch</div>
+      <h2 style="font-family:var(--font-display);font-size:1.75rem;color:var(--navy-deep);margin-bottom:0.35rem;">Let's start a conversation</h2>
+      <p style="font-size:0.88rem;color:#666;font-weight:300;">We'll follow up within 24 hours.</p>
+    </div>
+    <div id="formContainer">
+      <div class="form-group">
+        <label for="f-name">Name</label>
+        <input type="text" id="f-name" placeholder="Your full name" required>
+      </div>
+      <div class="form-group">
+        <label for="f-email">Email</label>
+        <input type="email" id="f-email" placeholder="you@firm.com" required>
+      </div>
+      <div class="form-group">
+        <label for="f-phone">Phone</label>
+        <input type="tel" id="f-phone" placeholder="(555) 000-0000">
+      </div>
+      <button class="form-submit" id="submitBtn" onclick="submitForm()">Submit →</button>
+    </div>
+    <div id="formSuccess" style="display:none;text-align:center;padding:2rem 0;">
+      <div style="width:56px;height:56px;border-radius:50%;background:var(--sage-pale);display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3B6D11" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h3 style="font-family:var(--font-display);font-size:1.35rem;color:var(--navy-deep);margin-bottom:0.5rem;">Thank you</h3>
+      <p style="font-size:0.9rem;color:#666;font-weight:300;line-height:1.6;">We've received your information and will<br>be in touch within 24 hours.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="container">
+    <p>© 2026 Haven Home Wellness, Inc. · Delaware C-Corp · <a href="#">Confidential</a></p>
+  </div>
+</footer>
+
+<script>
+// Modal
+function openModal() {
+  const overlay = document.getElementById('modalOverlay');
+  overlay.style.display = 'flex';
+  requestAnimationFrame(() => overlay.classList.add('open'));
+  document.body.style.overflow = 'hidden';
+  document.getElementById('f-name').focus();
+}
+function closeModal() {
+  const overlay = document.getElementById('modalOverlay');
+  overlay.classList.remove('open');
+  setTimeout(() => { overlay.style.display = 'none'; }, 300);
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+function submitForm() {
+  const name = document.getElementById('f-name');
+  const email = document.getElementById('f-email');
+  const phone = document.getElementById('f-phone');
+  let valid = true;
+
+  [name, email, phone].forEach(el => el.classList.remove('error'));
+
+  if (!name.value.trim()) { name.classList.add('error'); valid = false; }
+  if (!email.value.trim() || !email.value.includes('@')) { email.classList.add('error'); valid = false; }
+  if (!valid) return;
+
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+
+  // ── PASTE YOUR GOOGLE APPS SCRIPT URL BELOW ──
+  const SCRIPT_URL = https://script.google.com/macros/s/AKfycbwEJ-g4RGXjGmpBRgUn4AR6hADuO_y8J5MOw5r4VwKfHr2G9L6ZqsOGBPrYXMwufp22/exec;
+
+  const data = {
+    name: name.value.trim(),
+    email: email.value.trim(),
+    phone: phone.value.trim()
+  };
+
+  fetch(SCRIPT_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  })
+  .then(() => {
+    document.getElementById('formContainer').style.display = 'none';
+    document.getElementById('formSuccess').style.display = 'block';
+  })
+  .catch(err => {
+    console.error('Submit error:', err);
+    btn.disabled = false;
+    btn.textContent = 'Try again →';
+  });
+}
+
+// Nav scroll effect
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// Fade-up observer
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }});
+}, { threshold: 0.15 });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// Smooth scroll for nav links
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+
+// Count-up animation for hero stats
+function animateCountUp(el, target, suffix = '') {
+  const isDecimal = String(target).includes('.');
+  const duration = 1500;
+  const start = performance.now();
+  function update(now) {
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    const current = isDecimal ? (eased * target).toFixed(0) : Math.round(eased * target);
+    el.textContent = current + suffix;
+    if (progress < 1) requestAnimationFrame(update);
+  }
+  requestAnimationFrame(update);
+}
+
+const heroObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const stats = e.target.querySelectorAll('.hero-stat');
+      const data = [
+        [14, 'M'], [80, '$', 'B'], [38, 'K+'], [101, '$', 'B+']
+      ];
+      stats.forEach((s, i) => {
+        const numEl = s.querySelector('.num');
+        const d = data[i];
+        setTimeout(() => {
+          if (d.length === 3) {
+            animateCountUp(numEl, d[0], d[2]);
+            numEl.textContent = d[1] + numEl.textContent;
+            const target = d[0];
+            const suffix = d[2];
+            const prefix = d[1];
+            const duration = 1500;
+            const start = performance.now();
+            function up(now) {
+              const p = Math.min((now - start) / duration, 1);
+              const v = Math.round((1 - Math.pow(1 - p, 3)) * target);
+              numEl.textContent = prefix + v + suffix;
+              if (p < 1) requestAnimationFrame(up);
+            }
+            requestAnimationFrame(up);
+          } else {
+            const target = d[0];
+            const suffix = d[1];
+            const duration = 1500;
+            const start = performance.now();
+            function up(now) {
+              const p = Math.min((now - start) / duration, 1);
+              const v = Math.round((1 - Math.pow(1 - p, 3)) * target);
+              numEl.textContent = v + suffix;
+              if (p < 1) requestAnimationFrame(up);
+            }
+            requestAnimationFrame(up);
+          }
+        }, i * 150);
+      });
+      heroObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.3 });
+const heroStats = document.querySelector('.hero-stats');
+if (heroStats) heroObserver.observe(heroStats);
+</script>
+
+</body>
+</html>
