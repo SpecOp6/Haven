@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Haven Home Wellness — Pre-Seed Investment Opportunity</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Libre+Franklin:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --haven-navy: #1B3A6B;
+  --navy-deep: #122647;
+  --navy-mid: #2A5298;
+  --haven-sage: #7EAF7E;
+  --sage-light: #A8C9A8;
+  --sage-pale: #EDF5ED;
+  --haven-cream: #F9F8F4;
+  --warm-ink: #1A1A18;
+  --white: #FFFFFF;
+  --glass-w: rgba(255,255,255,0.06);
+  --glass-wb: rgba(255,255,255,0.1);
+  --glass-d: rgba(0,0,0,0.04);
+  --glass-db: rgba(0,0,0,0.08);
+  --red: #B83A30;
+  --font-d: 'Playfair Display', Georgia, serif;
+  --font-b: 'Libre Franklin', system-ui, sans-serif;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-snap-type:y mandatory;overflow-y:scroll}
+body{font-family:var(--font-b);background:var(--navy-deep);color:var(--warm-ink);-webkit-font-smoothing:antialiased;line-height:1.6}
+
+.slide{min-height:100vh;min-height:100dvh;scroll-snap-align:start;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;padding:clamp(40px,6vh,80px) clamp(28px,6vw,100px)}
+.slide::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.02'/%3E%3C/svg%3E");pointer-events:none;z-index:0}
+.slide>*{position:relative;z-index:1}
+.slide--dark{background:var(--navy-deep);color:var(--haven-cream)}
+.slide--navy{background:var(--haven-navy);color:var(--haven-cream)}
+.slide--cream{background:var(--haven-cream);color:var(--warm-ink)}
+.slide--sage{background:var(--sage-pale);color:var(--warm-ink)}
+
+.topbar{position:absolute;top:0;left:0;right:0;height:32px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(20px,4vw,40px);font-size:9px;letter-spacing:3.5px;text-transform:uppercase;z-index:10}
+.slide--dark .topbar,.slide--navy .topbar{color:rgba(255,255,255,0.35)}
+.slide--cream .topbar,.slide--sage .topbar{color:rgba(0,0,0,0.22)}
+.slide-foot{position:absolute;bottom:14px;left:clamp(20px,4vw,40px);right:clamp(20px,4vw,40px);display:flex;justify-content:space-between;font-size:9px;letter-spacing:1.2px;opacity:.25}
+
+.t-label{font-family:var(--font-b);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:4px;color:var(--haven-sage);margin-bottom:14px}
+.slide--cream .t-label,.slide--sage .t-label{color:var(--haven-navy)}
+.t-h1{font-family:var(--font-d);font-size:clamp(2.6rem,5.2vw,5rem);font-weight:900;line-height:1.05;letter-spacing:-1.5px}
+.t-h2{font-family:var(--font-d);font-size:clamp(1.8rem,3.2vw,3rem);font-weight:700;line-height:1.12;letter-spacing:-0.8px}
+.t-h3{font-family:var(--font-d);font-size:clamp(1.2rem,1.8vw,1.5rem);font-weight:400;font-style:italic;opacity:.7;margin-top:10px}
+.t-small{font-size:.78rem;opacity:.5;line-height:1.5}
+.t-tiny{font-size:.65rem;opacity:.35;letter-spacing:.5px}
+.accent-line{width:56px;height:3px;background:var(--haven-sage);border-radius:2px;margin:18px 0 24px}
+
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.4,0,.2,1),transform .7s cubic-bezier(.4,0,.2,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.d1{transition-delay:.12s}.d2{transition-delay:.24s}.d3{transition-delay:.36s}.d4{transition-delay:.48s}
+
+.g{display:grid;gap:24px;margin:36px 0}
+.g-4{grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}
+.g-3{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.g-2{grid-template-columns:1fr 1fr;gap:0}
+@media(max-width:700px){.g-2{grid-template-columns:1fr}}
+
+.card{border-radius:14px;padding:28px 22px;transition:transform .3s,box-shadow .3s}
+.card:hover{transform:translateY(-3px)}
+.card--gw{background:var(--glass-w);border:1px solid var(--glass-wb)}
+.card--gw:hover{box-shadow:0 16px 48px rgba(0,0,0,.25)}
+.card--solid{background:var(--white);border:1px solid var(--glass-db);box-shadow:0 2px 12px rgba(0,0,0,.04)}
+.card--solid:hover{box-shadow:0 12px 36px rgba(0,0,0,.08)}
+
+.stat{text-align:center}
+.stat-val{font-family:var(--font-d);font-size:clamp(2rem,3.6vw,3.2rem);font-weight:900;line-height:1;color:var(--haven-sage)}
+.slide--cream .stat-val,.slide--sage .stat-val{color:var(--haven-navy)}
+.stat-desc{font-size:.82rem;margin-top:6px;opacity:.65;line-height:1.4}
+.stat-src{font-size:.6rem;opacity:.3;margin-top:3px}
+
+.compare{border-radius:16px;overflow:hidden}
+.compare-col{padding:32px 28px}
+.compare-col--old{background:rgba(184,58,48,.08)}
+.compare-col--new{background:rgba(126,175,126,.08)}
+.slide--cream .compare-col--old{background:rgba(184,58,48,.05)}
+.compare-head{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:3px;margin-bottom:18px}
+.compare-row{display:flex;align-items:flex-start;gap:10px;margin-bottom:14px;font-size:.88rem;line-height:1.45}
+.compare-dot{flex-shrink:0;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;margin-top:1px;color:#fff}
+.compare-dot--x{background:var(--red)}.compare-dot--ok{background:var(--haven-sage)}
+
+.plat-icon{font-size:1.8rem;margin-bottom:10px}
+.plat-name{font-family:var(--font-d);font-size:1.25rem;font-weight:700}
+.plat-name sup{font-size:.55em;vertical-align:super;font-weight:400}
+.plat-desc{font-size:.82rem;opacity:.6;margin-top:4px;line-height:1.45}
+.plat-badge{display:inline-block;margin-top:12px;padding:3px 12px;border-radius:20px;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;background:var(--haven-sage);color:#fff}
+.plat-status{display:inline-block;margin-top:8px;padding:3px 12px;border-radius:20px;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:1.2px}
+.plat-status--live{background:var(--haven-sage);color:#fff}
+.plat-status--build{background:var(--navy-mid);color:#fff}
+
+.market-rings{display:flex;align-items:center;justify-content:center;position:relative;height:300px;margin:36px 0}
+.ring{position:absolute;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.ring--tam{width:290px;height:290px;background:rgba(126,175,126,.06);border:1px solid rgba(126,175,126,.15)}
+.ring--sam{width:195px;height:195px;background:rgba(126,175,126,.1);border:1px solid rgba(126,175,126,.22)}
+.ring--som{width:105px;height:105px;background:var(--haven-sage);color:#fff;box-shadow:0 8px 32px rgba(126,175,126,.35)}
+.ring-label{font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;opacity:.55}
+.ring--som .ring-label{opacity:.85}
+.ring-value{font-family:var(--font-d);font-size:1.5rem;font-weight:700;margin:2px 0}
+.ring--som .ring-value{font-size:1rem}
+.ring-sub{font-size:.55rem;opacity:.45;max-width:75%}
+.ring--som .ring-sub{opacity:.75}
+
+.price-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin:32px 0}
+.price-card{border-radius:12px;padding:22px 14px;text-align:center;background:var(--glass-w);border:1px solid var(--glass-wb);transition:transform .25s}
+.price-card:hover{transform:translateY(-2px)}
+.price-card--pop{border-color:var(--haven-sage);background:rgba(126,175,126,.1)}
+.price-tier{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px}
+.price-val{font-family:var(--font-d);font-size:1.8rem;font-weight:700;color:var(--haven-sage)}
+.price-val span{font-size:.7rem;font-family:var(--font-b);opacity:.5;font-weight:400}
+.price-desc{font-size:.72rem;opacity:.5;margin-top:6px;line-height:1.35}
+
+.rev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin:32px 0}
+@media(max-width:600px){.rev-grid{grid-template-columns:1fr}}
+.rev-card{background:var(--glass-w);border:1px solid var(--glass-wb);border-radius:12px;padding:24px 18px;text-align:center}
+.rev-year{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:2.5px;opacity:.4}
+.rev-val{font-family:var(--font-d);font-size:2.2rem;font-weight:700;color:var(--haven-sage);margin:6px 0}
+.rev-detail{font-size:.75rem;opacity:.5;line-height:1.45}
+
+.quad-layout{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:start;margin-top:28px}
+@media(max-width:700px){.quad-layout{grid-template-columns:1fr}}
+.quad-box{width:100%;max-width:420px;aspect-ratio:1;border:1px solid var(--glass-db);border-radius:10px;position:relative;display:grid;grid-template:1fr 1fr/1fr 1fr}
+.quad-axis{position:absolute;font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:3px;opacity:.3}
+.quad-axis--t{top:-18px;left:50%;transform:translateX(-50%)}
+.quad-axis--b{bottom:-18px;left:50%;transform:translateX(-50%)}
+.quad-axis--l{left:-8px;top:50%;transform:translateY(-50%) rotate(-90deg)}
+.quad-axis--r{right:-8px;top:50%;transform:translateY(-50%) rotate(90deg)}
+.q-cell{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:14px}
+.q-cell--hl{background:rgba(126,175,126,.1);border-radius:10px 0 0 0}
+.q-tag{padding:4px 12px;border-radius:16px;font-size:.7rem;font-weight:600;white-space:nowrap}
+.q-tag--haven{background:var(--haven-sage);color:#fff;font-size:.8rem;padding:6px 16px;box-shadow:0 4px 16px rgba(126,175,126,.35)}
+.q-tag--other{background:var(--glass-d);font-size:.65rem;opacity:.55}
+.quad-reasons .reason{font-size:.88rem;padding:7px 0;border-bottom:1px solid var(--glass-db);line-height:1.45}
+.quad-reasons .reason:last-child{border-bottom:none}
+
+.cust-card{text-align:left}
+.cust-emoji{font-size:2rem;margin-bottom:10px}
+.cust-badge{display:inline-block;background:var(--haven-navy);color:#fff;padding:2px 10px;border-radius:10px;font-size:.65rem;font-weight:700;margin-bottom:10px}
+.cust-card h4{font-family:var(--font-d);font-size:1.2rem;color:var(--navy-deep);margin-bottom:8px}
+.cust-card p{font-size:.85rem;opacity:.65;line-height:1.55}
+
+.gtm-card{border-left:3px solid var(--haven-sage);padding-left:20px}
+.gtm-phase{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:2.5px;color:var(--haven-sage)}
+.gtm-card h4{font-family:var(--font-d);font-size:1.2rem;margin:4px 0 2px}
+.gtm-months{font-size:.75rem;opacity:.4;margin-bottom:14px}
+.gtm-item{font-size:.85rem;padding:5px 0;opacity:.75;border-bottom:1px solid var(--glass-wb)}
+.gtm-item:last-child{border-bottom:none}
+
+.ask-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:18px;margin:32px 0}
+.ask-item{text-align:center;padding:20px 12px}
+.ask-pct{font-family:var(--font-d);font-size:2.4rem;font-weight:900;color:var(--haven-sage)}
+.ask-cat{font-size:.82rem;font-weight:700;margin:4px 0}
+.ask-amt{font-family:var(--font-d);font-size:1.1rem;opacity:.6}
+.ask-desc{font-size:.72rem;opacity:.4;margin-top:4px;line-height:1.35}
+.milestone-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:28px 0}
+.milestone{display:flex;align-items:center;gap:12px;padding:14px 18px;background:rgba(126,175,126,.07);border-radius:10px;font-size:.88rem}
+.milestone-dot{width:28px;height:28px;border-radius:50%;background:var(--haven-sage);color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:12px}
+
+.why-card{border-left:3px solid var(--haven-sage);padding:20px 24px}
+.slide--sage .why-card{border-color:var(--haven-navy)}
+.why-num{font-family:var(--font-d);font-size:2.2rem;font-weight:900;opacity:.2;line-height:1}
+.why-card h4{font-family:var(--font-d);font-size:1.15rem;margin:6px 0 10px}
+.why-card p{font-size:.85rem;opacity:.7;line-height:1.6}
+
+.traction-list{list-style:none;columns:2;gap:36px;margin:32px 0}
+@media(max-width:650px){.traction-list{columns:1}}
+.traction-list li{display:flex;align-items:flex-start;gap:10px;margin-bottom:16px;break-inside:avoid;font-size:.88rem;line-height:1.5}
+.traction-chk{flex-shrink:0;width:20px;height:20px;border-radius:50%;background:var(--haven-sage);color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;margin-top:2px}
+
+.callout{padding:16px 22px;border-radius:0 10px 10px 0;font-size:.88rem;line-height:1.6;margin:22px 0;font-style:italic}
+.callout--red{background:rgba(184,58,48,.08);border-left:3px solid var(--red)}
+.callout--sage{background:rgba(126,175,126,.08);border-left:3px solid var(--haven-sage)}
+.slide--dark .callout--red{background:rgba(184,58,48,.12)}.slide--dark .callout--sage,.slide--navy .callout--sage{background:rgba(126,175,126,.1)}
+
+.exit-bar{background:rgba(126,175,126,.08);border-radius:14px;padding:26px 28px;text-align:center;margin-top:28px}
+.exit-bar h4{font-size:9px;text-transform:uppercase;letter-spacing:3.5px;opacity:.4;margin-bottom:6px}
+.exit-bar p{font-family:var(--font-d);font-size:1.2rem;margin-bottom:6px}
+.exit-bar .acq{font-size:.75rem;opacity:.4}
+
+.nav{position:fixed;right:20px;top:50%;transform:translateY(-50%);z-index:100;display:flex;flex-direction:column;gap:7px}
+@media(max-width:650px){.nav{display:none}}
+.nav button{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.18);border:none;cursor:pointer;padding:0;transition:all .3s}
+.nav button:hover,.nav button.on{background:var(--haven-sage);transform:scale(1.5)}
+
+.inner{max-width:1040px;width:100%}
+.inner-narrow{max-width:780px;width:100%}
+.center-x{margin-left:auto;margin-right:auto;text-align:center}
+</style>
+</head>
+<body>
+<nav class="nav" id="nav" aria-label="Slide navigation"></nav>
+
+<!-- SLIDE 1 — TITLE -->
+<section class="slide slide--dark" id="s1">
+  <div class="topbar"><span>Confidential</span><span>Pre-Seed Investment Opportunity</span></div>
+  <div class="inner-narrow">
+    <p class="t-label reveal">Haven Home Wellness, Inc. · Delaware C-Corp</p>
+    <h1 class="t-h1 reveal d1">Haven<br>Home Wellness</h1>
+    <div class="accent-line reveal d2"></div>
+    <p class="t-h3 reveal d2">Predictive Fall Prevention for Aging Adults</p>
+    <p style="margin-top:28px;font-size:1.05rem;opacity:.55" class="reveal d3">Where home feels safe again.</p>
+    <p style="margin-top:36px;font-size:.85rem;opacity:.35" class="reveal d4">$750K Pre-Seed &nbsp;·&nbsp; 18-Month Runway &nbsp;·&nbsp; Series A Ready<br>havenhomewellness.ai</p>
+  </div>
+  <div class="slide-foot"><span>Haven Home Wellness, Inc.</span><span>Confidential — Do Not Distribute · 2026</span></div>
+</section>
+
+<!-- SLIDE 2 — THE PROBLEM -->
+<section class="slide slide--cream" id="s2">
+  <div class="topbar"><span>Confidential</span><span>The Problem</span></div>
+  <div class="inner">
+    <p class="t-label reveal">The Problem</p>
+    <h2 class="t-h2 reveal d1" style="color:var(--navy-deep)">Falls are the #1 cause of injury death in adults 65+.</h2>
+    <div class="g g-4 reveal d2">
+      <div class="stat"><div class="stat-val">1 in 4</div><div class="stat-desc">seniors fall every year</div><div class="stat-src">CDC, 2024</div></div>
+      <div class="stat"><div class="stat-val">Every 11s</div><div class="stat-desc">a senior visits the ER for a fall</div><div class="stat-src">NCOA, 2024</div></div>
+      <div class="stat"><div class="stat-val">Every 19m</div><div class="stat-desc">a senior dies from a fall</div><div class="stat-src">CDC WISQARS, 2024</div></div>
+      <div class="stat"><div class="stat-val">$50B+</div><div class="stat-desc">annual medical cost of falls</div><div class="stat-src">CDC/NCOA, 2024</div></div>
+    </div>
+    <div class="callout callout--red reveal d3">95% of hip fractures are caused by falls. 25% of seniors who fracture a hip will die within one year.<br><span class="t-tiny">Source: NIH/PMC, Journal of Bone and Mineral Research</span></div>
+  </div>
+  <div class="slide-foot"><span>Haven Home Wellness · The Problem</span><span>Confidential · 2026</span></div>
+</section>
+
+<!-- SLIDE 3 — THE OPPORTUNITY -->
+<section class="slide slide--navy" id="s3">
+  <div class="topbar"><span>Confidential</span><span>Market Opportunity</span></div>
+  <div class="inner">
+    <p class="t-label reveal">The Opportunity</p>
+    <h2 class="t-h2 reveal d1"><span style="font-size:1.15em">10,000</span> baby boomers turn 65 every single day through 2030.</h2>
+    <p class="t-tiny reveal d1" style="margin-top:4px">U.S. Census Bureau, 2024</p>
+    <div class="market-rings reveal d2">
+      <div class="ring ring--tam"><span class="ring-label">TAM</span><span class="ring-value">$50B+</span><span class="ring-sub">Total senior care & remote monitoring</span></div>
+      <div class="ring ring--sam"><span class="ring-label">SAM</span><span class="ring-value">$1.2B</span><span class="ring-sub">U.S. fall prevention market by 2027</span></div>
+      <div class="ring ring--som"><span class="ring-label">SOM</span><span class="ring-value">~$37M</span><span class="ring-sub">Year 3: 7,500 subs + enterprise</span></div>
+    </div>
+  </div>
+  <div class="slide-foot"><span>Haven Home Wellness · Market Opportunity</span><span>Confidential · 2026</span></div>
+</section>
+
+<!-- SLIDE 4 — THE SOLUTION -->
+<section class="slide slide--dark" id="s4">
+  <div class="topbar"><span>Confidential</span><span>The Solution</span></div>
+  <div class="inner">
+    <p class="t-label reveal">The Solution</p>
+    <h2 class="t-h2 reveal d1">Before the fall. Not after.</h2>
+    <div class="g g-2 compare reveal d2">
+      <div class="compare-col compare-col--old">
+        <div class="compare-head" style="color:var(--red)">Today's Approach · Reactive</div>
+        <div class="compare-row"><span class="compare-dot compare-dot--x">✕</span><span>Responds after the fall has happened</span></div>
+        <div class="compare-row"><span class="compare-dot compare-dot--x">✕</span><span>Requires the senior to press a button</span></div>
+        <div class="compare-row"><span class="compare-dot compare-dot--x">✕</span><span>Wearable compliance drops within weeks</span></div>
+        <div class="compare-row"><span class="compare-dot compare-dot--x">✕</span><span>Binary alerts families tune out</span></div>
+        <div class="compare-row"><span class="compare-dot compare-dot--x">✕</span><span>Cameras feel like surveillance</span></div>
+        <div class="compare-row"><span class="compare-dot compare-dot--x">✕</span><span>No prediction. No pattern recognition.</span></div>
+      </div>
+      <div class="compare-col compare-col--new">
+        <div class="compare-head" style="color:var(--haven-sage)">Haven's Approach · Predictive</div>
+        <div class="compare-row"><span class="compare-dot compare-dot--ok">✓</span><span>Predicts risk before the fall occurs</span></div>
+        <div class="compare-row"><span class="compare-dot compare-dot--ok">✓</span><span>Ambient sensors — nothing to wear or press</span></div>
+        <div class="compare-row"><span class="compare-dot compare-dot--ok">✓</span><span>Passive monitoring with zero compliance burden</span></div>
+        <div class="compare-row"><span class="compare-dot compare-dot--ok">✓</span><span>Contextualized alerts with AI narratives</span></div>
+        <div class="compare-row"><span class="compare-dot compare-dot--ok">✓</span><span>Technology is invisible — home is the hero</span></div>
+        <div class="compare-row"><span class="compare-dot compare-dot--ok">✓</span><span>Longitudinal AI learns each individual's normal</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-foot"><span>Haven Home Wellness · The Solution</span><span>Confidential · 2026</span></div>
+</section>
+
+<!-- SLIDE 5 — PRODUCT ARCHITECTURE -->
+<section class="slide slide--cream" id="s5">
+  <div class="topbar"><span>Confidential</span><span>Platform Architecture</span></div>
+  <div class="inner">
+    <p class="t-label reveal">Product Architecture</p>
+    <h2 class="t-h2 reveal d1" style="color:var(--navy-deep)">Four proprietary platforms. One ecosystem.</h2>
+    <div class="g g-4 reveal d2">
+      <div class="card card--solid" style="text-align:center"><div class="plat-icon">🏠</div><div class="plat-name">Steadfast<sup>™</sup></div><div class="plat-desc">Passive in-home sensor network</div><div class="plat-badge">Essential+</div></div>
+      <div class="card card--solid" style="text-align:center"><div class="plat-icon">🚶</div><div class="plat-name">Stride<sup>™</sup></div><div class="plat-desc">Wearable gait intelligence & AI</div><div class="plat-badge">Plus+</div></div>
+      <div class="card card--solid" style="text-align:center"><div class="plat-icon">📡</div><div class="plat-name">Beacon<sup>™</sup></div><div class="plat-desc">Family/caregiver dashboard & alerts</div><div class="plat-badge">All Tiers</div></div>
+      <div class="card card--solid" style="text-align:center"><div class="plat-icon">👁</div><div class="plat-name">Vigil<sup>™</sup></div><div class="plat-desc">Computer vision camera integration</div><div class="plat-badge">Premium</div></div>
+    </div>
+    <p class="t-small reveal d3" style="text-align:center;font-style:italic">Each platform is independently trademarked — a competitive moat single-product companies cannot replicate.</p>
+  </div>
+  <div class="slide-foot"><span>Haven Home Wellness · Platform Architecture</span><span>Confidential · 2026</span></div>
+</section>
+
+<!-- SLIDE 6 — TRACTION -->
+<section class="slide slide--navy" id="s6">
+  <div class="topbar"><span>Confidential</span><span>Traction & Progress</span></div>
+  <div class="inner">
+    <p class="t-label reveal">Traction & Progress</p>
+    <h2 class="t-h2 reveal d1">We're not pitching an idea.<br>We're showing you what we built.</h2>
+    <div class="g g-4 reveal d2" style="margin-bottom:28px">
+      <div class="card card--gw" style="text-align:center"><div class="plat-name" style="font-size:1.05rem">Steadfast<sup>™</sup></div><div class="plat-status plat-status--live">MVP Live</div></div>
+      <div class="card card--gw" style="text-align:center"><div class="plat-name" style="font-size:1.05rem">Stride<sup>™</sup></div><div class="plat-status plat-status--live">MVP Live</div></div>
+      <div class="card card--gw" style="text-align:center"><div class="plat-name" style="font-size:1.05rem">Beacon<sup>™</sup></div><div class="plat-status plat-status--live">MVP Live</div></div>
+      <div class="card card--gw" style="text-align:center"><div class="plat-name" style="font-size:1.05rem">Vigil<sup>™</sup></div><div class="plat-status plat-status--build">In Build</div></div>
+    </div>
+    <ul class="traction-list reveal d3">
+      <li><span class="traction-chk">✓</span>Delaware C-Corp incorporated, co-founder agreement executed</li>
+      <li><span class="traction-chk">✓</span>Market validation survey deployed — real user signal</li>
+      <li><span class="traction-chk">✓</span>IP assignment & trade secret protocols in place</li>
+      <li><span class="traction-chk">✓</span>12-slide investor deck, financial model, business plan complete</li>
+      <li><span class="traction-chk">✓</span>Full brand identity system — 4 trademarked platform names</li>
+      <li><span class="traction-chk">✓</span>Website live at havenhomewellness.ai with waitlist capture</li>
+    </ul>
+    <div class="callout callout--sage reveal d4">All of this accomplished with $0 in outside capital. Imagine what $750K unlocks.</div>
+  </div>
+  <div class="slide-foot"><span>Haven Home Wellness · Traction & Progress</span><span>Confidential · 2026</span></div>
+</section>
+
+<!-- SLIDE 7 — THE CUSTOMER -->
+<section class="slide slide--sage" id="s7">
+  <div class="topbar"><span>Confidential</span><span>The Customer</span></div>
+  <div class="inner">
+    <p class="t-label reveal">The Customer</p>
+    <h2 class="t-h2 reveal d1" style="color:var(--navy-deep)">Three buyers. One mission.</h2>
+    <div class="g g-3 reveal d2">
+      <div class="card card--solid cust-card"><div class="cust-emoji">👩‍👧</div><div class="cust-badge">Ages 35–55</div><h4>The Adult Child</h4><p>Primary buyer. Worries daily. Willing to pay for peace of mind. 53M unpaid caregivers in the U.S.</p></div>
+      <div class="card card--solid cust-card"><div class="cust-emoji">👴</div><div class="cust-badge">Ages 65+</div><h4>The Senior</h4><p>End user. Values independence. Wants to stay home safely. Technology must be invisible.</p></div>
+      <div class="card card--solid cust-card"><div class="cust-emoji">🏢</div><div class="cust-badge">B2B</div><h4>Enterprise</h4><p>Senior living, home health, Medicare Advantage plans. Pays for outcomes, not features.</p></div>
+    </div>
+    <p class="t-tiny reveal d3" style="text-align:center;margin-top:8px">Source: AARP/NAC Caregiving in the U.S. 2024</p>
+  </div>
+  <div class="slide-foot"><span>Haven Home Wellness · The Customer</span><span>Confidential · 2026</span></div>
+</section>
+
+<!-- SLIDE 8 — REVENUE MODEL -->
+<section class="slide slide--dark" id="s8">
+  <div class="topbar"><span>Confidential</span><span>Revenue Model</span></div>
+  <div class="inner">
+    <p class="t-label reveal">Revenue Model</p>
+    <h2 class="t-h2 reveal d1">Transparent math. Real assumptions.</h2>
+    <div class="price-grid reveal d2">
+      <div class="price-card"><div class="price-tier">Free</div><div class="price-val">$0<span>/mo</span></div><div class="price-desc">Onboarding + weekly summary</div></div>
+      <div class="price-card"><div class="price-tier">Essential</div><div class="price-val">$29.99<span>/mo</span></div><div class="price-desc">Steadfast + Beacon</div></div>
+      <div class="price-card price-card--pop"><div class="price-tier">Plus</div><div class="price-val">$44.99<span>/mo</span></div><div class="price-desc">+ Stride gait intelligence</div></div>
+      <div class="price-card"><div class="price-tier">Premium</div><div class="price-val">$59.99<span>/mo</span></div><div class="price-desc">+ Vigil computer vision</div></div>
+      <div class="price-card"><div class="price-tier">Family</div><div class="price-val">$79.99<span>/mo</span></div><div class="price-desc">Multi-senior · highest LTV</div></div>
+    </div>
+    <p class="t-label reveal d3" style="text-align:center;margin-top:8px;margin-bottom:4px;font-size:9px">Revenue Projections — Full Assumptions Shown</p>
+    <div class="rev-grid reveal d3">
+      <div class="rev-card"><div class="rev-year">Year 1</div><div class="rev-val">$788K</div><div class="rev-detail">2,500 subs · $26.26 ARPU<br>+ hardware + enterprise + data licensing</div></div>
+      <div class="rev-card"><div class="rev-year">Year 2</div><div class="rev-val">$4.3M</div><div class="rev-detail">7,500 subs · $47.56 ARPU<br>+ hardware + enterprise + data licensing</div></div>
+      <div class="rev-card"><div class="rev-year">Year 3</div><div class="rev-val">$12M</div><div class="rev-detail">15,000 subs · $66.16 ARPU<br>+ hardware + enterprise + data licensing</div></div>
+    </div>
+  </div>
+  <div class="slide-foot"><span>Haven Home Wellness · Revenue Model</span><span>Confidential · 2026</span></div>
+</section>
+
+<!-- SLIDE 9 — COMPETITIVE LANDSCAPE -->
+<section class="slide slide--cream" id="s9">
+  <div class="topbar"><span>Confidential</span><span>Competitive Landscape</span></div>
+  <div class="inner">
+    <p class="t-label reveal">Competitive Landscape</p>
+    <h2 class="t-h2 reveal d1" style="color:var(--navy-deep)">Haven owns the empty quadrant.</h2>
+    <div class="quad-layout reveal d2">
+      <div class="quad-box">
+        <div class="quad-axis quad-axis--t">Predictive</div>
+        <div class="quad-axis quad-axis--b">Reactive</div>
+        <div class="quad-axis quad-axis--l">Consumer</div>
+        <div class="quad-axis quad-axis--r">Clinical</div>
+        <div class="q-cell q-cell--hl"><span class="q-tag q-tag--haven">HAVEN</span></div>
+        <div class="q-cell"><span class="q-tag q-tag--other">CarePredict</span><span class="q-tag q-tag--other">VirtuSense</span></div>
+        <div class="q-cell"><span class="q-tag q-tag--other">Apple Watch</span></div>
+        <div class="q-cell"><span class="q-tag q-tag--other">Medical Guardian</span><span class="q-tag q-tag--other">Life Alert</span></div>
+      </div>
+      <div class="quad-reasons">
+        <h3 style="font-size:11px;letter-spacing:3px;text-transform:uppercase;font-weight:700;color:var(--haven-navy);margin-bottom:16px">Why No One Else Is Here</h3>
+        <div class="reason">→ Consumer-friendly + predictive = empty quadrant</div>
+        <div class="reason">→ Clinical tools sell to hospitals, not families</div>
+        <div class="reason">→ PERS devices react — they don't predict</div>
+        <div class="reason">→ Wearables detect falls after they happen</div>
+        <div class="reason">→ No one combines 4 data streams into one AI</div>
+        <div class="reason">→ Multi-platform moat requires years to replicate</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-foot"><span>Haven Home Wellness · Competitive Landscape</span><span>Confidential · 2026</span></div>
+</section>
+
+<!-- SLIDE 10 — GO-TO-MARKET -->
+<section class="slide slide--navy" id="s10">
+  <div class="topbar"><span>Confidential</span><span>Go-to-Market</span></div>
+  <div class="inner">
+    <p class="t-label reveal">Go-to-Market</p>
+    <h2 class="t-h2 reveal d1">Start specific. Stay focused.<br>Let the mission pull the market.</h2>
+    <div class="g g-3 reveal d2">
+      <div class="gtm-card"><div class="gtm-phase">Phase 1</div><h4>The Adult Child</h4><div class="gtm-months">Months 1–8</div><div class="gtm-item">Facebook/Instagram targeting 35-55</div><div class="gtm-item">"When did you last worry about Mom?"</div><div class="gtm-item">Built-in referral via Beacon sharing</div></div>
+      <div class="gtm-card"><div class="gtm-phase">Phase 2</div><h4>The Senior's Trust</h4><div class="gtm-months">Months 6–14</div><div class="gtm-item">Physician referral partnerships</div><div class="gtm-item">Co-branded Timed Up & Go tool</div><div class="gtm-item">Agency, not surveillance</div></div>
+      <div class="gtm-card"><div class="gtm-phase">Phase 3</div><h4>Enterprise</h4><div class="gtm-months">Months 12–18+</div><div class="gtm-item">Senior living operators first</div><div class="gtm-item">Home health & Medicare Advantage</div><div class="gtm-item">Four-platform configurability</div></div>
+    </div>
+  </div>
+  <div class="slide-foot"><span>Haven Home Wellness · Go-to-Market</span><span>Confidential · 2026</span></div>
+</section>
+
+<!-- SLIDE 11 — THE ASK -->
+<section class="slide slide--dark" id="s11">
+  <div class="topbar"><span>Confidential</span><span>The Ask</span></div>
+  <div class="inner">
+    <p class="t-label reveal">The Ask</p>
+    <h2 class="t-h2 reveal d1">$750K Pre-Seed<br><span style="font-size:.55em;opacity:.5;font-weight:400">18 Months of Focused Execution</span></h2>
+    <div class="ask-grid reveal d2">
+      <div class="ask-item"><div class="ask-pct">50%</div><div class="ask-cat">Product Development</div><div class="ask-amt">$375K</div><div class="ask-desc">AI models, all 4 platforms, mobile app</div></div>
+      <div class="ask-item"><div class="ask-pct">23%</div><div class="ask-cat">Customer Acquisition</div><div class="ask-amt">$173K</div><div class="ask-desc">Content, paid digital, PR, referrals</div></div>
+      <div class="ask-item"><div class="ask-pct">17%</div><div class="ask-cat">Clinical Validation</div><div class="ask-amt">$128K</div><div class="ask-desc">Physician partners, advisory board</div></div>
+      <div class="ask-item"><div class="ask-pct">10%</div><div class="ask-cat">Operations</div><div class="ask-amt">$75K</div><div class="ask-desc">Legal, IP, compliance</div></div>
+    </div>
+    <p class="t-label reveal d3" style="text-align:center;margin-bottom:4px;font-size:9px">What $750K Buys at 18 Months</p>
+    <div class="milestone-grid reveal d3">
+      <div class="milestone"><span class="milestone-dot">→</span>7,500 paying subscribers</div>
+      <div class="milestone"><span class="milestone-dot">→</span>~$3.7M annualized revenue</div>
+      <div class="milestone"><span class="milestone-dot">→</span>Proprietary multi-stream AI dataset</div>
+      <div class="milestone"><span class="milestone-dot">→</span>2-3 enterprise pilot agreements</div>
+      <div class="milestone"><span class="milestone-dot">→</span>4 registered trademarks</div>
+      <div class="milestone"><span class="milestone-dot">→</span>Series A narrative: $12-18M</div>
+    </div>
+  </div>
+  <div class="slide-foot"><span>Haven Home Wellness · The Ask</span><span>Confidential · 2026</span></div>
+</section>
+
+<!-- SLIDE 12 — WHY NOW -->
+<section class="slide slide--sage" id="s12">
+  <div class="topbar"><span>Confidential</span><span>Why Now</span></div>
+  <div class="inner">
+    <p class="t-label reveal">Why Now</p>
+    <h2 class="t-h2 reveal d1" style="color:var(--navy-deep)">Three forces converging at the same time.</h2>
+    <div class="g g-3 reveal d2">
+      <div class="why-card"><div class="why-num" style="color:var(--haven-navy)">01</div><h4 style="color:var(--navy-deep)">The Demographic Wave</h4><p>10,000 boomers turn 65 every day through 2030. The market is larger today than yesterday and smaller today than tomorrow.</p><p class="t-tiny" style="margin-top:8px">U.S. Census Bureau</p></div>
+      <div class="why-card"><div class="why-num" style="color:var(--haven-navy)">02</div><h4 style="color:var(--navy-deep)">The Technology Readiness</h4><p>Passive radar, computer vision gait analysis, wearable APIs, and longitudinal AI modeling have all crossed from experimental to deployable.</p></div>
+      <div class="why-card"><div class="why-num" style="color:var(--haven-navy)">03</div><h4 style="color:var(--navy-deep)">The Cultural Permission</h4><p>COVID permanently shifted how families think about aging parents. The emotional permission to care visibly has never been higher.</p><p class="t-tiny" style="margin-top:8px">AARP, 2024</p></div>
+    </div>
+    <p class="reveal d3" style="text-align:center;font-family:var(--font-d);font-style:italic;font-size:1.05rem;margin-top:20px;color:var(--navy-deep);opacity:.6">The window is open. It won't stay open forever.</p>
+  </div>
+  <div class="slide-foot"><span>Haven Home Wellness · Why Now</span><span>Confidential · 2026</span></div>
+</section>
+
+<!-- SLIDE 13 — WHY HAVEN WINS -->
+<section class="slide slide--navy" id="s13">
+  <div class="topbar"><span>Confidential</span><span>Why Haven Wins</span></div>
+  <div class="inner">
+    <p class="t-label reveal">Why Haven Wins</p>
+    <h2 class="t-h2 reveal d1">Mission. Moat. Moment.</h2>
+    <div class="g g-4 reveal d2" style="grid-template-columns:repeat(auto-fit,minmax(210px,1fr))">
+      <div class="why-card"><h4>The Mission</h4><p>Fall prevention is a cause, not a feature. Products built around genuine human urgency attract passionate early adopters and media.</p></div>
+      <div class="why-card"><h4>The Architecture</h4><p>Four trademarked platforms under one brand — a moat that single-product competitors cannot replicate without building from scratch.</p></div>
+      <div class="why-card"><h4>The Data Moat</h4><p>Every month builds a proprietary multi-stream dataset. Competitors can copy features. They cannot copy longitudinal behavioral data.</p></div>
+      <div class="why-card"><h4>The Timing</h4><p>Demographics, technology, and cultural permission have never aligned like this. First mover captures the data advantage permanently.</p></div>
+    </div>
+    <div class="exit-bar reveal d3"><h4>Exit Potential</h4><p>8-12x revenue · 15-25x pre-seed return</p><div class="acq">UnitedHealth · CVS Health · Humana · Medical device companies · Consumer health platforms</div></div>
+  </div>
+  <div class="slide-foot"><span>Haven Home Wellness · Why Haven Wins</span><span>Confidential · 2026</span></div>
+</section>
+
+<!-- SLIDE 14 — CLOSING -->
+<section class="slide slide--dark" id="s14">
+  <div class="topbar"><span>Confidential</span><span></span></div>
+  <div class="inner-narrow center-x">
+    <p class="t-label reveal" style="margin-bottom:22px">Haven Home Wellness</p>
+    <h1 class="t-h1 reveal d1">Haven<br>Home Wellness</h1>
+    <div class="accent-line reveal d2" style="margin:18px auto 22px"></div>
+    <p class="t-h3 reveal d2">Where home feels safe again.</p>
+    <p class="reveal d3" style="font-size:1.05rem;opacity:.6;margin-top:28px">$750K · 18 Months · Series A Ready</p>
+    <p class="reveal d3" style="font-size:.92rem;opacity:.5;margin-top:8px">Nick Whitehead, CEO &nbsp;·&nbsp; David A. Taylor, CTO</p>
+    <p class="reveal d4" style="font-size:.85rem;opacity:.3;margin-top:28px">havenhomewellness.ai</p>
+  </div>
+  <div class="slide-foot"><span>Haven Home Wellness, Inc.</span><span>Confidential — Do Not Distribute · 2026</span></div>
+</section>
+
+<script>
+(function(){
+  const S=document.querySelectorAll('.slide'),nav=document.getElementById('nav');
+  S.forEach((_,i)=>{const b=document.createElement('button');b.setAttribute('aria-label','Slide '+(i+1));b.onclick=()=>S[i].scrollIntoView({behavior:'smooth'});nav.appendChild(b)});
+  const D=nav.querySelectorAll('button');
+  const io=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){const i=[...S].indexOf(x.target);D.forEach((d,j)=>d.classList.toggle('on',j===i));x.target.querySelectorAll('.reveal').forEach(el=>el.classList.add('visible'))}})},{threshold:.25});
+  S.forEach(s=>io.observe(s));
+  let c=0;
+  const tc=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)c=[...S].indexOf(x.target)})},{threshold:.5});
+  S.forEach(s=>tc.observe(s));
+  document.addEventListener('keydown',e=>{if(e.key==='ArrowDown'||e.key===' '||e.key==='PageDown'){e.preventDefault();c=Math.min(c+1,S.length-1);S[c].scrollIntoView({behavior:'smooth'})}else if(e.key==='ArrowUp'||e.key==='PageUp'){e.preventDefault();c=Math.max(c-1,0);S[c].scrollIntoView({behavior:'smooth'})}});
+})();
+</script>
+</body>
+</html>
