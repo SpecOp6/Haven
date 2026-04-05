@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Technology — Haven Home Wellness</title>
+  <meta name="description" content="Haven's multi-modal RF sensing platform: Steadfast sensors, Stride AI engine, Beacon alerts, and Vigil clinical dashboard.">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* ── Technology page styles ── */
+    .platform-section { padding: 5rem 0; }
+    .platform-section:nth-child(odd) { background: var(--surface-4); }
+
+    .platform-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .platform-header.reverse { direction: rtl; }
+    .platform-header.reverse > * { direction: ltr; }
+
+    .platform-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(126,175,126,0.12);
+      color: var(--sage-light);
+      padding: 0.35rem 0.9rem;
+      border-radius: 100px;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .platform-content h2 {
+      color: var(--cream);
+      margin-bottom: 0.75rem;
+    }
+    .platform-content .tagline {
+      font-family: var(--font-display);
+      font-style: italic;
+      color: var(--sage);
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+    }
+    .platform-content p {
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+    }
+
+    .spec-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .spec-item {
+      background: rgba(126,175,126,0.08);
+      border: 1px solid rgba(126,175,126,0.12);
+      padding: 1.25rem;
+      border-radius: var(--radius-sm);
+    }
+    .spec-item h4 {
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--sage);
+      margin-bottom: 0.4rem;
+    }
+    .spec-item p {
+      font-size: 15px;
+      color: var(--text-secondary);
+      margin: 0;
+    }
+
+    .platform-image {
+      background: var(--surface-1);
+      border-radius: var(--radius);
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border-subtle);
+      position: relative;
+    }
+    .platform-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* How it works flow */
+    .tech-flow {
+      padding: 5rem 0;
+      background: var(--navy-deep);
+      color: var(--cream);
+      text-align: center;
+    }
+    .tech-flow .section-label { color: var(--sage-light); }
+    .tech-flow .section-title { color: var(--cream); margin-bottom: 0.5rem; }
+    .tech-flow .section-desc { color: rgba(249,248,244,0.6); margin: 0 auto 3rem; }
+
+    .flow-timeline {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 0;
+      max-width: 960px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .flow-timeline::before {
+      content: '';
+      position: absolute;
+      top: 28px;
+      left: 12%; right: 12%;
+      height: 2px;
+      background: rgba(126,175,126,0.3);
+    }
+    .timeline-step {
+      flex: 1;
+      text-align: center;
+      position: relative;
+      padding: 0 1rem;
+    }
+    .timeline-dot {
+      width: 56px; height: 56px;
+      background: rgba(126,175,126,0.15);
+      border: 2px solid var(--sage);
+      border-radius: 50%;
+      margin: 0 auto 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      position: relative;
+      z-index: 1;
+    }
+    .timeline-step h4 {
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--sage-light);
+      margin-bottom: 0.5rem;
+    }
+    .timeline-step p {
+      font-size: 14px;
+      color: rgba(249,248,244,0.5);
+      line-height: 1.5;
+      margin: 0 auto;
+      max-width: 200px;
+    }
+
+    /* Sensing modalities */
+    .modality-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+    .modality-card {
+      background: var(--surface-3);
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: var(--shadow-card);
+      border-top: 3px solid var(--sage);
+      border: 1px solid var(--border-subtle);
+      border-top: 3px solid var(--sage);
+    }
+    .modality-card h4 {
+      font-family: var(--font-body);
+      font-weight: 600;
+      color: var(--cream);
+      margin-bottom: 0.5rem;
+    }
+    .modality-card .coverage {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--sage);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.75rem;
+    }
+    .modality-card p { font-size: 15px; color: var(--text-secondary); }
+
+    @media (max-width: 768px) {
+      .platform-header,
+      .platform-header.reverse { grid-template-columns: 1fr; direction: ltr; }
+      .platform-image { aspect-ratio: 16/9; }
+      .spec-grid { grid-template-columns: 1fr; }
+      .flow-timeline { flex-direction: column; gap: 2rem; }
+      .flow-timeline::before { display: none; }
+      .modality-cards { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">Haven <span>Home Wellness</span></a>
+    <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links">
+      <a href="technology.html" class="active">Technology</a>
+      <a href="about.html">About</a>
+      <a href="white-paper.html">White Paper</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="/cdn-cgi/l/email-protection#9ff1f6fcf4dff7fee9faf1f7f0f2fae8faf3f3f1faececb1fcf0f2" class="nav-cta">Contact Us</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── PAGE HERO ── -->
+<div class="page-hero">
+  <div class="container">
+    <div class="section-label">Technology</div>
+    <div class="section-title">The science of prediction</div>
+    <div class="section-desc">Haven's multi-modal RF sensing platform detects gait deterioration weeks before a fall occurs. No cameras. No wearables. No privacy compromise.</div>
+  </div>
+</div>
+
+<!-- ── DATA FLOW ── -->
+<div class="tech-flow">
+  <div class="container">
+    <div class="section-label">End-to-end pipeline</div>
+    <div class="section-title" style="font-size: clamp(1.4rem,3vw,2rem);">From passive sensing to clinical action</div>
+    <div class="section-desc">Every data point flows through a unified pipeline — from the RF signals bouncing off walls to actionable clinical intelligence.</div>
+    <div class="flow-timeline">
+      <div class="timeline-step fade-up">
+        <div class="timeline-dot">📡</div>
+        <h4>Sense</h4>
+        <p>Wi-Fi CSI + mmWave radar capture movement patterns passively, 24/7</p>
+      </div>
+      <div class="timeline-step fade-up">
+        <div class="timeline-dot">⚡</div>
+        <h4>Process</h4>
+        <p>Edge AI on Steadfast hub processes signals locally — data never leaves the home raw</p>
+      </div>
+      <div class="timeline-step fade-up">
+        <div class="timeline-dot">🧠</div>
+        <h4>Analyze</h4>
+        <p>Stride's ML models build longitudinal gait profiles and detect anomalies</p>
+      </div>
+      <div class="timeline-step fade-up">
+        <div class="timeline-dot">🔔</div>
+        <h4>Alert</h4>
+        <p>Beacon sends tiered notifications — risk trends to family, clinical data to providers</p>
+      </div>
+      <div class="timeline-step fade-up">
+        <div class="timeline-dot">🏥</div>
+        <h4>Act</h4>
+        <p>Vigil dashboard enables proactive clinical intervention before a fall occurs</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── STEADFAST ── -->
+<section class="platform-section" id="steadfast">
+  <div class="container">
+    <div class="platform-header">
+      <div class="platform-content fade-up">
+        <div class="platform-badge">📡 Platform 1</div>
+        <h2>Steadfast</h2>
+        <div class="tagline">The sensor array that sees without watching.</div>
+        <p>Steadfast is Haven's multi-modal RF sensing hardware — a passive sensor array that detects human movement patterns through radio frequency analysis. No cameras, no microphones, no wearables. Just invisible signals that map how someone moves through their home.</p>
+        <p>Ceiling-mounted sensors cover entire rooms, work in all lighting conditions, and penetrate steam and light barriers — critical for bathrooms where 80% of falls occur.</p>
+        <div class="spec-grid">
+          <div class="spec-item">
+            <h4>Wi-Fi CSI</h4>
+            <p>IEEE 802.11bf whole-home presence and movement detection</p>
+          </div>
+          <div class="spec-item">
+            <h4>mmWave Radar</h4>
+            <p>60GHz FMCW for sub-centimeter gait analysis in high-risk zones</p>
+          </div>
+          <div class="spec-item">
+            <h4>Edge Processing</h4>
+            <p>On-device ML inference — raw data never leaves the home</p>
+          </div>
+          <div class="spec-item">
+            <h4>Hardware BOM</h4>
+            <p>$25–100 per module using commercial chipsets</p>
+          </div>
+        </div>
+      </div>
+      <div class="platform-image fade-up">
+        <img src="images/steadfast.webp" alt="Haven Steadfast sensor mounted on a hallway wall — low-poly cream design with sage green LED indicator" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── STRIDE ── -->
+<section class="platform-section" id="stride">
+  <div class="container">
+    <div class="platform-header reverse">
+      <div class="platform-content fade-up">
+        <div class="platform-badge">🧠 Platform 2</div>
+        <h2>Stride</h2>
+        <div class="tagline">The AI that learns how you walk.</div>
+        <p>Stride is Haven's analytics and machine learning engine. It builds a personalized gait profile for each individual, tracks changes over time, and detects the subtle anomalies that precede a fall — often weeks before it would occur.</p>
+        <p>Using longitudinal gait analysis, Stride transforms raw RF data into clinically actionable risk scores. Published studies show gait analysis achieves 90–95% sensitivity in predicting fall risk.</p>
+        <div class="spec-grid">
+          <div class="spec-item">
+            <h4>Gait Profiling</h4>
+            <p>Personalized baseline with continuous recalibration</p>
+          </div>
+          <div class="spec-item">
+            <h4>Anomaly Detection</h4>
+            <p>Statistical + ML models flag deviations from normal patterns</p>
+          </div>
+          <div class="spec-item">
+            <h4>Risk Scoring</h4>
+            <p>Longitudinal fall risk score updated daily</p>
+          </div>
+          <div class="spec-item">
+            <h4>Accuracy</h4>
+            <p>90–95% sensitivity based on published gait analysis research</p>
+          </div>
+        </div>
+      </div>
+      <div class="platform-image fade-up">
+        <img src="images/ecosystem.webp" alt="Haven hardware ecosystem — Steadfast sensor, Anchor hub, and Vigil camera unit with sage green LED indicators" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── BEACON ── -->
+<section class="platform-section" id="beacon">
+  <div class="container">
+    <div class="platform-header">
+      <div class="platform-content fade-up">
+        <div class="platform-badge">🔔 Platform 3</div>
+        <h2>Beacon</h2>
+        <div class="tagline">Smart alerts, not alarm fatigue.</div>
+        <p>Beacon is Haven's intelligent notification and escalation engine. Unlike simple alert systems that cry wolf, Beacon uses context-aware tiering to send the right information to the right person at the right time.</p>
+        <p>Trend-level risk data goes to family members. Clinical anomalies go to care teams. Acute events trigger emergency response. No unnecessary panic, no missed warnings.</p>
+        <div class="spec-grid">
+          <div class="spec-item">
+            <h4>Tiered Alerts</h4>
+            <p>Family → caregiver → clinical → emergency escalation chain</p>
+          </div>
+          <div class="spec-item">
+            <h4>Family Portal</h4>
+            <p>Simple, non-clinical dashboard for peace of mind</p>
+          </div>
+          <div class="spec-item">
+            <h4>Context-Aware</h4>
+            <p>Distinguishes trends from acute events</p>
+          </div>
+          <div class="spec-item">
+            <h4>Multi-Channel</h4>
+            <p>Push, SMS, email, and voice alerts</p>
+          </div>
+        </div>
+      </div>
+      <div class="platform-image fade-up">
+        <img src="images/anchor.webp" alt="Haven Anchor hub in a warm living room setting — faceted cream design with sage green LED, blending seamlessly into home decor" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── VIGIL ── -->
+<section class="platform-section" id="vigil">
+  <div class="container">
+    <div class="platform-header reverse">
+      <div class="platform-content fade-up">
+        <div class="platform-badge">🏥 Platform 4</div>
+        <h2>Vigil</h2>
+        <div class="tagline">Clinical intelligence, delivered.</div>
+        <p>Vigil is Haven's clinical provider dashboard — the bridge between in-home sensing data and clinical decision-making. Geriatricians, physical therapists, and care teams get longitudinal movement data that transforms fall prevention from a reactive conversation into a proactive care plan.</p>
+        <p>Vigil integrates with existing EHR systems and supports Medicare CPT code 99454 for remote physiologic monitoring reimbursement.</p>
+        <div class="spec-grid">
+          <div class="spec-item">
+            <h4>EHR Integration</h4>
+            <p>HL7 FHIR-compatible data export to major EHR platforms</p>
+          </div>
+          <div class="spec-item">
+            <h4>Medicare Billing</h4>
+            <p>CPT 99454 remote physiologic monitoring reimbursement</p>
+          </div>
+          <div class="spec-item">
+            <h4>Patient Panels</h4>
+            <p>Multi-patient population health view with risk stratification</p>
+          </div>
+          <div class="spec-item">
+            <h4>Trend Analysis</h4>
+            <p>30/60/90-day gait trend visualization</p>
+          </div>
+        </div>
+      </div>
+      <div class="platform-image fade-up">
+        <img src="images/vigil.webp" alt="Haven Vigil clinical camera unit on a shelf in a warm living room — woman reading comfortably in the background" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SENSING MODALITIES ── -->
+<section style="background: var(--surface-4); border-top: 1px solid var(--border-subtle);">
+  <div class="container">
+    <div class="section-label fade-up">Sensing layers</div>
+    <div class="section-title fade-up">Multi-modal RF architecture</div>
+    <div class="section-desc fade-up">Three complementary sensing layers provide redundant coverage from whole-home awareness to sub-centimeter precision.</div>
+    <div class="modality-cards">
+      <div class="modality-card fade-up">
+        <h4>Wi-Fi CSI (802.11bf)</h4>
+        <div class="coverage">Whole-home coverage</div>
+        <p>Uses existing home Wi-Fi infrastructure to detect presence, room-to-room movement, and gross activity patterns. Leverages Channel State Information from standard routers and IoT devices. Minimal additional hardware cost.</p>
+      </div>
+      <div class="modality-card fade-up">
+        <h4>mmWave FMCW Radar</h4>
+        <div class="coverage">High-risk zone precision</div>
+        <p>60GHz frequency-modulated continuous wave radar provides sub-centimeter resolution for gait analysis, breathing rate, and real-time fall detection. Works through steam and darkness — critical for bathrooms.</p>
+      </div>
+      <div class="modality-card fade-up">
+        <h4>Supplementary Sensors</h4>
+        <div class="coverage">Contextual intelligence</div>
+        <p>Optional passive RFID for medication tracking, pressure mats for bed exit detection, and environmental sensors (temperature, humidity, light) for behavioral context enrichment.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="ask">
+  <div class="container" style="text-align: center;">
+    <div class="section-label fade-up">Learn more</div>
+    <div class="section-title fade-up" style="color: var(--cream);">Ready for the full picture?</div>
+    <div class="section-desc fade-up" style="color: rgba(249,248,244,0.6); margin: 0 auto 2rem;">Our white paper covers the complete technical architecture, market analysis, competitive landscape, and financial projections.</div>
+    <div class="fade-up" style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+      <a href="white-paper.html" class="btn-primary">Read the white paper →</a>
+      <a href="/cdn-cgi/l/email-protection#e48a8d878fa48c8592818a8c8b8981938188888a819797ca878b89" class="btn-outline" style="border-color: rgba(249,248,244,0.3); color: var(--cream);">Contact us</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">Haven <span>Home Wellness</span></a>
+        <p>Predictive fall prevention for aging adults. Passive RF sensing, zero cameras, zero wearables.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="about.html">About Us</a>
+        <a href="technology.html">Technology</a>
+        <a href="white-paper.html">White Paper</a>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <a href="/cdn-cgi/l/email-protection#dcb2b5bfb79cb4bdaab9b2b4b3b1b9abb9b0b0b2b9afaff2bfb3b1"><span class="__cf_email__" data-cfemail="741a1d171f341c1502111a1c1b1911031118181a1107075a171b19">[email&#160;protected]</span></a>
+        <a href="https://linkedin.com/company/haven-home-wellness" target="_blank">LinkedIn</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Haven Home Wellness, Inc. · Delaware C-Corp</span>
+      <span><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></span>
+    </div>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => nav

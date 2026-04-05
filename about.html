@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — Haven Home Wellness</title>
+  <meta name="description" content="Meet the team behind Haven Home Wellness. Two founders on a mission to make predictive fall prevention a reality for every aging adult.">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .mission-section {
+      padding: 5rem 0;
+      text-align: center;
+    }
+    .mission-section .section-desc {
+      margin: 0 auto;
+      max-width: 700px;
+    }
+    .mission-quote {
+      font-family: var(--font-display);
+      font-size: clamp(1.3rem, 3vw, 1.8rem);
+      font-style: italic;
+      color: var(--sage);
+      max-width: 640px;
+      margin: 3rem auto 0;
+      line-height: 1.5;
+      position: relative;
+      padding: 0 2rem;
+    }
+    .mission-quote::before {
+      content: '"';
+      font-size: 4rem;
+      color: var(--sage);
+      position: absolute;
+      top: -1.5rem;
+      left: -0.5rem;
+      font-family: var(--font-display);
+    }
+
+    /* Team */
+    .team-section { padding: 5rem 0; }
+    .team-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      margin-top: 3rem;
+    }
+    .team-card {
+      background: var(--surface-3);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      border: 1px solid var(--border-subtle);
+    }
+    .team-photo {
+      height: 320px;
+      background: linear-gradient(135deg, var(--navy-deep) 0%, var(--navy-mid) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .team-photo::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 80px;
+      background: linear-gradient(transparent, rgba(18,38,71,0.4));
+    }
+    .team-photo .initials {
+      font-family: var(--font-display);
+      font-size: 4rem;
+      font-weight: 300;
+      color: rgba(249,248,244,0.2);
+      letter-spacing: 0.1em;
+    }
+    .team-info {
+      padding: 2rem;
+    }
+    .team-info .role {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: 0.5rem;
+    }
+    .team-info h3 {
+      color: var(--cream);
+      margin-bottom: 1rem;
+      font-size: 1.4rem;
+    }
+    .team-info p {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* Values */
+    .values-section {
+      padding: 5rem 0;
+      background: rgba(126,175,126,0.08);
+    }
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    .value-card {
+      background: var(--surface-3);
+      padding: 2.5rem 2rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-card);
+    }
+    .value-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    .value-card h3 {
+      color: var(--cream);
+      font-size: 1.2rem;
+      margin-bottom: 0.75rem;
+    }
+    .value-card p {
+      font-size: 15px;
+      color: var(--text-secondary);
+    }
+
+    /* Hiring CTA */
+    .hiring-section {
+      padding: 5rem 0;
+      text-align: center;
+    }
+    .hiring-roles {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin: 3rem auto;
+      max-width: 800px;
+    }
+    .hiring-role {
+      background: rgba(126,175,126,0.08);
+      padding: 1.5rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(126,175,126,0.15);
+    }
+    .hiring-role h4 {
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 15px;
+      color: var(--sage-light);
+      margin-bottom: 0.3rem;
+    }
+    .hiring-role p {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    /* Company facts */
+    .facts-strip {
+      display: flex;
+      justify-content: center;
+      gap: 4rem;
+      padding: 3rem 0;
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+      margin-top: 3rem;
+    }
+    .fact { text-align: center; }
+    .fact .val {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--sage-light);
+    }
+    .fact .lbl {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    @media (max-width: 768px) {
+      .team-grid { grid-template-columns: 1fr; }
+      .values-grid { grid-template-columns: 1fr; }
+      .hiring-roles { grid-template-columns: 1fr; }
+      .facts-strip { flex-wrap: wrap; gap: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">Haven <span>Home Wellness</span></a>
+    <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links">
+      <a href="technology.html">Technology</a>
+      <a href="about.html" class="active">About</a>
+      <a href="white-paper.html">White Paper</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="/cdn-cgi/l/email-protection#0c62656f674c646d7a6962646361697b69606062697f7f226f6361" class="nav-cta">Contact Us</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── PAGE HERO ── -->
+<div class="page-hero">
+  <div class="container">
+    <div class="section-label">About</div>
+    <div class="section-title">Two founders. One mission.</div>
+    <div class="section-desc">We're building the future of fall prevention because the people we love deserve better than a panic button.</div>
+  </div>
+</div>
+
+<!-- ── MISSION ── -->
+<section class="mission-section">
+  <div class="container">
+    <div class="section-label fade-up">Our mission</div>
+    <div class="section-title fade-up">Keep aging adults safe at home — on their terms.</div>
+    <div class="section-desc fade-up">Haven exists because falling shouldn't be an inevitability of aging. With the right technology — passive, predictive, and privacy-preserving — we can see risk before it becomes injury. We can intervene before the fall, not after. And we can do it without cameras, wearables, or compromising anyone's dignity.</div>
+    <div class="mission-quote fade-up">
+      Where home feels safe again.
+    </div>
+    <div class="facts-strip fade-up">
+      <div class="fact">
+        <div class="val">Delaware C-Corp</div>
+        <div class="lbl">Incorporation</div>
+      </div>
+      <div class="fact">
+        <div class="val">2025</div>
+        <div class="lbl">Founded</div>
+      </div>
+      <div class="fact">
+        <div class="val">Pre-seed</div>
+        <div class="lbl">Stage</div>
+      </div>
+      <div class="fact">
+        <div class="val">Leesburg, VA</div>
+        <div class="lbl">Headquarters</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TEAM ── -->
+<section class="team-section" style="background: var(--surface-4);">
+  <div class="container">
+    <div class="section-label fade-up">Leadership</div>
+    <div class="section-title fade-up">The founding team</div>
+    <div class="team-grid">
+      <div class="team-card fade-up">
+        <div class="team-photo">
+          <div class="initials">N</div>
+        </div>
+        <div class="team-info">
+          <div class="role">Co-Founder & CEO</div>
+          <h3>Nick</h3>
+          <p>Business development professional with deep experience in enterprise SaaS sales and AI-powered marketing technology. Currently at Typeface, an API-driven enterprise marketing orchestration platform, navigating complex enterprise sales cycles and driving AI adoption with Fortune 500 decision-makers.</p>
+          <p style="margin-top: 0.75rem;">Brings a maker's mentality to product development — hands-on experience building hardware prototypes, software tools, and AI agent systems. Responsible for Haven's business strategy, fundraising, go-to-market execution, and investor relations.</p>
+        </div>
+      </div>
+      <div class="team-card fade-up">
+        <div class="team-photo">
+          <div class="initials">D</div>
+        </div>
+        <div class="team-info">
+          <div class="role">Co-Founder & CTO</div>
+          <h3>David A. Taylor</h3>
+          <p>Technical co-founder responsible for Haven's RF sensing architecture, firmware development, AI/ML pipeline design, and cloud infrastructure. Leads all engineering decisions across the Steadfast sensor array, Stride analytics engine, and Vigil clinical dashboard.</p>
+          <p style="margin-top: 0.75rem;">Owns the complete hardware-to-software pipeline — from sensor selection and embedded systems design through edge compute optimization and cloud-scale data processing.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── VALUES ── -->
+<section class="values-section">
+  <div class="container">
+    <div class="section-label fade-up">What drives us</div>
+    <div class="section-title fade-up">Our principles</div>
+    <div class="values-grid">
+      <div class="value-card fade-up">
+        <div class="value-icon">🛡️</div>
+        <h3>Privacy by design</h3>
+        <p>No cameras. No microphones. No cloud-first architecture. Haven processes data at the edge and only transmits anonymized, derived insights. Privacy isn't a feature — it's the foundation.</p>
+      </div>
+      <div class="value-card fade-up">
+        <div class="value-icon">🔬</div>
+        <h3>Science over hype</h3>
+        <p>Every claim we make is grounded in peer-reviewed research. RF-based gait analysis, predictive fall risk modeling, and passive sensing are validated technologies — not vaporware.</p>
+      </div>
+      <div class="value-card fade-up">
+        <div class="value-icon">💪</div>
+        <h3>Dignity first</h3>
+        <p>Aging adults aren't patients to be monitored. They're people who deserve to live independently, safely, and with full agency. Our technology is invisible because their life is what matters.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PLANNED HIRES ── -->
+<section class="hiring-section">
+  <div class="container">
+    <div class="section-label fade-up">Growth</div>
+    <div class="section-title fade-up">Key hires — planned</div>
+    <div class="section-desc fade-up" style="margin: 0 auto;">Post-raise, Haven will recruit critical expertise across engineering, clinical science, and regulatory affairs.</div>
+    <div class="hiring-roles fade-up">
+      <div class="hiring-role">
+        <h4>VP of Engineering</h4>
+        <p>RF/embedded systems lead with mmWave or Wi-Fi sensing experience</p>
+      </div>
+      <div class="hiring-role">
+        <h4>Clinical Advisor / CMO</h4>
+        <p>Geriatrician or PT specializing in fall prevention and gait analysis</p>
+      </div>
+      <div class="hiring-role">
+        <h4>Regulatory Affairs</h4>
+        <p>FDA 510(k) specialist with Class II medical device experience</p>
+      </div>
+    </div>
+    <a href="/cdn-cgi/l/email-protection#bdd3d4ded6fdd5dccbd8d3d5d2d0d8cad8d1d1d3d8cece93ded2d0" class="btn-primary fade-up">Get in touch →</a>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">Haven <span>Home Wellness</span></a>
+        <p>Predictive fall prevention for aging adults. Passive RF sensing, zero cameras, zero wearables.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="about.html">About Us</a>
+        <a href="technology.html">Technology</a>
+        <a href="white-paper.html">White Paper</a>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <a href="/cdn-cgi/l/email-protection#ddb3b4beb69db5bcabb8b3b5b2b0b8aab8b1b1b3b8aeaef3beb2b0"><span class="__cf_email__" data-cfemail="4927202a220921283f2c272126242c3e2c2525272c3a3a672a2624">[email&#160;protected]</span></a>
+        <a href="https://linkedin.com/company/haven-home-wellness" target="_blank">LinkedIn</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Haven Home Wellness, Inc. · Delaware C-Corp</span>
+      <span><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></span>
+    </div>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => nav

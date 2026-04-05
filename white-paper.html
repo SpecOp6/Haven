@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>White Paper — Haven Home Wellness</title>
+  <meta name="description" content="Read Haven's comprehensive white paper on predictive fall prevention using multi-modal RF sensing technology.">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .wp-content { padding: 4rem 0 6rem; }
+    .wp-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .wp-main h2 {
+      color: var(--cream);
+      margin-top: 2.5rem;
+      margin-bottom: 0.75rem;
+      font-size: 1.3rem;
+    }
+    .wp-main h2:first-child { margin-top: 0; }
+    .wp-main p {
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+    }
+    .wp-sidebar {
+      position: sticky;
+      top: calc(var(--nav-height) + 2rem);
+    }
+    .wp-download-card {
+      background: rgba(126,175,126,0.1);
+      border: 1px solid rgba(126,175,126,0.25);
+      color: var(--cream);
+      padding: 2.5rem 2rem;
+      border-radius: var(--radius);
+      text-align: center;
+    }
+    .wp-download-card h3 {
+      color: var(--cream);
+      margin-bottom: 0.5rem;
+    }
+    .wp-download-card p {
+      color: rgba(249,248,244,0.6);
+      font-size: 15px;
+      margin-bottom: 1.5rem;
+    }
+    .wp-download-card .btn-primary {
+      width: 100%;
+      justify-content: center;
+      margin-bottom: 0.75rem;
+    }
+    .wp-download-card .detail {
+      font-size: 14px;
+      color: rgba(249,248,244,0.4);
+    }
+    .wp-toc {
+      background: var(--surface-3);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 1.5rem 2rem;
+      margin-top: 1.5rem;
+    }
+    .wp-toc h4 {
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--sage);
+      margin-bottom: 0.75rem;
+    }
+    .wp-toc ol {
+      margin: 0;
+      padding-left: 1.25rem;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+    .wp-toc ol li { margin-bottom: 0.35rem; line-height: 1.4; }
+
+    .wp-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin: 3rem 0;
+    }
+    .wp-stat {
+      background: rgba(126,175,126,0.08);
+      padding: 1.5rem;
+      border-radius: var(--radius-sm);
+      text-align: center;
+    }
+    .wp-stat .val {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: var(--sage-light);
+    }
+    .wp-stat .lbl {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    @media (max-width: 768px) {
+      .wp-grid { grid-template-columns: 1fr; }
+      .wp-sidebar { position: static; }
+      .wp-stats { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">Haven <span>Home Wellness</span></a>
+    <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links">
+      <a href="technology.html">Technology</a>
+      <a href="about.html">About</a>
+      <a href="white-paper.html" class="active">White Paper</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="/cdn-cgi/l/email-protection#0866616b634860697e6d666067656d7f6d6464666d7b7b266b6765" class="nav-cta">Contact Us</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="container">
+    <div class="section-label">Research</div>
+    <div class="section-title">White Paper</div>
+    <div class="section-desc">A comprehensive analysis of Haven's technology, market opportunity, and the science behind predictive fall prevention.</div>
+  </div>
+</div>
+
+<div class="wp-content">
+  <div class="container">
+    <div class="wp-grid">
+      <div class="wp-main">
+        <h2>Executive Summary</h2>
+        <p>Falls are the leading cause of injury-related death among adults aged 65 and older, claiming over 38,000 lives annually and generating $80+ billion in direct healthcare costs. Despite decades of investment in fall detection technology, every commercial solution on the market today shares a fundamental flaw: they react to falls after they happen.</p>
+        <p>Haven Home Wellness is building the first predictive fall prevention platform — a passive, privacy-preserving sensor ecosystem that detects subtle gait deterioration weeks before a fall occurs, enabling proactive clinical intervention instead of emergency response.</p>
+
+        <div class="wp-stats fade-up">
+          <div class="wp-stat">
+            <div class="val">$22B+</div>
+            <div class="lbl">Total addressable market</div>
+          </div>
+          <div class="wp-stat">
+            <div class="val">90–95%</div>
+            <div class="lbl">Gait analysis sensitivity</div>
+          </div>
+          <div class="wp-stat">
+            <div class="val">14.7M</div>
+            <div class="lbl">U.S. seniors living alone</div>
+          </div>
+        </div>
+
+        <h2>The Technology</h2>
+        <p>Haven's platform uses multi-modal radio frequency sensing — combining Wi-Fi Channel State Information (IEEE 802.11bf) with millimeter-wave FMCW radar — to create a continuous, passive picture of an individual's movement patterns within their home. No cameras, no microphones, no wearables.</p>
+        <p>The white paper details the complete technical architecture, from sensor placement strategy through edge AI processing, longitudinal gait profiling, anomaly detection algorithms, and clinical data delivery.</p>
+
+        <h2>Market Opportunity</h2>
+        <p>The global elderly monitoring market is projected to reach $22+ billion by 2033. Within this space, the fall detection radar market alone is growing at 37% CAGR, and the Wi-Fi sensing market at 23.8% CAGR. Haven occupies a unique position at the intersection of these growth vectors — the only platform combining predictive analytics with passive, privacy-preserving sensing.</p>
+
+        <h2>Regulatory & Reimbursement</h2>
+        <p>The white paper covers Haven's FDA 510(k) regulatory pathway for Class II medical devices and the Medicare CPT 99454 reimbursement opportunity for remote physiologic monitoring — a critical revenue enabler that validates the clinical utility of continuous gait data.</p>
+
+        <h2>Financial Model</h2>
+        <p>Detailed five-year financial projections across three revenue models: direct-to-consumer (DTC), B2B partnerships with senior living operators, and OEM/ISP channel integration. The paper includes unit economics, customer acquisition cost analysis, and path to profitability.</p>
+      </div>
+
+      <div class="wp-sidebar">
+        <div class="wp-download-card">
+          <h3>Get the full paper</h3>
+          <p>42 pages covering technology, market, competition, financials, and regulatory strategy.</p>
+          <a href="/cdn-cgi/l/email-protection#3856515b537850594e5d565057555d4f5d5454565d4b4b165b5755074b4d5a525d5b4c056f50514c5d1d0a086859485d4a1d0a086a5d494d5d4b4c1e5a575c4105711f5c1d0a085451535d1d0a084c571d0a084a5d494d5d4b4c1d0a08591d0a085b5748411d0a08575e1d0a084c505d1d0a0870594e5d561d0a087057555d1d0a086f5d5454565d4b4b1d0a084f50514c5d1d0a084859485d4a16" class="btn-primary">Request white paper →</a>
+          <div class="detail">Confidential · For qualified investors and partners</div>
+        </div>
+        <div class="wp-toc">
+          <h4>Table of Contents</h4>
+          <ol>
+            <li>Executive Summary</li>
+            <li>The Problem: Falls in Aging Adults</li>
+            <li>Market Opportunity</li>
+            <li>Technology: Multi-Modal RF Sensing</li>
+            <li>Product Ecosystem</li>
+            <li>Competitive Landscape</li>
+            <li>Regulatory Pathway</li>
+            <li>Go-to-Market Strategy</li>
+            <li>Team</li>
+            <li>Financial Projections</li>
+            <li>The Ask</li>
+            <li>Appendix: Technical References</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">Haven <span>Home Wellness</span></a>
+        <p>Predictive fall prevention for aging adults. Passive RF sensing, zero cameras, zero wearables.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="about.html">About Us</a>
+        <a href="technology.html">Technology</a>
+        <a href="white-paper.html">White Paper</a>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <a href="/cdn-cgi/l/email-protection#016f68626a41696077646f696e6c6476646d6d6f6472722f626e6c"><span class="__cf_email__" data-cfemail="335d5a5058735b5245565d5b5c5e5644565f5f5d5640401d505c5e">[email&#160;protected]</span></a>
+        <a href="https://linkedin.com/company/haven-home-wellness" target="_blank">LinkedIn</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Haven Home Wellness, Inc. · Delaware C-Corp</span>
+      <span><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></span>
+    </div>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-stati
