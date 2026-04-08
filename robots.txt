@@ -1,0 +1,50 @@
+# Haven Home Wellness — robots.txt
+# https://havenhomewellness.ai
+
+# Allow all traditional search engine crawlers
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+# Allow AI search engine crawlers (GEO optimization)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+# Allow Brave Search (used by Claude AI)
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://havenhomewellness.ai/sitemap.xml
