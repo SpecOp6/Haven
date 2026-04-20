@@ -1,0 +1,296 @@
+<!--
+  ═══════════════════════════════════════════════════════════════
+  Haven Home Wellness — Universal Nav + Modal Partial
+  Copy-paste this block into EVERY page's <body> (at the top,
+  before any <section>). The <head> block goes in <head>.
+  ═══════════════════════════════════════════════════════════════
+
+  ── REQUIRED <head> ADDITIONS ──────────────────────────────────
+  1. Paste the meta block below into <head>
+  2. Replace PAGE-SPECIFIC values marked with [EDIT]
+  ───────────────────────────────────────────────────────────────
+-->
+
+<!-- =============================================
+     HEAD BLOCK (paste into <head>)
+     ============================================= -->
+<!--
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>[EDIT: Page title] — Haven Home Wellness</title>
+<meta name="description" content="[EDIT: page description]">
+<link rel="canonical" href="https://havenhomewellness.ai/[EDIT: page-slug.html]">
+
+<meta property="og:title" content="[EDIT: OG title]">
+<meta property="og:description" content="[EDIT: OG description]">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://havenhomewellness.ai/[EDIT: page-slug.html]">
+<meta property="og:site_name" content="Haven Home Wellness">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="[EDIT: Twitter title]">
+<meta name="twitter:description" content="[EDIT: Twitter description]">
+
+<link rel="stylesheet" href="haven-universal.css">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+-->
+
+<!-- =============================================
+     UNIVERSAL NAV (paste at top of <body>)
+     ============================================= -->
+<nav id="siteNav" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">Haven <span>Home Wellness</span></a>
+
+    <!-- Desktop links -->
+    <div class="nav-links desktop-only" role="list">
+      <a href="technology.html" role="listitem">Technology</a>
+      <a href="about.html" role="listitem">About</a>
+      <a href="white-paper.html" role="listitem">White Paper</a>
+      <a href="privacy.html" role="listitem">Privacy</a>
+      <a href="investors.html" role="listitem">Investors</a>
+      <button
+        onclick="openModal('contact')"
+        class="btn btn-primary nav-cta"
+        style="cursor:pointer;border:none;font-family:var(--fb);font-size:14px;"
+        aria-label="Open contact form"
+      >Contact Us</button>
+    </div>
+
+    <!-- Hamburger (mobile) -->
+    <button
+      class="nav-toggle"
+      id="burgerBtn"
+      aria-label="Open navigation menu"
+      aria-expanded="false"
+      aria-controls="mobileNav"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile drawer -->
+<nav
+  class="mobile-nav"
+  id="mobileNav"
+  aria-label="Mobile navigation"
+  aria-hidden="true"
+>
+  <a href="technology.html">Technology</a>
+  <a href="about.html">About Us</a>
+  <a href="white-paper.html">White Paper</a>
+  <a href="investors.html">Investors</a>
+  <a href="privacy.html">Privacy Policy</a>
+  <a href="terms.html">Terms of Service</a>
+  <div class="mobile-nav-cta">
+    <button
+      onclick="openModal('contact'); closeMenuGlobal();"
+      class="btn btn-primary"
+      style="cursor:pointer;border:none;font-family:var(--fb);width:100%;"
+    >Contact Us →</button>
+  </div>
+</nav>
+
+
+<!-- =============================================
+     WAITLIST MODAL
+     ============================================= -->
+<div
+  class="hm-overlay"
+  id="modalWaitlist"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="wlTitle"
+>
+  <div class="hm-box">
+    <button class="hm-close" onclick="closeModal('waitlist')" aria-label="Close modal">✕</button>
+
+    <!-- Form state -->
+    <div id="wlForm">
+      <div class="eyebrow">Early access</div>
+      <h2 id="wlTitle">Join the waitlist</h2>
+      <p class="hm-sub">Be the first to know when Haven launches. No spam — just the updates that matter.</p>
+
+      <div class="hm-row">
+        <div class="hm-field">
+          <label for="wlFirst">First name</label>
+          <input type="text" id="wlFirst" placeholder="Sarah" required autocomplete="given-name">
+        </div>
+        <div class="hm-field">
+          <label for="wlLast">Last name</label>
+          <input type="text" id="wlLast" placeholder="Johnson" required autocomplete="family-name">
+        </div>
+      </div>
+
+      <div class="hm-field">
+        <label for="wlEmail">Email address</label>
+        <input type="email" id="wlEmail" placeholder="sarah@example.com" required autocomplete="email">
+      </div>
+
+      <div class="hm-field">
+        <label for="wlRole">I am a…</label>
+        <select id="wlRole">
+          <option value="">Select your role</option>
+          <option>Adult child / family caregiver</option>
+          <option>Senior living in my own home</option>
+          <option>Healthcare professional</option>
+          <option>Senior living community operator</option>
+          <option>Home health agency</option>
+          <option>Investor / partner</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div class="hm-field">
+        <label for="wlNote">
+          Anything you'd like us to know?
+          <span style="opacity:0.4;font-weight:400;text-transform:none;letter-spacing:0">(optional)</span>
+        </label>
+        <textarea id="wlNote" rows="3" placeholder="e.g. my dad had a fall last year and I need something better…"></textarea>
+      </div>
+
+      <button class="btn btn-primary hm-submit" onclick="submitModal('waitlist')">Get early access →</button>
+    </div>
+
+    <!-- Success state -->
+    <div class="hm-success" id="wlSuccess">
+      <div class="hm-success-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <polyline points="20 6 9 17 4 12" stroke="#7EAF7E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h3>You're on the list.</h3>
+      <p>We'll be in touch at the email you provided. Thank you for believing in what we're building.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- =============================================
+     CONTACT MODAL
+     ============================================= -->
+<div
+  class="hm-overlay"
+  id="modalContact"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="ctTitle"
+>
+  <div class="hm-box">
+    <button class="hm-close" onclick="closeModal('contact')" aria-label="Close modal">✕</button>
+
+    <!-- Form state -->
+    <div id="ctForm">
+      <div class="eyebrow">Get in touch</div>
+      <h2 id="ctTitle">Contact us</h2>
+      <p class="hm-sub">Questions, partnerships, press, or investor inquiries — we read everything.</p>
+
+      <div class="hm-row">
+        <div class="hm-field">
+          <label for="ctFirst">First name</label>
+          <input type="text" id="ctFirst" placeholder="Alex" required autocomplete="given-name">
+        </div>
+        <div class="hm-field">
+          <label for="ctLast">Last name</label>
+          <input type="text" id="ctLast" placeholder="Rivera" required autocomplete="family-name">
+        </div>
+      </div>
+
+      <div class="hm-field">
+        <label for="ctEmail">Email address</label>
+        <input type="email" id="ctEmail" placeholder="alex@example.com" required autocomplete="email">
+      </div>
+
+      <div class="hm-field">
+        <label for="ctSubject">Subject</label>
+        <select id="ctSubject">
+          <option value="">What's this about?</option>
+          <option>General inquiry</option>
+          <option>Partnership opportunity</option>
+          <option>Investor / media inquiry</option>
+          <option>Clinical / research inquiry</option>
+          <option>Product question</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div class="hm-field">
+        <label for="ctMessage">Message</label>
+        <textarea id="ctMessage" rows="4" placeholder="Tell us what's on your mind…" required></textarea>
+      </div>
+
+      <button class="btn btn-primary hm-submit" onclick="submitModal('contact')">Send message →</button>
+    </div>
+
+    <!-- Success state -->
+    <div class="hm-success" id="ctSuccess">
+      <div class="hm-success-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <polyline points="20 6 9 17 4 12" stroke="#7EAF7E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h3>Message sent.</h3>
+      <p>We'll get back to you at the email you provided. Usually within one business day.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- =============================================
+     UNIVERSAL FOOTER (paste before </body>)
+     ============================================= -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+
+      <div class="footer-brand">
+        <a href="index.html" class="logo">Haven <span>Home Wellness</span></a>
+        <p style="margin-top:1rem">Predictive fall prevention for aging adults. Passive in-home sensing. Wearable intelligence. Zero pendants.</p>
+        <p style="font-family:var(--fd);font-style:italic;color:var(--sage);margin-top:1rem;font-size:15px">"Stay home, on your terms."</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="about.html">About Us</a>
+        <a href="technology.html">Technology</a>
+        <a href="white-paper.html">White Paper</a>
+        <a href="investors.html">Investors</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <a href="mailto:info@havenhomewellness.ai">info@havenhomewellness.ai</a>
+        <button
+          onclick="openModal('contact')"
+          style="display:inline-block;background:none;border:none;padding:0;cursor:pointer;font-family:var(--fb);font-size:0.9375rem;font-weight:300;color:rgba(249,248,244,0.55);margin-top:0.25rem;transition:color 0.2s;"
+          onmouseover="this.style.color='var(--cream)'"
+          onmouseout="this.style.color='rgba(249,248,244,0.55)'"
+        >Send a message</button>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom mt-6 pt-4 hairline">
+      <span>© 2026 Haven Home Wellness, Inc. All rights reserved.</span>
+      <div style="display:flex;gap:1.5rem">
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- =============================================
+     UNIVERSAL SCRIPT (paste just before </body>)
+     ============================================= -->
+<script src="haven-universal.js"></script>
