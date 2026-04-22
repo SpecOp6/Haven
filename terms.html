@@ -6,58 +6,42 @@
   <title>Terms of Service — Haven Home Wellness</title>
   <meta name="description" content="Haven Home Wellness Terms of Service.">
   <link rel="stylesheet" href="styles.css">
-  <style>
-    .policy-content {
-      padding: 4rem 0 6rem;
-      max-width: 780px;
-      margin: 0 auto;
-    }
-    .policy-content h2 {
-      color: var(--cream);
-      margin-top: 3rem;
-      margin-bottom: 1rem;
-      font-size: 1.4rem;
-    }
-    .policy-content p {
-      color: var(--text-secondary);
-      margin-bottom: 1rem;
-      font-size: 0.95rem;
-    }
-    .policy-content ul {
-      margin: 0.5rem 0 1.5rem 1.5rem;
-      color: var(--text-secondary);
-      font-size: 0.95rem;
-    }
-    .policy-content ul li {
-      margin-bottom: 0.5rem;
-      line-height: 1.6;
-    }
-    .policy-updated {
-      font-size: 14px;
-      color: var(--text-muted);
-      margin-bottom: 2rem;
-      padding-bottom: 2rem;
-      border-bottom: 1px solid var(--border-subtle);
-    }
-  </style>
+  
 </head>
-<body>
+<body class="dark-page">
 
-<nav id="nav">
+<nav class="nav-dark">
   <div class="nav-inner">
     <a href="index.html" class="logo">Haven <span>Home Wellness</span></a>
-    <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
-    <div class="nav-links">
+    <div class="nav-links desktop-only">
       <a href="technology.html">Technology</a>
       <a href="about.html">About</a>
       <a href="white-paper.html">White Paper</a>
       <a href="privacy.html">Privacy</a>
-      <a href="/cdn-cgi/l/email-protection#dab4b3b9b19ab2bbacbfb4b2b5b7bfadbfb6b6b4bfa9a9f4b9b5b7" class="nav-cta">Contact Us</a>
+      <a href="investors.html">Investors</a>
+      <button onclick="openModal('contact')" class="btn btn-primary nav-cta" style="cursor:pointer;border:none;font-family:var(--font-body);font-size:14px;">Contact Us</button>
     </div>
+    <button class="burger" id="burgerBtn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileNav">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
   </div>
 </nav>
+
+<!-- Mobile navigation drawer -->
+<nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation" aria-hidden="true">
+  <a href="technology.html">Technology</a>
+  <a href="about.html">About Us</a>
+  <a href="white-paper.html">White Paper</a>
+  <a href="investors.html">Investors</a>
+  <a href="privacy.html">Privacy Policy</a>
+  <a href="terms.html">Terms of Service</a>
+  <div class="mobile-nav-cta">
+    <button onclick="openModal('contact');closeMenuGlobal();" class="btn btn-primary" style="cursor:pointer;border:none;font-family:var(--font-body);">Contact Us →</button>
+  </div>
+</nav>
+
 
 <div class="page-hero">
   <div class="container">
@@ -117,8 +101,8 @@
     <p>Questions about these Terms should be directed to:</p>
     <p>
       Haven Home Wellness, Inc.<br>
-      <a href="/cdn-cgi/l/email-protection#bcd0d9dbddd0fcd4ddcad9d2d4d3d1d9cbd9d0d0d2d9cfcf92dfd3d1" style="color: var(--sage); text-decoration: underline;"><span class="__cf_email__" data-cfemail="7d11181a1c113d151c0b1813151210180a18111113180e0e531e1210">[email&#160;protected]</span></a><br>
-      <a href="/cdn-cgi/l/email-protection#7917101a123911180f1c171116141c0e1c1515171c0a0a571a1614" style="color: var(--sage); text-decoration: underline;"><span class="__cf_email__" data-cfemail="056b6c666e456d6473606b6d6a6860726069696b6076762b666a68">[email&#160;protected]</span></a>
+      <a href="/cdn-cgi/l/email-protection#bcd0d9dbddd0fcd4ddcad9d2d4d3d1d9cbd9d0d0d2d9cfcf92dfd3d1" class="accent-link"><span class="__cf_email__" data-cfemail="7d11181a1c113d151c0b1813151210180a18111113180e0e531e1210">[email&#160;protected]</span></a><br>
+      <a href="/cdn-cgi/l/email-protection#7917101a123911180f1c171116141c0e1c1515171c0a0a571a1614" class="accent-link"><span class="__cf_email__" data-cfemail="056b6c666e456d6473606b6d6a6860726069696b6076762b666a68">[email&#160;protected]</span></a>
     </p>
   </div>
 </div>

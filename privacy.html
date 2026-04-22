@@ -6,102 +6,44 @@
   <title>Privacy Policy — Haven Home Wellness</title>
   <meta name="description" content="Haven Home Wellness Privacy Policy. How we collect, process, and protect data from our RF sensing platform.">
   <link rel="stylesheet" href="styles.css">
-  <style>
-    .policy-content {
-      padding: 4rem 0 6rem;
-      max-width: 780px;
-      margin: 0 auto;
-    }
-    .policy-content h2 {
-      color: var(--cream);
-      margin-top: 3rem;
-      margin-bottom: 1rem;
-      font-size: 1.4rem;
-    }
-    .policy-content h3 {
-      color: var(--sage-light);
-      margin-top: 2rem;
-      margin-bottom: 0.75rem;
-      font-size: 1.1rem;
-    }
-    .policy-content p {
-      color: var(--text-secondary);
-      margin-bottom: 1rem;
-      font-size: 0.95rem;
-    }
-    .policy-content ul {
-      margin: 0.5rem 0 1.5rem 1.5rem;
-      color: var(--text-secondary);
-      font-size: 0.95rem;
-    }
-    .policy-content ul li {
-      margin-bottom: 0.5rem;
-      line-height: 1.6;
-    }
-    .policy-updated {
-      font-size: 14px;
-      color: var(--text-muted);
-      margin-bottom: 2rem;
-      padding-bottom: 2rem;
-      border-bottom: 1px solid var(--border-subtle);
-    }
-    .privacy-highlight {
-      background: rgba(126,175,126,0.08);
-      border-left: 3px solid var(--sage);
-      padding: 1.5rem 2rem;
-      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-      margin: 2rem 0;
-    }
-    .privacy-highlight p {
-      color: var(--cream);
-      font-weight: 500;
-      margin: 0;
-    }
-    .toc {
-      background: var(--surface-3);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-sm);
-      padding: 1.5rem 2rem;
-      margin-bottom: 3rem;
-    }
-    .toc h4 {
-      font-family: var(--font-body);
-      font-weight: 600;
-      font-size: 14px;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--sage);
-      margin-bottom: 0.75rem;
-    }
-    .toc ol {
-      margin: 0;
-      padding-left: 1.25rem;
-      font-size: 15px;
-    }
-    .toc ol li { margin-bottom: 0.35rem; }
-    .toc ol li a { color: var(--sage-light); }
-    .toc ol li a:hover { color: var(--sage); }
-  </style>
+  
 </head>
-<body>
+<body class="dark-page">
 
-<!-- ── NAV ── -->
-<nav id="nav">
-  <div class="nav-inner">
+<nav class="nav-dark">
+  <div class="ni">
     <a href="index.html" class="logo">Haven <span>Home Wellness</span></a>
-    <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
-    <div class="nav-links">
+    <div class="nl">
       <a href="technology.html">Technology</a>
       <a href="about.html">About</a>
       <a href="white-paper.html">White Paper</a>
       <a href="privacy.html" class="active">Privacy</a>
-      <a href="/cdn-cgi/l/email-protection#bcd2d5dfd7fcd4ddcad9d2d4d3d1d9cbd9d0d0d2d9cfcf92dfd3d1" class="nav-cta">Contact Us</a>
+      <a href="investors.html">Investors</a>
+      <button onclick="openModal('contact')" class="nc" style="cursor:pointer;border:none;font-family:var(--fb);font-size:14px;">Contact Us</button>
     </div>
+    <button class="burger" id="burgerBtn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileNav">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
   </div>
 </nav>
 
+<!-- Mobile navigation drawer -->
+<nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation" aria-hidden="true">
+  <a href="technology.html">Technology</a>
+  <a href="about.html">About Us</a>
+  <a href="white-paper.html">White Paper</a>
+  <a href="investors.html">Investors</a>
+  <a href="privacy.html" class="active">Privacy Policy</a>
+  <a href="terms.html">Terms of Service</a>
+  <div class="mobile-nav-cta">
+    <button onclick="openModal('contact');closeMenuGlobal();" class="bp" style="cursor:pointer;border:none;font-family:var(--fb);">Contact Us →</button>
+  </div>
+</nav>
+
+
+<!-- ── NAV ── -->
 <!-- ── PAGE HERO ── -->
 <div class="page-hero">
   <div class="container">
