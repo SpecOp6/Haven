@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Haven SafeSpace™ — Spatial Risk Intelligence</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy-deep: #122647;
+    --navy-mid: #2A5298;
+    --sage: #7EAF7E;
+    --sage-light: #A8C9A8;
+    --cream: #F9F8F4;
+    --white: #FFFFFF;
+    --risk-high: #C0392B;
+    --risk-med: #E67E22;
+    --risk-moderate: #D4A84C;
+    --risk-low: #7EAF7E;
+    --risk-safe: #A8C9A8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Jost', 'Helvetica Neue', sans-serif;
+    background: var(--cream);
+    color: var(--navy-deep);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── Onboarding ── */
+  #onboarding-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: linear-gradient(135deg, var(--navy-deep) 0%, var(--navy-mid) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 1;
+    transition: opacity 0.6s ease;
+  }
+  #onboarding-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .onboard-card {
+    max-width: 500px;
+    width: 100%;
+    background: var(--cream);
+    border-radius: 24px;
+    padding: 48px 40px;
+    text-align: center;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.3);
+    opacity: 0;
+    transform: translateY(24px);
+    animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+  }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+  @keyframes slideIn {
+    to { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes pulseGlow {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(126, 175, 126, 0.4); }
+    50% { box-shadow: 0 0 0 8px rgba(126, 175, 126, 0); }
+  }
+
+  .logo-mark {
+    width: 56px; height: 56px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, var(--navy-deep), var(--navy-mid));
+    margin: 0 auto 24px;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .step-label {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--sage); margin-bottom: 8px;
+  }
+
+  .onboard-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 28px; font-weight: 700;
+    color: var(--navy-deep);
+    margin-bottom: 8px; line-height: 1.2;
+  }
+
+  .onboard-subtitle {
+    font-size: 14px; font-weight: 500;
+    color: var(--navy-mid); opacity: 0.8;
+    margin-bottom: 20px;
+  }
+
+  .onboard-body {
+    font-size: 14px; color: var(--navy-mid);
+    opacity: 0.7; line-height: 1.6;
+    margin-bottom: 28px;
+  }
+
+  .address-card {
+    background: var(--white);
+    border-radius: 16px; padding: 20px;
+    margin-bottom: 24px;
+    border: 1px solid rgba(168, 201, 168, 0.3);
+    text-align: left;
+  }
+
+  .address-header {
+    display: flex; justify-content: space-between;
+    align-items: center; margin-bottom: 12px;
+  }
+  .address-header span:first-child {
+    font-size: 12px; font-weight: 500;
+    color: var(--navy-mid); opacity: 0.6;
+  }
+  .public-badge {
+    font-size: 10px; font-weight: 600;
+    color: var(--sage);
+    background: rgba(126, 175, 126, 0.1);
+    padding: 3px 10px; border-radius: 20px;
+    letter-spacing: 0.05em;
+  }
+
+  .address-text {
+    font-size: 15px; font-weight: 500;
+    color: var(--navy-deep); margin-bottom: 16px;
+  }
+  .address-text .faded { opacity: 0.6; }
+
+  .property-stats {
+    background: rgba(18, 38, 71, 0.04);
+    border-radius: 12px; padding: 14px;
+    display: flex; gap: 20px;
+  }
+  .stat-item label {
+    font-size: 10px; font-weight: 500;
+    color: var(--navy-mid); opacity: 0.5;
+    display: block;
+  }
+  .stat-item span {
+    font-size: 16px; font-weight: 600;
+    color: var(--navy-deep); margin-top: 2px;
+    display: block;
+  }
+
+  .checklist-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 16px;
+    background: var(--white);
+    border-radius: 10px;
+    border: 1px solid rgba(168, 201, 168, 0.15);
+    margin-bottom: 8px;
+    opacity: 0; transform: translateX(-10px);
+  }
+  .checklist-item:nth-child(1) { animation: slideIn 0.5s 0.1s forwards; }
+  .checklist-item:nth-child(2) { animation: slideIn 0.5s 0.25s forwards; }
+  .checklist-item:nth-child(3) { animation: slideIn 0.5s 0.4s forwards; }
+
+  .check-circle {
+    width: 24px; height: 24px; border-radius: 12px;
+    background: rgba(126, 175, 126, 0.12);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .checklist-item span {
+    font-size: 13px; font-weight: 500;
+    color: var(--navy-deep);
+  }
+
+  .btn-primary {
+    width: 100%; padding: 14px 24px;
+    background: linear-gradient(135deg, var(--navy-deep), var(--navy-mid));
+    color: var(--white); border: none;
+    border-radius: 12px; font-size: 14px;
+    font-weight: 600; font-family: 'Jost', sans-serif;
+    cursor: pointer; letter-spacing: 0.03em;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(18, 38, 71, 0.35);
+  }
+
+  /* ── Main Dashboard ── */
+  #dashboard {
+    opacity: 0;
+    transition: opacity 0.6s ease 0.3s;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  #dashboard.visible { opacity: 1; }
+
+  .dash-header {
+    background: linear-gradient(135deg, var(--navy-deep) 0%, var(--navy-mid) 100%);
+    padding: 20px 24px 16px;
+  }
+
+  .header-top {
+    display: flex; align-items: center;
+    justify-content: space-between; margin-bottom: 16px;
+  }
+  .header-label {
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--sage-light); opacity: 0.8;
+  }
+  .header-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-weight: 700;
+    color: var(--white); margin-top: 4px;
+  }
+
+  .score-box {
+    display: flex; flex-direction: column;
+    align-items: center;
+    background: rgba(255,255,255,0.1);
+    border-radius: 16px; padding: 10px 18px;
+    backdrop-filter: blur(8px);
+  }
+  .score-label {
+    font-size: 10px; font-weight: 500;
+    color: var(--sage-light);
+    letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  .score-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px; font-weight: 700;
+    color: var(--sage);
+  }
+
+  .tab-bar {
+    display: flex; gap: 6px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 12px; padding: 4px;
+  }
+  .tab-btn {
+    flex: 1; padding: 8px 0;
+    background: transparent;
+    color: rgba(255,255,255,0.5);
+    border: none; border-radius: 8px;
+    font-size: 12px; font-weight: 600;
+    font-family: 'Jost', sans-serif;
+    cursor: pointer; letter-spacing: 0.03em;
+    transition: all 0.25s;
+  }
+  .tab-btn.active {
+    background: rgba(255,255,255,0.15);
+    color: var(--white);
+  }
+
+  .map-container {
+    padding: 16px 16px 8px;
+  }
+  .map-card {
+    background: var(--white);
+    border-radius: 20px; padding: 16px;
+    box-shadow: 0 2px 16px rgba(18,38,71,0.06);
+    border: 1px solid rgba(168, 201, 168, 0.18);
+  }
+  .map-card svg { width: 100%; height: auto; display: block; }
+
+  /* Risk zone dots */
+  .risk-dot {
+    cursor: pointer;
+    transition: r 0.2s;
+  }
+  .risk-dot:hover { filter: brightness(1.1); }
+
+  /* Info panels */
+  .info-panel {
+    padding: 0 16px 16px;
+  }
+  .info-card {
+    background: var(--white);
+    border-radius: 16px; padding: 16px;
+    margin-bottom: 12px;
+    border: 1px solid;
+    animation: fadeUp 0.3s ease forwards;
+  }
+
+  .risk-badge {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 8px;
+  }
+  .risk-dot-indicator {
+    width: 10px; height: 10px; border-radius: 5px;
+  }
+  .risk-tier-label {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  .risk-score-num {
+    margin-left: auto;
+    font-size: 18px; font-weight: 700;
+    font-family: 'Playfair Display', serif;
+  }
+  .risk-desc {
+    font-size: 13px; line-height: 1.5;
+    color: var(--navy-mid);
+  }
+
+  /* Furniture detail */
+  .furn-type-badge {
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 3px 10px; border-radius: 20px;
+    display: inline-block; margin-bottom: 8px;
+  }
+  .furn-name {
+    font-size: 16px; font-weight: 600;
+    color: var(--navy-deep); margin-bottom: 6px;
+  }
+  .furn-note {
+    font-size: 13px; line-height: 1.5;
+    color: var(--navy-mid); opacity: 0.8;
+  }
+
+  /* Pathway legend */
+  .pathway-legend h3 {
+    font-size: 13px; font-weight: 600;
+    color: var(--navy-deep);
+    margin-bottom: 12px; letter-spacing: 0.05em;
+  }
+  .pathway-item {
+    display: flex; align-items: center;
+    gap: 10px; margin-bottom: 8px;
+  }
+  .pathway-line {
+    width: 20px; height: 3px;
+    border-radius: 2px;
+  }
+  .pathway-item span {
+    font-size: 12px; font-weight: 500;
+    color: var(--navy-deep);
+  }
+  .priority-badge {
+    font-size: 9px; font-weight: 600;
+    color: var(--risk-high);
+    background: rgba(192, 57, 43, 0.07);
+    padding: 2px 8px; border-radius: 10px;
+    letter-spacing: 0.08em; text-transform: uppercase;
+  }
+  .pathway-desc {
+    font-size: 12px; line-height: 1.5;
+    color: var(--navy-mid); opacity: 0.7;
+    margin-top: 12px;
+  }
+
+  /* Gradient legend */
+  .gradient-legend {
+    background: var(--white);
+    border-radius: 16px; padding: 16px;
+    border: 1px solid rgba(168, 201, 168, 0.12);
+  }
+  .gradient-legend h3 {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--navy-mid); opacity: 0.6;
+    margin-bottom: 12px;
+  }
+  .gradient-bar {
+    height: 10px; border-radius: 5px;
+    background: linear-gradient(90deg,
+      var(--risk-safe) 0%,
+      var(--sage) 25%,
+      var(--risk-moderate) 50%,
+      var(--risk-med) 75%,
+      var(--risk-high) 100%);
+    margin-bottom: 8px;
+  }
+  .gradient-labels {
+    display: flex; justify-content: space-between;
+  }
+  .gradient-labels span {
+    font-size: 10px; font-weight: 500;
+  }
+
+  .tagline {
+    text-align: center; padding: 8px 16px 32px;
+  }
+  .tagline p {
+    font-size: 11px; font-style: italic;
+    color: var(--navy-mid); opacity: 0.35;
+    font-family: 'Playfair Display', serif;
+  }
+
+  /* Furniture item on map */
+  .furn-rect {
+    cursor: pointer;
+    transition: stroke-width 0.2s;
+  }
+  .furn-rect:hover { stroke-width: 2; }
+
+  /* SVG animations */
+  .risk-glow {
+    animation: pulseGlow 2s infinite;
+    border-radius: 50%;
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════ ONBOARDING ═══════════ -->
+<div id="onboarding-overlay">
+  <div class="onboard-card" id="onboard-card">
+    <div class="logo-mark">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+        <path d="M3 9.5L12 3L21 9.5V20C21 20.5523 20.5523 21 20 21H4C3.44772 21 3 20.5523 3 20V9.5Z" stroke="#7EAF7E" stroke-width="2"/>
+        <path d="M9 21V14H15V21" stroke="#7EAF7E" stroke-width="2"/>
+      </svg>
+    </div>
+
+    <div id="step-content">
+      <!-- Filled dynamically -->
+    </div>
+
+    <button class="btn-primary" id="onboard-btn" onclick="advanceOnboarding()">
+      Confirm Floor Plan
+    </button>
+  </div>
+</div>
+
+<!-- ═══════════ DASHBOARD ═══════════ -->
+<div id="dashboard">
+  <!-- Header -->
+  <div class="dash-header">
+    <div class="header-top">
+      <div>
+        <p class="header-label">SafeSpace™</p>
+        <h1 class="header-title">Mom's Home</h1>
+      </div>
+      <div class="score-box">
+        <span class="score-label">Safety Score</span>
+        <span class="score-value" id="safety-score">72</span>
+      </div>
+    </div>
+    <div class="tab-bar">
+      <button class="tab-btn active" data-view="heatmap" onclick="switchView('heatmap', this)">Risk Map</button>
+      <button class="tab-btn" data-view="furniture" onclick="switchView('furniture', this)">Furniture</button>
+      <button class="tab-btn" data-view="pathways" onclick="switchView('pathways', this)">Pathways</button>
+    </div>
+  </div>
+
+  <!-- Map -->
+  <div class="map-container">
+    <div class="map-card">
+      <svg viewBox="-10 -10 530 430" id="floor-svg">
+        <defs>
+          <!-- Radial gradients generated by JS -->
+        </defs>
+
+        <!-- Rooms -->
+        <g id="rooms-layer"></g>
+
+        <!-- Risk heat map -->
+        <g id="heatmap-layer"></g>
+
+        <!-- Risk dots -->
+        <g id="dots-layer"></g>
+
+        <!-- Pathways -->
+        <g id="pathways-layer" style="display:none"></g>
+
+        <!-- Furniture -->
+        <g id="furniture-layer" style="display:none"></g>
+
+        <!-- Doors -->
+        <g id="doors-layer"></g>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Info Panel -->
+  <div class="info-panel" id="info-panel">
+    <!-- Dynamic content -->
+  </div>
+
+  <!-- Gradient Legend -->
+  <div style="padding: 0 16px 16px;">
+    <div class="gradient-legend">
+      <h3>Risk Gradient</h3>
+      <div class="gradient-bar"></div>
+      <div class="gradient-labels">
+        <span style="color: var(--sage);">Low</span>
+        <span style="color: var(--risk-moderate);">Moderate</span>
+        <span style="color: var(--risk-med);">Watch</span>
+        <span style="color: var(--risk-high);">Elevated</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="tagline">
+    <p>Where home feels safe again.</p>
+  </div>
+</div>
+
+<script>
+// ═══════════ DATA ═══════════
+const ROOMS = [
+  { id: "living", label: "Living Room", x: 20, y: 20, w: 280, h: 200 },
+  { id: "kitchen", label: "Kitchen", x: 300, y: 20, w: 200, h: 200 },
+  { id: "hallway", label: "Hallway", x: 200, y: 220, w: 100, h: 120 },
+  { id: "bedroom", label: "Master Bedroom", x: 20, y: 220, w: 180, h: 180 },
+  { id: "bathroom", label: "Bathroom", x: 300, y: 220, w: 120, h: 120 },
+  { id: "bedroom2", label: "Guest Room", x: 300, y: 340, w: 200, h: 60 },
+  { id: "entry", label: "Entry", x: 420, y: 220, w: 80, h: 120 },
+];
+
+const DOORS = [
+  { x: 290, y: 100, w: 10, h: 40 },
+  { x: 230, y: 210, w: 40, h: 10 },
+  { x: 190, y: 300, w: 10, h: 30 },
+  { x: 290, y: 270, w: 10, h: 30 },
+  { x: 450, y: 210, w: 30, h: 10 },
+  { x: 340, y: 330, w: 40, h: 10 },
+];
+
+const RISK_ZONES = [
+  { x: 275, y: 85, r: 35, risk: 0.9, reason: "Living/Kitchen transition — threshold change between flooring types. Balance adjustment required." },
+  { x: 240, y: 200, r: 30, risk: 0.85, reason: "Living/Hallway doorway — high-traffic pivot point. Most daily transitions pass through here." },
+  { x: 185, y: 295, r: 30, risk: 0.95, reason: "Bedroom/Hallway doorway — the start of the Midnight Route. Low light + sleep inertia = critical risk." },
+  { x: 285, y: 270, r: 30, risk: 0.92, reason: "Hallway/Bathroom entry — wet floor transition zone. Highest-severity fall location in most homes." },
+  { x: 455, y: 200, r: 28, risk: 0.7, reason: "Front entry doorway — elevation change, shoe removal, packages creating floor obstacles." },
+  { x: 350, y: 325, r: 25, risk: 0.6, reason: "Bathroom/Guest room transition — secondary traffic path with intermittent use." },
+  { x: 350, y: 270, r: 40, risk: 0.8, reason: "Bathroom interior — wet surfaces, tub entry/exit, toilet sit-to-stand movements." },
+  { x: 380, y: 80, r: 35, risk: 0.65, reason: "Kitchen sink area — standing on wet tile, overhead reaching for cabinets, bending." },
+  { x: 420, y: 160, r: 30, risk: 0.55, reason: "Kitchen stove area — reaching across burners, bending to lower oven, hot surface proximity." },
+  { x: 250, y: 280, r: 25, risk: 0.7, reason: "Narrow hallway center — limited wall-to-wall distance reduces stabilization options." },
+  { x: 100, y: 350, r: 30, risk: 0.5, reason: "Bedside area — nighttime disorientation zone. First steps after waking are most unstable." },
+];
+
+const FURNITURE = [
+  { id: "f1", x: 60, y: 310, w: 60, h: 30, label: "Nightstand", type: "support", note: "Position for easy reach — lamp + phone within arm's length for midnight visibility." },
+  { id: "f2", x: 30, y: 260, w: 30, h: 80, label: "Dresser", type: "neutral", note: "Against wall — keeps bedroom pathway clear from bed to door." },
+  { id: "f3", x: 80, y: 240, w: 80, h: 50, label: "Bed", type: "anchor", note: "Centered with clear path to door on both sides. 36\" minimum clearance." },
+  { id: "f4", x: 40, y: 50, w: 100, h: 50, label: "Sofa", type: "support", note: "Provides a stabilization point along the main living room pathway." },
+  { id: "f5", x: 200, y: 140, w: 60, h: 40, label: "Side Table", type: "support", note: "Near hallway entrance — natural grab point before the transition zone." },
+  { id: "f6", x: 50, y: 140, w: 50, h: 50, label: "Armchair", type: "support", note: "Sturdy armrests provide assist for sit-to-stand transitions." },
+  { id: "f7", x: 320, y: 240, w: 15, h: 60, label: "Grab Bar", type: "safety", note: "Wall-mounted adjacent to shower — critical for tub entry/exit support." },
+  { id: "f8", x: 370, y: 310, w: 40, h: 20, label: "Bath Mat", type: "safety", note: "Non-slip mat at tub exit — first contact point on wet feet." },
+];
+
+const PATHWAYS = [
+  {
+    id: "midnight", label: "Midnight Route", critical: true,
+    points: [{x:130,y:330},{x:195,y:310},{x:250,y:280},{x:290,y:280},{x:350,y:280}],
+  },
+  {
+    id: "kitchen", label: "Kitchen Path", critical: false,
+    points: [{x:150,y:120},{x:250,y:110},{x:295,y:110},{x:380,y:100}],
+  },
+  {
+    id: "entry", label: "Front Entry Path", critical: false,
+    points: [{x:460,y:330},{x:460,y:260},{x:460,y:210},{x:400,y:120}],
+  },
+];
+
+// ═══════════ HELPERS ═══════════
+function getRiskColor(risk) {
+  if (risk >= 0.8) return '#C0392B';
+  if (risk >= 0.6) return '#E67E22';
+  if (risk >= 0.4) return '#D4A84C';
+  return '#A8C9A8';
+}
+function getRiskLabel(risk) {
+  if (risk >= 0.8) return 'Elevated';
+  if (risk >= 0.6) return 'Watch';
+  if (risk >= 0.4) return 'Moderate';
+  return 'Low';
+}
+function getFurnColor(type) {
+  if (type === 'safety') return { fill: 'rgba(126,175,126,0.3)', stroke: '#7EAF7E' };
+  if (type === 'support') return { fill: 'rgba(42,82,152,0.12)', stroke: '#2A5298' };
+  if (type === 'anchor') return { fill: 'rgba(18,38,71,0.08)', stroke: 'rgba(18,38,71,0.4)' };
+  return { fill: 'rgba(42,82,152,0.06)', stroke: 'rgba(42,82,152,0.3)' };
+}
+function getFurnTypeLabel(type) {
+  if (type === 'safety') return 'Safety Equipment';
+  if (type === 'support') return 'Support Point';
+  return 'Placement';
+}
+
+function createSVGElement(tag, attrs) {
+  const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
+  for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v);
+  return el;
+}
+
+// ═══════════ ONBOARDING ═══════════
+let onboardStep = 0;
+
+function renderOnboardStep() {
+  const content = document.getElementById('step-content');
+  const btn = document.getElementById('onboard-btn');
+
+  if (onboardStep === 0) {
+    content.innerHTML = `
+      <p class="step-label">New Feature</p>
+      <h1 class="onboard-title">Welcome to SafeSpace™</h1>
+      <p class="onboard-subtitle">Spatial Risk Intelligence for the Home</p>
+      <div class="address-card">
+        <div class="address-header">
+          <span>Address</span>
+          <span class="public-badge">PUBLIC RECORD</span>
+        </div>
+        <p class="address-text">742 Peachtree Lane<br><span class="faded">Atlanta, GA 30309</span></p>
+        <div class="property-stats">
+          <div class="stat-item"><label>Sq. Ft.</label><span>1,840</span></div>
+          <div class="stat-item"><label>Rooms</label><span>7</span></div>
+          <div class="stat-item"><label>Type</label><span>Ranch</span></div>
+          <div class="stat-item"><label>Built</label><span>1978</span></div>
+        </div>
+      </div>
+      <p class="onboard-body">We've pulled your loved one's floor plan from public records. Let's make sure it's accurate.</p>
+    `;
+    btn.textContent = 'Confirm Floor Plan';
+  } else if (onboardStep === 1) {
+    content.innerHTML = `
+      <p class="step-label">Step 2 of 2</p>
+      <h1 class="onboard-title">Floor Plan Confirmed</h1>
+      <p class="onboard-subtitle">Analyzing Ingress & Egress Points</p>
+      <div style="margin-bottom: 24px;">
+        <div class="checklist-item"><div class="check-circle"><svg width="12" height="12" viewBox="0 0 16 16" fill="#7EAF7E"><path d="M6 10.8L3.2 8l-1.1 1.1L6 13 14 5l-1.1-1.1L6 10.8z"/></svg></div><span>7 doorways mapped</span></div>
+        <div class="checklist-item"><div class="check-circle"><svg width="12" height="12" viewBox="0 0 16 16" fill="#7EAF7E"><path d="M6 10.8L3.2 8l-1.1 1.1L6 13 14 5l-1.1-1.1L6 10.8z"/></svg></div><span>3 critical pathways identified</span></div>
+        <div class="checklist-item"><div class="check-circle"><svg width="12" height="12" viewBox="0 0 16 16" fill="#7EAF7E"><path d="M6 10.8L3.2 8l-1.1 1.1L6 13 14 5l-1.1-1.1L6 10.8z"/></svg></div><span>12 risk zones scored</span></div>
+      </div>
+      <p class="onboard-body">Haven is mapping every doorway, threshold, and transition zone. We're scoring each pathway based on fall risk factors.</p>
+    `;
+    btn.textContent = 'View Risk Map';
+  }
+}
+
+function advanceOnboarding() {
+  if (onboardStep < 1) {
+    onboardStep++;
+    const card = document.getElementById('onboard-card');
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(24px)';
+    setTimeout(() => {
+      renderOnboardStep();
+      card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      card.style.opacity = '1';
+      card.style.transform = 'translateY(0)';
+    }, 300);
+  } else {
+    document.getElementById('onboarding-overlay').classList.add('hidden');
+    const dash = document.getElementById('dashboard');
+    setTimeout(() => dash.classList.add('visible'), 100);
+  }
+}
+
+// ═══════════ BUILD MAP ═══════════
+let currentView = 'heatmap';
+let selectedZone = null;
+let selectedFurniture = null;
+
+function buildMap() {
+  const svg = document.getElementById('floor-svg');
+  const defs = svg.querySelector('defs');
+  const roomsLayer = document.getElementById('rooms-layer');
+  const doorsLayer = document.getElementById('doors-layer');
+  const heatLayer = document.getElementById('heatmap-layer');
+  const dotsLayer = document.getElementById('dots-layer');
+  const pathLayer = document.getElementById('pathways-layer');
+  const furnLayer = document.getElementById('furniture-layer');
+
+  // Gradients
+  RISK_ZONES.forEach((z, i) => {
+    const grad = createSVGElement('radialGradient', { id: `rg${i}`, cx: '50%', cy: '50%', r: '50%' });
+    const s1 = createSVGElement('stop', { offset: '0%', 'stop-color': getRiskColor(z.risk), 'stop-opacity': '0.55' });
+    const s2 = createSVGElement('stop', { offset: '60%', 'stop-color': getRiskColor(z.risk), 'stop-opacity': '0.2' });
+    const s3 = createSVGElement('stop', { offset: '100%', 'stop-color': getRiskColor(z.risk), 'stop-opacity': '0' });
+    grad.appendChild(s1); grad.appendChild(s2); grad.appendChild(s3);
+    defs.appendChild(grad);
+  });
+
+  // Rooms
+  ROOMS.forEach(r => {
+    const rect = createSVGElement('rect', {
+      x: r.x, y: r.y, width: r.w, height: r.h,
+      fill: '#F9F8F4', stroke: '#122647',
+      'stroke-width': '2', 'stroke-opacity': '0.2', rx: '3'
+    });
+    roomsLayer.appendChild(rect);
+
+    const txt = createSVGElement('text', {
+      x: r.x + r.w/2, y: r.y + 16,
+      'text-anchor': 'middle', 'font-size': '9',
+      'font-family': 'Jost, sans-serif', 'font-weight': '500',
+      fill: '#2A5298', opacity: '0.45'
+    });
+    txt.textContent = r.label;
+    roomsLayer.appendChild(txt);
+  });
+
+  // Doors
+  DOORS.forEach(d => {
+    const rect = createSVGElement('rect', {
+      x: d.x, y: d.y, width: d.w, height: d.h,
+      fill: '#2A5298', 'fill-opacity': '0.25', rx: '2'
+    });
+    doorsLayer.appendChild(rect);
+  });
+
+  // Heat map circles
+  RISK_ZONES.forEach((z, i) => {
+    const c = createSVGElement('circle', {
+      cx: z.x, cy: z.y, r: z.r * 1.8,
+      fill: `url(#rg${i})`, cursor: 'pointer',
+      'data-index': i
+    });
+    c.addEventListener('click', () => selectZone(i));
+    heatLayer.appendChild(c);
+  });
+
+  // Dots
+  RISK_ZONES.forEach((z, i) => {
+    const c = createSVGElement('circle', {
+      cx: z.x, cy: z.y, r: '5',
+      fill: getRiskColor(z.risk),
+      stroke: '#FFFFFF', 'stroke-width': '2',
+      cursor: 'pointer', class: 'risk-dot',
+      'data-index': i
+    });
+    c.addEventListener('click', () => selectZone(i));
+    dotsLayer.appendChild(c);
+  });
+
+  // Pathways
+  PATHWAYS.forEach(p => {
+    const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+
+    const line = createSVGElement('polyline', {
+      points: p.points.map(pt => `${pt.x},${pt.y}`).join(' '),
+      fill: 'none',
+      stroke: p.critical ? '#C0392B' : '#2A5298',
+      'stroke-width': p.critical ? '4' : '3',
+      'stroke-opacity': p.critical ? '0.7' : '0.35',
+      'stroke-dasharray': p.critical ? 'none' : '8 4',
+      'stroke-linecap': 'round',
+      'stroke-linejoin': 'round'
+    });
+    g.appendChild(line);
+
+    // Arrow
+    const pts = p.points;
+    const last = pts[pts.length - 1];
+    const prev = pts[pts.length - 2];
+    const angle = Math.atan2(last.y - prev.y, last.x - prev.x);
+    const arrow = createSVGElement('polygon', {
+      points: `${last.x},${last.y} ${last.x - 8*Math.cos(angle-0.4)},${last.y - 8*Math.sin(angle-0.4)} ${last.x - 8*Math.cos(angle+0.4)},${last.y - 8*Math.sin(angle+0.4)}`,
+      fill: p.critical ? '#C0392B' : '#2A5298',
+      opacity: p.critical ? '0.7' : '0.35'
+    });
+    g.appendChild(arrow);
+
+    // Label
+    const lbl = createSVGElement('text', {
+      x: pts[0].x, y: pts[0].y - 10,
+      'font-size': '8', 'font-family': 'Jost, sans-serif',
+      'font-weight': '600',
+      fill: p.critical ? '#C0392B' : '#2A5298',
+      opacity: '0.8'
+    });
+    lbl.textContent = p.label + (p.critical ? ' ⚠' : '');
+    g.appendChild(lbl);
+
+    pathLayer.appendChild(g);
+  });
+
+  // Furniture
+  FURNITURE.forEach(f => {
+    const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    g.style.cursor = 'pointer';
+    g.addEventListener('click', () => selectFurnitureItem(f.id));
+
+    const colors = getFurnColor(f.type);
+    const rect = createSVGElement('rect', {
+      x: f.x, y: f.y, width: f.w, height: f.h,
+      fill: colors.fill, stroke: colors.stroke,
+      'stroke-width': '1', rx: '3', class: 'furn-rect'
+    });
+    g.appendChild(rect);
+
+    const txt = createSVGElement('text', {
+      x: f.x + f.w/2, y: f.y + f.h/2 + 3,
+      'text-anchor': 'middle', 'font-size': '7',
+      'font-family': 'Jost, sans-serif', 'font-weight': '500',
+      fill: '#122647', opacity: '0.7'
+    });
+    txt.textContent = f.label;
+    g.appendChild(txt);
+
+    if (f.type === 'safety') {
+      const badge = createSVGElement('circle', {
+        cx: f.x + f.w - 4, cy: f.y + 4, r: '4', fill: '#7EAF7E'
+      });
+      g.appendChild(badge);
+    }
+
+    furnLayer.appendChild(g);
+  });
+}
+
+// ═══════════ INTERACTIONS ═══════════
+function switchView(view, btn) {
+  currentView = view;
+  selectedZone = null;
+  selectedFurniture = null;
+
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  const heat = document.getElementById('heatmap-layer');
+  const dots = document.getElementById('dots-layer');
+  const paths = document.getElementById('pathways-layer');
+  const furn = document.getElementById('furniture-layer');
+
+  heat.style.display = (view === 'heatmap' || view === 'pathways') ? '' : 'none';
+  dots.style.display = view === 'heatmap' ? '' : 'none';
+  paths.style.display = view === 'pathways' ? '' : 'none';
+  furn.style.display = view === 'furniture' ? '' : 'none';
+
+  // Update heat opacity for pathways view
+  heat.querySelectorAll('circle').forEach((c, i) => {
+    const z = RISK_ZONES[i];
+    if (view === 'pathways') {
+      c.style.opacity = '0.4';
+    } else {
+      c.style.opacity = '1';
+    }
+  });
+
+  renderInfoPanel();
+}
+
+function selectZone(idx) {
+  selectedZone = selectedZone === idx ? null : idx;
+  selectedFurniture = null;
+
+  // Update dot sizes
+  document.querySelectorAll('#dots-layer circle').forEach((c, i) => {
+    c.setAttribute('r', i === selectedZone ? '7' : '5');
+  });
+
+  renderInfoPanel();
+}
+
+function selectFurnitureItem(id) {
+  selectedFurniture = selectedFurniture === id ? null : id;
+  selectedZone = null;
+
+  // Update stroke widths
+  document.querySelectorAll('#furniture-layer .furn-rect').forEach(r => {
+    const parent = r.parentElement;
+    const fId = FURNITURE.find(f =>
+      r.getAttribute('x') == f.x && r.getAttribute('y') == f.y
+    );
+    r.setAttribute('stroke-width', fId && fId.id === selectedFurniture ? '2.5' : '1');
+  });
+
+  renderInfoPanel();
+}
+
+function renderInfoPanel() {
+  const panel = document.getElementById('info-panel');
+  let html = '';
+
+  if (currentView === 'heatmap' && selectedZone !== null) {
+    const z = RISK_ZONES[selectedZone];
+    const color = getRiskColor(z.risk);
+    html = `
+      <div class="info-card" style="border-color: ${color}20; box-shadow: 0 4px 16px ${color}12;">
+        <div class="risk-badge">
+          <div class="risk-dot-indicator" style="background: ${color};"></div>
+          <span class="risk-tier-label" style="color: ${color};">${getRiskLabel(z.risk)} Risk</span>
+          <span class="risk-score-num" style="color: ${color};">${Math.round(z.risk * 100)}</span>
+        </div>
+        <p class="risk-desc">${z.reason}</p>
+      </div>
+    `;
+  }
+
+  if (currentView === 'furniture' && selectedFurniture) {
+    const f = FURNITURE.find(f => f.id === selectedFurniture);
+    if (f) {
+      const isSafety = f.type === 'safety';
+      const badgeColor = isSafety ? '#7EAF7E' : '#2A5298';
+      const badgeBg = isSafety ? 'rgba(126,175,126,0.1)' : 'rgba(42,82,152,0.08)';
+      html = `
+        <div class="info-card" style="border-color: rgba(168,201,168,0.25);">
+          <span class="furn-type-badge" style="color: ${badgeColor}; background: ${badgeBg};">${getFurnTypeLabel(f.type)}</span>
+          <h3 class="furn-name">${f.label}</h3>
+          <p class="furn-note">${f.note}</p>
+        </div>
+      `;
+    }
+  }
+
+  if (currentView === 'pathways') {
+    html = `
+      <div class="info-card pathway-legend" style="border-color: rgba(168,201,168,0.18);">
+        <h3>Critical Pathways</h3>
+        ${PATHWAYS.map(p => `
+          <div class="pathway-item">
+            <div class="pathway-line" style="background: ${p.critical ? '#C0392B' : '#2A5298'}; opacity: ${p.critical ? '0.7' : '0.35'};"></div>
+            <span>${p.label}</span>
+            ${p.critical ? '<span class="priority-badge">Priority</span>' : ''}
+          </div>
+        `).join('')}
+        <p class="pathway-desc">The Midnight Route (Bedroom → Bathroom) is the #1 fall risk pathway. Haven monitors this path 24/7 with Steadfast sensors.</p>
+      </div>
+    `;
+  }
+
+  panel.innerHTML = html;
+}
+
+// ═══════════ INIT ═══════════
+renderOnboardStep();
+buildMap();
+</script>
+</body>
+</html>
