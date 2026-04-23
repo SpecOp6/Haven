@@ -42,16 +42,20 @@
   <!-- =============================================
        UNIVERSAL NAV
   ============================================= -->
-  <nav id="siteNav" aria-label="Main navigation">
-    <div class="nav-inner">
-      <a href="index.html" class="logo">Haven <span>Home Wellness</span></a>
-
-      <div class="nav-links desktop-only" role="list">
-        <a href="technology.html" role="listitem">Technology</a>
-        <a href="about.html" role="listitem">About</a>
-        <a href="white-paper.html" role="listitem">White Paper</a>
-        <a href="privacy.html" role="listitem">Privacy</a>
-        <a href="investors.html" class="active" role="listitem">Investors</a>
+ <nav class="nav-dark">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">Haven <span>Home Wellness</span></a>
+    
+    <div class="nav-links desktop-only">
+      <a href="index.html">Home</a> <a href="technology.html">Technology</a>
+      <a href="about.html">About</a>
+      <a href="white-paper.html">White Paper</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="investors.html">Investors</a>
+      <button onclick="openModal('contact')" class="btn btn-primary nav-cta">Contact Us</button>
+    </div>
+    </div>
+</nav>
         <a href="https://havenhomewellness.ai/HavenHomeWellness_PitchDeck.html" target="_blank" class="btn-nav-deck" rel="noopener noreferrer">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
           Pitch Deck
@@ -59,12 +63,7 @@
         <button onclick="openInvestorModal()" class="btn btn-primary nav-cta" style="cursor:pointer;border:none;font-family:var(--font-body);font-size:14px;">Contact Us</button>
       </div>
 
-      <button class="nav-toggle" id="burgerBtn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileNav">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </nav>
-
+ 
   <!-- Mobile drawer -->
   <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation" aria-hidden="true">
     <a href="technology.html">Technology</a>
