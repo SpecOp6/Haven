@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   Haven Home Wellness — Investor Overview
+  </title>
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,600&amp;family=Jost:wght@200;300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js">
+  </script>
+  <style>
+   :root {
+      /* User Strict Color Palette */
+      --navy:        #1B3A6B;
+      --navy-deep:   #122647;
+      --navy-mid:    #2A5298;
+      --sage:        #7EAF7E;
+      --sage-light:  #A8C9A8;
+      --sage-pale:   #EDF5ED;
+      --cream:       #F9F8F4;
+      --warm-white:  #FFFFFF;
+      --ink:         #1A1A18;
+      --ink-mid:     #3D3D38;
+      --ink-soft:    #6B6B64;
+
+      /* Font */
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body: 'Jost', system-ui, sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; background: var(--cream); }
+    body {
+      font-family: var(--font-body);
+      color: var(--ink);
+      background-color: var(--cream);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.6;
+    }
+
+    /* Ambient UI Details */
+    .glow-orb { position: fixed; border-radius: 50%; filter: blur(120px); pointer-events: none; opacity: 0.3; z-index: -1; }
+    .glow-orb.top-right { background: var(--sage-light); width: 50vw; height: 50vw; top: -20vh; right: -20vw; }
+    .glow-orb.bottom-left { background: var(--navy-mid); width: 60vw; height: 60vw; bottom: -20vh; left: -20vw; opacity: 0.15; }
+
+    /* Layout & Utilities */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 10; }
+    .glass { background: rgba(255, 255, 255, 0.75); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(27, 58, 107, 0.08); border-radius: 24px; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+    .glass:hover { background: var(--warm-white); border-color: rgba(27, 58, 107, 0.15); box-shadow: 0 15px 40px rgba(18, 38, 71, 0.05); transform: translateY(-4px); }
+    
+    .text-gradient { background: linear-gradient(135deg, var(--navy-deep) 0%, var(--navy-mid) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .text-gradient-sage { background: linear-gradient(135deg, var(--sage) 0%, var(--sage-light) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .text-muted { color: var(--ink-soft); }
+
+    /* Navigation */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1.5rem 0; width: 100%; transition: all 0.4s ease; border-bottom: 1px solid transparent; }
+    nav.scrolled { padding: 1rem 0; background: rgba(249, 248, 244, 0.85); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(27, 58, 107, 0.08); }
+    .nav-inner { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+    .logo { font-family: var(--font-display); font-size: 1.5rem; color: var(--navy-deep); text-decoration: none; letter-spacing: -0.02em; transition: color 0.3s; }
+    .logo span { color: var(--sage); font-family: var(--font-body); font-weight: 300; font-size: 1.2rem; display: inline-block; margin-left: 0.4rem; }
+    
+    .nav-links { display: flex; gap: 2.5rem; align-items: center; }
+    .nav-links a { color: var(--ink-soft); text-decoration: none; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; transition: color 0.3s; }
+    .nav-links a:hover { color: var(--navy-deep); }
+    .btn-nav-cta { background: var(--navy-deep); color: var(--warm-white) !important; padding: 0.6rem 1.5rem; border-radius: 100px; font-size: 0.85rem; font-weight: 600; text-decoration: none; transition: all 0.3s; border: 1px solid var(--navy-deep); }
+    .btn-nav-cta:hover { background: var(--navy); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(18, 38, 71, 0.15); }
+
+    /* Hero Section */
+    .hero { min-height: 100vh; display: flex; align-items: center; padding-top: 6rem; position: relative; }
+    .hero-content { max-width: 900px; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 0.75rem; background: var(--sage-pale); border: 1px solid rgba(126, 175, 126, 0.3); border-radius: 100px; padding: 0.5rem 1.2rem; margin-bottom: 2.5rem; }
+    .hero-badge .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--sage); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.8); } }
+    .hero-badge span { font-size: 0.8rem; color: var(--navy-deep); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+    
+    .hero h1 { font-family: var(--font-display); font-size: clamp(3.5rem, 8vw, 6.5rem); color: var(--navy-deep); line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 1.5rem; }
+    .hero h1 em { font-style: italic; color: var(--sage); }
+    .hero-sub { font-size: clamp(1.1rem, 2vw, 1.35rem); color: var(--ink-soft); line-height: 1.6; max-width: 700px; margin-bottom: 3rem; font-weight: 300; }
+    
+    .hero-actions { display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap; }
+    .btn-primary { background: var(--navy-deep); color: var(--warm-white); padding: 1rem 2.5rem; border-radius: 100px; font-weight: 600; font-size: 0.95rem; text-decoration: none; transition: all 0.3s; border: 1px solid var(--navy-deep); display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer; }
+    .btn-primary:hover { background: var(--navy); transform: translateY(-2px); box-shadow: 0 12px 25px rgba(18, 38, 71, 0.15); }
+    .btn-outline { background: transparent; color: var(--navy-deep); padding: 1rem 2.5rem; border-radius: 100px; font-weight: 500; font-size: 0.95rem; text-decoration: none; border: 1px solid rgba(18, 38, 71, 0.2); transition: all 0.3s; }
+    .btn-outline:hover { border-color: var(--navy-deep); background: rgba(18, 38, 71, 0.03); }
+
+    /* Bento Grid (Stats) */
+    .bento-hero { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-top: 5rem; }
+    .bento-item { padding: 2rem; display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden; background: var(--warm-white); border: 1px solid rgba(27, 58, 107, 0.06); border-radius: 20px; box-shadow: 0 10px 30px rgba(18, 38, 71, 0.03); transition: transform 0.4s ease; }
+    .bento-item:hover { transform: translateY(-4px); border-color: rgba(27, 58, 107, 0.15); }
+    .bento-num { font-family: var(--font-display); font-size: 3rem; color: var(--navy-deep); margin-bottom: 0.5rem; line-height: 1; }
+    .bento-num.accent { color: var(--sage); }
+    .bento-desc { font-size: 0.85rem; color: var(--ink-soft); font-weight: 400; line-height: 1.5; }
+
+    /* Shared Section Styles */
+    section { padding: 8rem 0; position: relative; }
+    .section-header { margin-bottom: 4rem; max-width: 800px; }
+    .section-label { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--sage); margin-bottom: 1.5rem; display: inline-block; padding: 0.4rem 1rem; border: 1px solid rgba(126, 175, 126, 0.3); border-radius: 100px; background: var(--sage-pale); }
+    .section-title { font-family: var(--font-display); font-size: clamp(2.5rem, 5vw, 4rem); color: var(--navy-deep); line-height: 1.1; margin-bottom: 1.5rem; letter-spacing: -0.02em; }
+    .section-desc { font-size: 1.15rem; color: var(--ink-mid); line-height: 1.7; font-weight: 300; }
+
+    /* Alternate Background Sections */
+    .bg-navy { background: var(--navy-deep); color: var(--warm-white); }
+    .bg-navy .section-label { border-color: rgba(168, 201, 168, 0.3); background: rgba(168, 201, 168, 0.1); color: var(--sage-light); }
+    .bg-navy .section-title { color: var(--warm-white); }
+    .bg-navy .section-desc { color: rgba(255, 255, 255, 0.7); }
+    .bg-navy .text-gradient { background: linear-gradient(135deg, var(--warm-white) 0%, var(--sage-pale) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    
+    /* Problem Section */
+    .problem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+    .stat-stack { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .stat-card { padding: 2rem; }
+    .stat-card .stat-num { font-family: var(--font-display); font-size: 2.5rem; color: var(--navy-deep); margin-bottom: 0.75rem; line-height: 1; }
+    .stat-card .stat-num.red { color: #A32D2D; /* Added a subtle red for context or stick to navy */ color: var(--navy); }
+    .stat-card .stat-text { font-size: 0.9rem; color: var(--ink-soft); line-height: 1.6; }
+    .problem-narrative h3 { font-family: var(--font-display); font-size: 2rem; margin-bottom: 1.5rem; color: var(--navy-deep); }
+    .problem-narrative p { font-size: 1.1rem; color: var(--ink-mid); line-height: 1.8; margin-bottom: 1.5rem; font-weight: 300; }
+    .problem-narrative .highlight { border-left: 2px solid var(--sage); padding-left: 1.5rem; font-style: italic; color: var(--ink); }
+
+    /* Solution Section */
+    .how-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2rem; align-items: stretch; }
+    .how-col { padding: 2.5rem; background: var(--warm-white); border: 1px solid rgba(27, 58, 107, 0.08); border-radius: 24px; box-shadow: 0 10px 40px rgba(18, 38, 71, 0.04); transition: transform 0.4s ease; }
+    .how-col:hover { transform: translateY(-4px); box-shadow: 0 15px 50px rgba(18, 38, 71, 0.08); }
+    .tech-badge { display: inline-block; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.4rem 1rem; border-radius: 100px; margin-bottom: 1.5rem; }
+    .tech-badge.wifi { background: rgba(42, 82, 152, 0.1); color: var(--navy-mid); border: 1px solid rgba(42, 82, 152, 0.2); }
+    .tech-badge.radar { background: var(--sage-pale); color: var(--sage); border: 1px solid rgba(126, 175, 126, 0.3); }
+    .tech-badge.vision { background: rgba(18, 38, 71, 0.08); color: var(--navy-deep); border: 1px solid rgba(18, 38, 71, 0.2); }
+    .how-col h3 { font-family: var(--font-display); font-size: 2rem; margin-bottom: 0.5rem; color: var(--navy-deep); }
+    .how-tagline { font-size: 1rem; color: var(--ink); font-weight: 500; margin-bottom: 1.5rem; }
+    .how-col p { font-size: 0.95rem; color: var(--ink-soft); line-height: 1.7; margin-bottom: 1.5rem; }
+    .how-col ul { list-style: none; }
+    .how-col ul li { font-size: 0.85rem; color: var(--ink-mid); padding: 0.5rem 0; padding-left: 1.5rem; position: relative; border-top: 1px solid rgba(27, 58, 107, 0.05); }
+    .how-col ul li:first-child { border-top: none; }
+    .how-col ul li::before { content: ''; position: absolute; left: 0; top: 1rem; width: 6px; height: 6px; border-radius: 50%; background: var(--sage); }
+    
+    /* Convergence Flow */
+    .convergence-flow { display: flex; justify-content: center; align-items: center; gap: 1rem; margin: 3rem 0; position: relative; }
+    .flow-line { width: 2px; height: 40px; background: linear-gradient(to bottom, var(--sage-light), var(--sage)); border-radius: 2px; }
+    .flow-arrows { display: flex; gap: 6rem; justify-content: center; }
+    .flow-arrow { display: flex; flex-direction: column; align-items: center; }
+    .flow-arrow .label { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 0.5rem; }
+    .flow-arrow svg { color: var(--sage); }
+    
+    /* Beacon Hub */
+    .beacon-hub { background: linear-gradient(135deg, var(--navy-deep) 0%, var(--navy) 100%); border-radius: 24px; padding: 3.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; box-shadow: 0 20px 60px rgba(18, 38, 71, 0.15); }
+    .beacon-hub-info h3 { font-family: var(--font-display); font-size: 2.5rem; color: var(--warm-white); margin-bottom: 0.5rem; }
+    .beacon-hub-info .how-tagline { color: var(--sage-light); margin-bottom: 1rem; }
+    .beacon-hub-info p { font-size: 1.05rem; color: rgba(255, 255, 255, 0.75); line-height: 1.7; }
+    .beacon-feeds { display: flex; flex-direction: column; gap: 1rem; }
+    .feed-item { display: flex; align-items: center; gap: 1rem; background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 14px; padding: 1rem 1.25rem; transition: background 0.3s; }
+    .feed-item:hover { background: rgba(255, 255, 255, 0.1); }
+    .feed-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .feed-dot.sf { background: var(--navy-mid); box-shadow: 0 0 8px rgba(42, 82, 152, 0.4); }
+    .feed-dot.st { background: var(--sage); box-shadow: 0 0 8px rgba(126, 175, 126, 0.4); }
+    .feed-dot.vg { background: var(--navy-deep); box-shadow: 0 0 8px rgba(18, 38, 71, 0.4); }
+    .feed-name { font-size: 0.8rem; font-weight: 600; color: var(--warm-white); letter-spacing: 0.05em; text-transform: uppercase; min-width: 90px; }
+    .feed-desc { font-size: 0.85rem; color: rgba(255, 255, 255, 0.55); }
+    .feed-arrow { color: var(--sage-light); margin-left: auto; font-size: 1.2rem; flex-shrink: 0; }
+    .how-connector { width: 60px; height: 60px; border-radius: 50%; background: var(--warm-white); border: 1px solid rgba(27, 58, 107, 0.1); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--ink-soft); position: relative; z-index: 2; margin: 0 auto; box-shadow: 0 5px 15px rgba(18, 38, 71, 0.05); }
+
+    /* Timeline Section */
+    .timeline { position: relative; margin-top: 5rem; padding-left: 3rem; }
+    .timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--sage-light), transparent); }
+    .tl-item { margin-bottom: 4rem; position: relative; }
+    .tl-dot { width: 16px; height: 16px; border-radius: 50%; background: var(--navy-deep); border: 3px solid var(--sage-light); position: absolute; left: -3.45rem; top: 0.3rem; box-shadow: 0 0 15px rgba(168, 201, 168, 0.3); }
+    .tl-content h4 { font-family: var(--font-display); font-size: 1.5rem; margin-bottom: 0.75rem; color: var(--warm-white); }
+    .tl-content p { font-size: 1.05rem; color: rgba(255, 255, 255, 0.7); line-height: 1.7; max-width: 600px; }
+    
+    .vs-bar { display: grid; grid-template-columns: 1fr 1fr; margin-top: 5rem; overflow: hidden; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; }
+    .vs-side { padding: 3rem; }
+    .vs-side.others { background: rgba(255, 255, 255, 0.02); border-right: 1px solid rgba(255, 255, 255, 0.05); }
+    .vs-side.haven { background: rgba(168, 201, 168, 0.05); }
+    .vs-side h4 { font-family: var(--font-body); font-size: 0.85rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 2rem; color: rgba(255, 255, 255, 0.5); }
+    .vs-side.haven h4 { color: var(--sage-light); }
+    .vs-side ul { list-style: none; }
+    .vs-side ul li { font-size: 1rem; color: rgba(255, 255, 255, 0.6); padding: 0.75rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .vs-side.haven ul li { color: var(--warm-white); }
+
+    /* Platforms */
+    .platform-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-top: 4rem; }
+    .p-card { padding: 2.5rem 2rem; }
+    .p-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; font-weight: 700; color: var(--navy-deep); margin-bottom: 1.5rem; background: rgba(27, 58, 107, 0.05); border: 1px solid rgba(27, 58, 107, 0.1); transition: all 0.3s; }
+    .p-card:nth-child(1) .p-icon { background: rgba(27, 58, 107, 0.05); color: var(--navy); }
+    .p-card:nth-child(2) .p-icon { background: var(--sage-pale); color: var(--sage); border-color: rgba(126, 175, 126, 0.3); }
+    .p-card:nth-child(3) .p-icon { background: rgba(42, 82, 152, 0.05); color: var(--navy-mid); }
+    .p-card:nth-child(4) .p-icon { background: rgba(18, 38, 71, 0.05); color: var(--navy-deep); }
+    
+    .p-card:hover .p-icon { transform: scale(1.05); }
+    
+    .p-card h3 { font-family: var(--font-display); font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--navy-deep); }
+    .p-tech { font-size: 0.8rem; font-weight: 600; color: var(--ink-mid); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    .p-card p { font-size: 0.9rem; color: var(--ink-soft); line-height: 1.7; }
+
+    /* Evidence & Regulatory */
+    .evidence-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .ev-card { padding: 2.5rem; }
+    .ev-num { font-family: var(--font-display); font-size: 3rem; color: var(--navy); margin-bottom: 1rem; line-height: 1; }
+    .ev-label { font-size: 1rem; color: var(--ink-mid); line-height: 1.6; margin-bottom: 1rem; }
+    .ev-source { font-size: 0.8rem; color: var(--sage); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+
+    .reg-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+    .reg-block { padding: 3rem; }
+    .reg-block h3 { font-family: var(--font-display); font-size: 2rem; margin-bottom: 1rem; color: var(--navy-deep); }
+    .reg-block p { font-size: 1.05rem; color: var(--ink-soft); line-height: 1.7; margin-bottom: 1rem; }
+    .reg-block.bg-navy h3 { color: var(--warm-white); }
+    .reg-block.bg-navy p { color: rgba(255, 255, 255, 0.7); }
+
+    /* Team */
+    .team-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; max-width: 900px; }
+    .t-card { display: flex; gap: 1.5rem; padding: 2.5rem; }
+    .t-avatar { width: 72px; height: 72px; border-radius: 16px; background: var(--sage-pale); border: 1px solid rgba(126, 175, 126, 0.3); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 1.75rem; color: var(--navy-deep); flex-shrink: 0; }
+    .t-info h4 { font-family: var(--font-display); font-size: 1.5rem; margin-bottom: 0.25rem; color: var(--navy-deep); }
+    .t-role { font-size: 0.85rem; color: var(--sage); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem; }
+    .t-info p { font-size: 0.95rem; color: var(--ink-soft); line-height: 1.6; }
+
+    /* Ask */
+    .ask { text-align: center; padding: 10rem 0; background: var(--cream); border-top: 1px solid rgba(27, 58, 107, 0.05); }
+    .ask .section-header { margin: 0 auto 4rem; }
+    .ask-stats { display: flex; justify-content: center; gap: 6rem; margin-bottom: 4rem; }
+    .ask-num .val { font-family: var(--font-display); font-size: 4rem; color: var(--navy-deep); margin-bottom: 0.5rem; line-height: 1; }
+    .ask-num .lbl { font-size: 0.9rem; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; }
+
+    /* Footer */
+    footer { background: var(--navy-deep); padding: 3rem 0; text-align: center; }
+    footer p { font-size: 0.85rem; color: rgba(255, 255, 255, 0.5); }
+    footer a { color: var(--warm-white); text-decoration: none; opacity: 0.8; transition: opacity 0.3s; }
+    footer a:hover { opacity: 1; }
+
+    /* Contact Modal */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(18, 38, 71, 0.6); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 200; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
+    .modal { background: var(--warm-white); border: 1px solid rgba(27, 58, 107, 0.1); border-radius: 24px; padding: 3rem; width: 90%; max-width: 480px; position: relative; transform: translateY(20px) scale(0.95); transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 40px 100px rgba(18, 38, 71, 0.2); }
+    .modal-overlay.open .modal { transform: translateY(0) scale(1); }
+    .modal-close { position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; font-size: 1.5rem; color: var(--ink-soft); cursor: pointer; width: 40px; height: 40px; border-radius: 20px; display: flex; align-items: center; justify-content: center; transition: all 0.2s; background: rgba(27, 58, 107, 0.05); }
+    .modal-close:hover { background: rgba(27, 58, 107, 0.1); color: var(--navy-deep); }
+    .form-group { margin-bottom: 1.5rem; text-align: left; }
+    .form-group label { display: block; font-size: 0.8rem; font-weight: 600; color: var(--navy-deep); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    .form-group input { width: 100%; padding: 1rem 1.25rem; font-size: 1rem; font-family: var(--font-body); border: 1px solid rgba(27, 58, 107, 0.15); border-radius: 12px; background: var(--cream); color: var(--ink); transition: all 0.3s; outline: none; }
+    .form-group input:focus { border-color: var(--sage); background: var(--warm-white); box-shadow: 0 0 0 4px var(--sage-pale); }
+    .form-submit { width: 100%; padding: 1.1rem; font-size: 1rem; font-weight: 600; font-family: var(--font-body); background: var(--navy-deep); color: var(--warm-white); border: none; border-radius: 12px; cursor: pointer; transition: all 0.3s; margin-top: 1rem; }
+    .form-submit:hover { background: var(--navy); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(18, 38, 71, 0.2); }
+
+    /* Pitch Deck Button Variants */
+    .btn-deck { background: linear-gradient(135deg, var(--sage) 0%, var(--sage-light) 100%); color: var(--warm-white); padding: 1rem 2.5rem; border-radius: 100px; font-weight: 600; font-size: 0.95rem; text-decoration: none; transition: all 0.3s; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 0.6rem; font-family: var(--font-body); }
+    .btn-deck:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(126, 175, 126, 0.3); filter: brightness(1.05); }
+    .btn-deck svg { width: 18px; height: 18px; }
+    .btn-nav-deck { background: linear-gradient(135deg, var(--sage) 0%, var(--sage-light) 100%); color: var(--warm-white) !important; padding: 0.6rem 1.5rem; border-radius: 100px; font-size: 0.85rem; font-weight: 600; text-decoration: none; transition: all 0.3s; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 0.4rem; letter-spacing: 0; text-transform: none; }
+    .btn-nav-deck:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(126, 175, 126, 0.25); filter: brightness(1.05); }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .bento-hero, .platform-grid { grid-template-columns: repeat(2, 1fr) !important; }
+      .evidence-grid { grid-template-columns: repeat(2, 1fr); }
+      .problem-grid, .reg-cols, .team-grid { grid-template-columns: 1fr; }
+      .how-grid { grid-template-columns: 1fr; }
+      .beacon-hub { grid-template-columns: 1fr; }
+      .ask-stats { gap: 3rem; flex-wrap: wrap; }
+      .flow-arrows { gap: 2rem; }
+    }
+    @media (max-width: 768px) {
+      .bento-hero, .platform-grid, .evidence-grid, .stat-stack { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .ask-stats { flex-direction: column; gap: 2rem; }
+      section { padding: 5rem 0; }
+      .flow-arrows { flex-direction: column; gap: 1rem; }
+    }
+  </style>
+  <link href="styles.css" rel="stylesheet"/>
+ </head>
+ <body>
+  <div class="glow-orb top-right">
+  </div>
+  <nav aria-hidden="true" aria-label="Mobile navigation" class="mobile-nav" id="mobileNav">
+   <a href="technology.html">
+    Technology
+   </a>
+   <a href="about.html">
+    About Us
+   </a>
+   <a href="white-paper.html">
+    White Paper
+   </a>
+   <a href="investors.html">
+    Investors
+   </a>
+   <a href="privacy.html">
+    Privacy Policy
+   </a>
+   <a href="terms.html">
+    Terms of Service
+   </a>
+   <div class="mobile-nav-cta">
+    <button class="btn btn-primary" onclick="openModal('contact');closeMenuGlobal();" style="cursor:pointer;border:none;font-family:var(--font-body);">
+     Contact Us →
+    </button>
+   </div>
+  </nav>
+  <div class="glow-orb bottom-left">
+  </div>
+  <!-- NAV -->
+  <!-- HERO -->
+  <section class="hero surface-dark">
+   <div class="container">
+    <div class="hero-content gs-reveal-up">
+     <div class="hero-badge">
+      <div class="dot">
+      </div>
+      <span>
+       Pre-seed · $400k raise
+      </span>
+     </div>
+     <h1 class="text-gradient">
+      Predicting falls
+      <br/>
+      <em>
+       before
+      </em>
+      they happen
+     </h1>
+     <p class="hero-sub">
+      Haven turns your home into a silent guardian using proprietary technology to predict a fall before it happens. Nothing to wear. Nothing to remember. Just protection that works the way it should — invisibly.
+     </p>
+     <div class="hero-actions">
+      <a class="btn-primary" href="#ask">
+       The Opportunity
+      </a>
+      <a class="btn-outline" href="#solution">
+       Discover How
+      </a>
+     </div>
+    </div>
+    <div class="bento-hero">
+     <div class="bento-item gs-reveal">
+      <div class="bento-num count-up" data-suffix="s" data-val="8">
+       0s
+      </div>
+      <div class="bento-desc">
+       An older adult falls every 8 seconds in the U.S.
+      </div>
+     </div>
+     <div class="bento-item gs-reveal" style="transition-delay: 0.1s">
+      <div class="bento-num accent count-up" data-suffix=" min" data-val="12">
+       0 min
+      </div>
+      <div class="bento-desc">
+       A fall-related death occurs every 12 minutes
+      </div>
+     </div>
+     <div class="bento-item gs-reveal" style="transition-delay: 0.2s">
+      <div class="bento-num count-up" data-prefix="$" data-suffix="B" data-val="80">
+       $0B
+      </div>
+      <div class="bento-desc">
+       Annual healthcare cost of non-fatal falls
+      </div>
+     </div>
+     <div class="bento-item gs-reveal" style="transition-delay: 0.3s">
+      <div class="bento-num accent count-up" data-prefix="$" data-suffix="B+" data-val="101">
+       $0B+
+      </div>
+      <div class="bento-desc">
+       Projected cost by the year 2030
+      </div>
+     </div>
+    </div>
+   </div>
+  </section>
+  <!-- PROBLEM -->
+  <section id="problem">
+   <div class="container">
+    <div class="section-header gs-reveal-up">
+     <div class="section-label">
+      The Crisis
+     </div>
+     <h2 class="section-title text-gradient">
+      Falls are the #1 killer of older adults. Current solutions only react.
+     </h2>
+     <p class="section-desc">
+      Every existing fall detection product works exactly the same way: wait for someone to hit the ground, then send an alert. Haven is building the first system that sees it coming.
+     </p>
+    </div>
+    <div class="problem-grid">
+     <div class="stat-stack">
+      <div class="stat-card glass gs-reveal">
+       <div class="stat-num">
+        1 in 4
+       </div>
+       <div class="stat-text">
+        Adults over 65 fall each year — and less than half tell their doctor
+       </div>
+      </div>
+      <div class="stat-card glass gs-reveal">
+       <div class="stat-num red">
+        +41%
+       </div>
+       <div class="stat-text">
+        Surge in fall death rates from 2012 to 2021
+       </div>
+      </div>
+      <div class="stat-card glass gs-reveal">
+       <div class="stat-num">
+        $18,658
+       </div>
+       <div class="stat-text">
+        Average cost per inpatient hospital visit from a fall injury
+       </div>
+      </div>
+      <div class="stat-card glass gs-reveal">
+       <div class="stat-num">
+        67%
+       </div>
+       <div class="stat-text">
+        Of fall-related costs are paid by Medicare ($53.3B annually)
+       </div>
+      </div>
+     </div>
+     <div class="problem-narrative gs-reveal-up">
+      <h3 class="text-gradient">
+       A growing crisis with no predictive solution.
+      </h3>
+      <p>
+       Over 10,000 Americans turn 65 every day. The aging population is accelerating, and fall-related injuries and deaths are rising faster than the population itself.
+      </p>
+      <p>
+       Today's fall detection products — wearable pendants, camera systems, smart watches — share a fundamental flaw: they are reactive. They detect impact after it happens. By then, the damage is already done.
+      </p>
+      <p class="highlight">
+       Research proves that gait abnormalities are established predictors of fall risk. Subtle changes in walking speed, stride length, and balance appear weeks or months before a fall occurs. The technology to detect these changes contactlessly exists — it just hasn't been commercialized.
+      </p>
+     </div>
+    </div>
+   </div>
+  </section>
+  <!-- SOLUTION -->
+  <section id="solution">
+   <div class="container">
+    <div class="section-header gs-reveal-up">
+     <div class="section-label">
+      The Breakthrough
+     </div>
+     <h2 class="section-title text-gradient">
+      Three sensing layers. One intelligent hub. One daily risk score.
+     </h2>
+     <p class="section-desc">
+      Haven deploys three proven sensing technologies — each capturing a distinct signal — fuses them through Anchor™, the Matter-compatible smart home hub, and delivers intelligence through Beacon™, the family dashboard.
+     </p>
+    </div>
+    <div class="how-grid">
+     <div class="how-col gs-reveal-up">
+      <div class="tech-badge wifi">
+       Wi-Fi CSI
+      </div>
+      <h3>
+       Steadfast™
+      </h3>
+      <div class="how-tagline">
+       Presence &amp; Reactive Detection
+      </div>
+      <p>
+       A small radar sensor — the size of a smoke detector — sends invisible radio waves that bounce off the body. It measures walking speed, step length, gait symmetry, and balance with clinical precision.
+      </p>
+      <li>
+       Uses existing Wi-Fi infrastructure
+      </li>
+      <li>
+       Cost-effective sensor deployment (&lt;$10)
+      </li>
+      <li>
+       No cameras, no wearables
+      </li>
+      <li>
+       Works through walls
+      </li>
+     </div>
+     <div class="how-col gs-reveal-up">
+      <div class="tech-badge radar">
+       mmWave Radar
+      </div>
+      <h3>
+       Stride™
+      </h3>
+      <div class="how-tagline">
+       Predictive Gait Analysis
+      </div>
+      <p>
+       Stride integrates with Apple Watch, Fitbit, Garmin, and other popular wearables to build a continuous personal gait and movement baseline. It tracks step frequency, stride length, sleep patterns, and balance trends — monitoring gait, activity, and sleep passively through the watch your parent already wears
+      </p>
+      <ul>
+       <li>
+        Stride is the signal layer that makes AI prediction possible
+       </li>
+       <li>
+        No new hardware. No new device to charge.
+       </li>
+       <li>
+        It turns an existing wearable into a fall prevention tool.
+       </li>
+      </ul>
+     </div>
+     <div class="how-col gs-reveal-up">
+      <div class="tech-badge vision">
+       Computer Vision
+      </div>
+      <h3>
+       Vigil™
+      </h3>
+      <div class="how-tagline">
+       Camera-enabled Pose Estimation
+      </div>
+      <p>
+       Hi-Res camera performs real-time gait and posture analysis using pose estimation AI — capturing micro-changes in movement that passive sensors alone cannot detect.
+      </p>
+      <ul>
+       <li>
+        Most data-rich monitoring available
+       </li>
+       <li>
+        Designed for highest-risk seniors
+       </li>
+       <li>
+        Privacy tiered — families choose their level
+       </li>
+       <li>
+        Captures micro-movement other sensors miss
+       </li>
+      </ul>
+     </div>
+    </div>
+    <!-- Convergence Flow -->
+    <div class="convergence-flow gs-reveal-up">
+     <div class="flow-arrows">
+      <div class="flow-arrow">
+       <div class="label">
+        Steadfast™
+       </div>
+       <svg fill="none" height="40" viewbox="0 0 16 40" width="16">
+        <line stroke="var(--navy-mid)" stroke-dasharray="4 3" stroke-width="2" x1="8" x2="8" y1="0" y2="32">
+        </line>
+        <polygon fill="var(--navy-mid)" points="2,30 8,40 14,30">
+        </polygon>
+       </svg>
+      </div>
+      <div class="flow-arrow">
+       <div class="label">
+        Stride™
+       </div>
+       <svg fill="none" height="40" viewbox="0 0 16 40" width="16">
+        <line stroke="var(--sage)" stroke-dasharray="4 3" stroke-width="2" x1="8" x2="8" y1="0" y2="32">
+        </line>
+        <polygon fill="var(--sage)" points="2,30 8,40 14,30">
+        </polygon>
+       </svg>
+      </div>
+      <div class="flow-arrow">
+       <div class="label">
+        Vigil™
+       </div>
+       <svg fill="none" height="40" viewbox="0 0 16 40" width="16">
+        <line stroke="var(--navy-deep)" stroke-dasharray="4 3" stroke-width="2" x1="8" x2="8" y1="0" y2="32">
+        </line>
+        <polygon fill="var(--navy-deep)" points="2,30 8,40 14,30">
+        </polygon>
+       </svg>
+      </div>
+     </div>
+    </div>
+    <!-- Anchor Hub -->
+    <div class="gs-reveal-up" style="background: linear-gradient(135deg, var(--sage-pale) 0%, rgba(126, 175, 126, 0.15) 100%); border: 1px solid rgba(126, 175, 126, 0.25); border-radius: 20px; padding: 2.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; align-items: center; margin-bottom: 1.5rem;">
+     <div>
+      <div class="tech-badge" style="background: rgba(126, 175, 126, 0.15); color: var(--sage); border: 1px solid rgba(126, 175, 126, 0.3);">
+       Edge Processing Hub
+      </div>
+      <h3 style="font-family: var(--font-display); font-size: 2rem; color: var(--navy-deep); margin-bottom: 0.5rem;">
+       Anchor™
+      </h3>
+      <div class="how-tagline" style="color: var(--sage);">
+       Matter-compatible smart home hub
+      </div>
+      <p style="font-size: 1rem; color: var(--ink-soft); line-height: 1.7;">
+       Anchor is the nerve center of every Haven home. It aggregates data from all three sensing layers, runs edge AI inference locally — keeping data in the home first — and bridges Haven into the broader smart home ecosystem via Matter protocol. Lights illuminate a path when nighttime movement is detected. Voice assistants can relay wellness updates. The home itself becomes responsive.
+      </p>
+     </div>
+     <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+      <div class="feed-item" style="background: rgba(27, 58, 107, 0.04); border: 1px solid rgba(27, 58, 107, 0.08); border-radius: 14px; padding: 1rem 1.25rem; display: flex; align-items: center; gap: 1rem;">
+       <div style="width: 10px; height: 10px; border-radius: 50%; background: var(--sage); box-shadow: 0 0 8px rgba(126, 175, 126, 0.4); flex-shrink: 0;">
+       </div>
+       <div style="font-size: 0.8rem; font-weight: 600; color: var(--navy-deep); letter-spacing: 0.05em; text-transform: uppercase; min-width: 90px;">
+        Apple Home
+       </div>
+       <div style="font-size: 0.85rem; color: var(--ink-soft);">
+        HomeKit integration via Matter
+       </div>
+      </div>
+      <div class="feed-item" style="background: rgba(27, 58, 107, 0.04); border: 1px solid rgba(27, 58, 107, 0.08); border-radius: 14px; padding: 1rem 1.25rem; display: flex; align-items: center; gap: 1rem;">
+       <div style="width: 10px; height: 10px; border-radius: 50%; background: var(--navy-mid); box-shadow: 0 0 8px rgba(42, 82, 152, 0.4); flex-shrink: 0;">
+       </div>
+       <div style="font-size: 0.8rem; font-weight: 600; color: var(--navy-deep); letter-spacing: 0.05em; text-transform: uppercase; min-width: 90px;">
+        Google Home
+       </div>
+       <div style="font-size: 0.85rem; color: var(--ink-soft);">
+        Nest &amp; Assistant integration
+       </div>
+      </div>
+      <div class="feed-item" style="background: rgba(27, 58, 107, 0.04); border: 1px solid rgba(27, 58, 107, 0.08); border-radius: 14px; padding: 1rem 1.25rem; display: flex; align-items: center; gap: 1rem;">
+       <div style="width: 10px; height: 10px; border-radius: 50%; background: var(--navy-deep); box-shadow: 0 0 8px rgba(18, 38, 71, 0.4); flex-shrink: 0;">
+       </div>
+       <div style="font-size: 0.8rem; font-weight: 600; color: var(--navy-deep); letter-spacing: 0.05em; text-transform: uppercase; min-width: 90px;">
+        Amazon Alexa
+       </div>
+       <div style="font-size: 0.85rem; color: var(--ink-soft);">
+        Echo &amp; smart home routines
+       </div>
+      </div>
+     </div>
+    </div>
+    <div class="convergence-flow gs-reveal-up" style="margin-top: 0;">
+     <div class="flow-arrows">
+      <div class="flow-arrow">
+       <div class="label">
+        Anchor™ → Beacon™
+       </div>
+       <svg fill="none" height="40" viewbox="0 0 16 40" width="16">
+        <line stroke="var(--sage)" stroke-dasharray="4 3" stroke-width="2" x1="8" x2="8" y1="0" y2="32">
+        </line>
+        <polygon fill="var(--sage)" points="2,30 8,40 14,30">
+        </polygon>
+       </svg>
+      </div>
+     </div>
+    </div>
+    <!-- Beacon Dashboard -->
+    <div class="beacon-hub gs-reveal-up">
+     <div class="beacon-hub-info">
+      <div class="tech-badge" style="background: rgba(168, 201, 168, 0.15); color: var(--sage-light); border: 1px solid rgba(168, 201, 168, 0.3);">
+       Intelligence Layer
+      </div>
+      <h3>
+       Beacon™
+      </h3>
+      <div class="how-tagline">
+       Family dashboard &amp; alert intelligence
+      </div>
+      <p>
+       Beacon is where families see everything. Anchor processes and fuses data from Steadfast, Stride, and Vigil — then pushes unified insights to Beacon as a single daily risk score, trend visualizations, tiered alerts with AI context, and weekly health narratives.
+      </p>
+     </div>
+     <div class="beacon-feeds">
+      <div class="feed-item">
+       <div class="feed-dot sf">
+       </div>
+       <div class="feed-name">
+        Steadfast™
+       </div>
+       <div class="feed-desc">
+        Presence, activity patterns, reactive fall events
+       </div>
+       <div class="feed-arrow">
+        →
+       </div>
+      </div>
+      <div class="feed-item">
+       <div class="feed-dot st">
+       </div>
+       <div class="feed-name">
+        Stride™
+       </div>
+       <div class="feed-desc">
+        Gait baselines, degradation trends, predictive warnings
+       </div>
+       <div class="feed-arrow">
+        →
+       </div>
+      </div>
+      <div class="feed-item">
+       <div class="feed-dot vg">
+       </div>
+       <div class="feed-name">
+        Vigil™
+       </div>
+       <div class="feed-desc">
+        Posture analysis, micro-movement data, real-time AI
+       </div>
+       <div class="feed-arrow">
+        →
+       </div>
+      </div>
+      <div class="feed-item" style="background: rgba(126, 175, 126, 0.12); border-color: rgba(126, 175, 126, 0.2);">
+       <div class="feed-dot" style="background: var(--sage-light); box-shadow: 0 0 8px rgba(168, 201, 168, 0.5);">
+       </div>
+       <div class="feed-name">
+        Anchor™
+       </div>
+       <div class="feed-desc">
+        Edge AI fusion, Matter smart home bridge
+       </div>
+       <div class="feed-arrow">
+        →
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </section>
+  <!-- PREDICTIVE MOAT -->
+  <section class="bg-navy" id="predictive">
+   <div class="container">
+    <div class="section-header gs-reveal-up">
+     <div class="section-label">
+      The Moat
+     </div>
+     <h2 class="section-title">
+      From detection to prediction
+     </h2>
+     <p class="section-desc">
+      Haven doesn't just catch falls — it catches the warning signs weeks before they happen, enabling life-saving intervention.
+     </p>
+    </div>
+    <div class="timeline">
+     <div class="tl-item gs-reveal-up">
+      <div class="tl-dot">
+      </div>
+      <div class="tl-content">
+       <h4>
+        Weeks 1–4: Contextual Baseline
+       </h4>
+       <p>
+        Stride™ passively observes how each person walks — speed, cadence, symmetry, arm swing — and builds a personal gait fingerprint unique strictly to them.
+       </p>
+      </div>
+     </div>
+     <div class="tl-item gs-reveal-up">
+      <div class="tl-dot">
+      </div>
+      <div class="tl-content">
+       <h4>
+        Ongoing: Invisible Monitoring
+       </h4>
+       <p>
+        Every walk through the home is compared dynamically against the baseline. No cameras. No wearables. The resident remains completely oblivious to the system.
+       </p>
+      </div>
+     </div>
+     <div class="tl-item gs-reveal-up">
+      <div class="tl-dot">
+      </div>
+      <div class="tl-content">
+       <h4>
+        Early Warning: Degradation Detected
+       </h4>
+       <p>
+        Stride length shortens by 8%. Walking speed drops 0.15 m/s over three weeks. Left-right asymmetry increases. Too subtle for clinical observation — but Stride captures it.
+       </p>
+      </div>
+     </div>
+     <div class="tl-item gs-reveal-up">
+      <div class="tl-dot">
+      </div>
+      <div class="tl-content">
+       <h4>
+        Intervention: The Fall Never Happens
+       </h4>
+       <p>
+        Beacon alerts the caregiver or clinician. Physical therapy is ordered natively. Home modifications are made. The ER visit that would have cost $18,658 never occurs.
+       </p>
+      </div>
+     </div>
+    </div>
+    <div class="vs-bar gs-reveal-up">
+     <div class="vs-side others">
+      <h4>
+       Everyone Else
+      </h4>
+      <ul>
+       <li>
+        Detects falls after impact
+       </li>
+       <li>
+        Requires wearables or vulnerable cameras
+       </li>
+       <li>
+        Binary signal: fell / didn't fall
+       </li>
+       <li>
+        Reactive — trauma already sustained
+       </li>
+       <li>
+        Relies on user compliance to wear device
+       </li>
+      </ul>
+     </div>
+     <div class="vs-side haven">
+      <h4>
+       Haven Home Wellness
+      </h4>
+      <ul>
+       <li>
+        Predicts and prevents falls natively
+       </li>
+       <li>
+        Completely contactless and passive
+       </li>
+       <li>
+        Continuous, nuanced gait fingerprint data
+       </li>
+       <li>
+        Proactive — enables pre-emptive intervention
+       </li>
+       <li>
+        Zero user friction or effort required
+       </li>
+      </ul>
+     </div>
+    </div>
+   </div>
+  </section>
+  <!-- PLATFORMS -->
+  <section id="platforms">
+   <div class="container">
+    <div class="section-header gs-reveal-up">
+     <div class="section-label">
+      The Platform
+     </div>
+     <h2 class="section-title text-gradient">
+      Five products. One ecosystem.
+     </h2>
+     <p class="section-desc">
+      Each platform addresses a distinct layer of fall prevention — allowing standalone deployments or seamless bundling.
+     </p>
+    </div>
+    <div class="platform-grid" style="grid-template-columns: repeat(5, 1fr);">
+     <div class="p-card glass gs-reveal">
+      <div class="p-icon">
+       SF
+      </div>
+      <h3>
+       Steadfast™
+      </h3>
+      <div class="p-tech">
+       Wi-Fi CSI Sensing
+      </div>
+      <p>
+       Always-on presence detection, activity recognition, and reactive fall detection mapping onto existing Wi-Fi infrastructure.
+      </p>
+     </div>
+     <div class="p-card glass gs-reveal">
+      <div class="p-icon">
+       ST
+      </div>
+      <h3>
+       Stride™
+      </h3>
+      <div class="p-tech">
+       mmWave Radar Analysis
+      </div>
+      <p>
+       Predictive gait analysis engine. Builds personal baselines, detects degradation trends, and generates early warnings. The ultimate moat.
+      </p>
+     </div>
+     <div class="p-card glass gs-reveal">
+      <div class="p-icon">
+       VG
+      </div>
+      <h3>
+       Vigil™
+      </h3>
+      <div class="p-tech">
+       Camera-Enabled Computer Vision
+      </div>
+      <p>
+       Real-time gait and posture analysis via pose estimation AI. The most data-rich monitoring available — designed for highest-risk seniors. Privacy tiered and family-controlled.
+      </p>
+     </div>
+     <div class="p-card glass gs-reveal">
+      <div class="p-icon" style="background: rgba(126, 175, 126, 0.08); color: var(--sage); border-color: rgba(126, 175, 126, 0.2);">
+       AN
+      </div>
+      <h3>
+       Anchor™
+      </h3>
+      <div class="p-tech">
+       Matter-Compatible Smart Home Hub
+      </div>
+      <p>
+       The central nervous system. Aggregates all sensor data, runs edge AI inference locally, and bridges Haven into Apple Home, Google Home, Alexa, and SmartThings via Matter protocol.
+      </p>
+     </div>
+     <div class="p-card glass gs-reveal">
+      <div class="p-icon">
+       BC
+      </div>
+      <h3>
+       Beacon™
+      </h3>
+      <div class="p-tech">
+       Family Dashboard &amp; Alert Intelligence
+      </div>
+      <p>
+       Daily risk scores, trend visualizations, tiered alerts with AI context, and weekly health narratives. The product families interact with every day.
+      </p>
+     </div>
+    </div>
+   </div>
+  </section>
+  <!-- EVIDENCE -->
+  <section id="evidence">
+   <div class="container">
+    <div class="section-header gs-reveal-up">
+     <div class="section-label">
+      The Evidence
+     </div>
+     <h2 class="section-title text-gradient">
+      Peer-reviewed. Validated.
+     </h2>
+     <p class="section-desc">
+      Haven's architecture is rooted in a robust body of academic research validating RF-based sensing for elite human activity recognition.
+     </p>
+    </div>
+    <div class="evidence-grid">
+     <div class="ev-card glass gs-reveal">
+      <div class="ev-num">
+       98%
+      </div>
+      <div class="ev-label">
+       Fall detection accuracy using mmWave radar with semi-supervised learning models.
+      </div>
+      <div class="ev-source">
+       mmFall — IEEE Trans. Automation
+      </div>
+     </div>
+     <div class="ev-card glass gs-reveal">
+      <div class="ev-num">
+       96%
+      </div>
+      <div class="ev-label">
+       Gait step time measurement accuracy mapping FMCW radar in real environments.
+      </div>
+      <div class="ev-source">
+       PMC / Sensors, 2022
+      </div>
+     </div>
+     <div class="ev-card glass gs-reveal">
+      <div class="ev-num">
+       &gt;90%
+      </div>
+      <div class="ev-label">
+       Activity recognition accuracy across 8 unique environments utilizing Wi-Fi CSI.
+      </div>
+      <div class="ev-source">
+       EHUNAM — Nature Scientific Data
+      </div>
+     </div>
+     <div class="ev-card glass gs-reveal">
+      <div class="ev-num">
+       125
+      </div>
+      <div class="ev-label">
+       Diverse volunteers tested (ages 6–63) validating the mmWave gait ecosystem.
+      </div>
+      <div class="ev-source">
+       RDGait — ACM UbiComp, 2024
+      </div>
+     </div>
+     <div class="ev-card glass gs-reveal">
+      <div class="ev-num">
+       1.2TB
+      </div>
+      <div class="ev-label">
+       Extensive public CSI+BFI dataset spanning 20 activities across complex NLOS scenarios.
+      </div>
+      <div class="ev-source">
+       CSI-BFI-HAR — IEEE DataPort
+      </div>
+     </div>
+     <div class="ev-card glass gs-reveal">
+      <div class="ev-num">
+       510(k)
+      </div>
+      <div class="ev-label">
+       FDA pathway actively pioneered by competitors for parallel radar monitoring models.
+      </div>
+      <div class="ev-source">
+       Precedent Validation
+      </div>
+     </div>
+    </div>
+   </div>
+  </section>
+  <!-- REGULATORY -->
+  <section id="regulatory">
+   <div class="container">
+    <div class="reg-cols">
+     <div class="reg-block glass gs-reveal-up">
+      <div class="section-label">
+       FDA Pathway
+      </div>
+      <h3 class="text-gradient">
+       510(k) Substantial Equivalence
+      </h3>
+      <p>
+       Xandar Kardian's XK300 — a radar-based, contactless vital sign monitor — received FDA 510(k) clearance as a Class II medical device in April 2021. Haven's Stride engine uses a related RF modality for a complementary application.
+      </p>
+      <p>
+       This positions us perfectly for expedited clearance through the identical substantial equivalence pathway, drastically reducing regulatory friction.
+      </p>
+     </div>
+     <div class="reg-block glass bg-navy gs-reveal-up" style="background: var(--navy-deep); border:none;">
+      <div class="section-label" style="border-color: rgba(168, 201, 168, 0.3); background: rgba(168, 201, 168, 0.1); color: var(--sage-light);">
+       Reimbursement Strategy
+      </div>
+      <h3 style="color:var(--warm-white);">
+       Medicare CPT Code 99454
+      </h3>
+      <p style="color:rgba(255,255,255,0.7);">
+       Similar RF technologies already qualify for robust Medicare reimbursement under CPT Code 99454 (Remote Patient Monitoring). Once Haven achieves clearance, the same pipeline immediately activates.
+      </p>
+      <p style="color:rgba(255,255,255,0.7);">
+       The core customer does not pay out of pocket. Medicare does. Haven natively aligns with Medicare's multi-billion dollar incentive to fund prevention over treatment.
+      </p>
+     </div>
+    </div>
+   </div>
+  </section>
+  <!-- TEAM -->
+  <section id="team">
+   <div class="container">
+    <div class="section-header gs-reveal-up">
+     <div class="section-label">
+      Leadership
+     </div>
+     <h2 class="section-title text-gradient">
+      Built to execute.
+     </h2>
+    </div>
+    <div class="team-grid">
+     <div class="t-card glass gs-reveal">
+      <div class="t-avatar">
+       NW
+      </div>
+      <div class="t-info">
+       <h4>
+        Nick Whitehead
+       </h4>
+       <div class="t-role">
+        CEO &amp; Co-Founder
+       </div>
+       <p>
+        Enterprise sales professional with direct experience selling API-driven platforms to institutional buyers. Leads fundraising, go-to-market strategy, and business development.
+       </p>
+      </div>
+     </div>
+     <div class="t-card glass gs-reveal">
+      <div class="t-avatar">
+       DT
+      </div>
+      <div class="t-info">
+       <h4>
+        David A. Taylor
+       </h4>
+       <div class="t-role">
+        CTO &amp; Co-Founder
+       </div>
+       <p>
+        Technical architect and UX designer leading product development, elite RF sensing research, and the Stride engine build. Owns the full hardware-to-software pipeline.
+       </p>
+      </div>
+     </div>
+    </div>
+   </div>
+  </section>
+  <!-- ASK -->
+  <section class="ask" id="ask">
+   <div class="container">
+    <div class="section-header gs-reveal-up">
+     <div class="section-label">
+      The Opportunity
+     </div>
+     <h2 class="section-title text-gradient">
+      Pre-seed: $1.5M
+     </h2>
+     <p class="section-desc" style="max-width:800px; margin:0 auto; text-align:center;">
+      The science is proven. The regulatory path is completely clear. Medicare stands ready to reimburse.
+      <br/>
+      We just need to build it. That's what this capital unlocks — 18 months of focused execution.
+     </p>
+    </div>
+    <div class="ask-stats">
+     <div class="ask-num gs-reveal-up">
+      <div class="val text-gradient-sage">
+       $50B+
+      </div>
+      <div class="lbl">
+       Total Addressable Market
+      </div>
+     </div>
+     <div class="ask-num gs-reveal-up">
+      <div class="val text-gradient-sage">
+       3
+      </div>
+      <div class="lbl">
+       Scalable Revenue Models
+      </div>
+     </div>
+     <div class="ask-num gs-reveal-up">
+      <div class="val text-gradient-sage">
+       0
+      </div>
+      <div class="lbl">
+       Direct Competitors
+      </div>
+     </div>
+    </div>
+    <div class="gs-reveal" style="text-align:center;">
+     <button class="btn-primary" onclick="openModal()" style="font-size: 1.1rem; padding: 1.25rem 3.5rem;">
+      Let's talk business
+     </button>
+    </div>
+   </div>
+  </section>
+  <!-- FOOTER -->
+  <!-- MODAL -->
+  <div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
+   <div class="modal" id="modalContent">
+    <button class="modal-close" onclick="closeModal()">
+     ×
+    </button>
+    <div style="margin-bottom: 2rem; text-align:left;">
+     <div class="section-label" style="margin-bottom: 0.5rem; border:none; background:transparent; padding:0;">
+      Initialize
+     </div>
+     <h2 class="text-gradient" style="font-family: var(--font-display); font-size: 2rem; margin-bottom: 0.5rem;">
+      Start the conversation
+     </h2>
+     <p style="color: var(--ink-soft); font-size: 0.95rem;">
+      We guarantee a response directly from the founders within 24 hours.
+     </p>
+    </div>
+    <div id="formContainer">
+     <div class="form-group">
+      <label>
+       Full Name
+      </label>
+      <input id="f-name" placeholder="E.g. Jane Doe" required="" type="text"/>
+     </div>
+     <div class="form-group">
+      <label>
+       Corporate Email
+      </label>
+      <input id="f-email" placeholder="jane@venture.vc" required="" type="email"/>
+     </div>
+     <button class="form-submit" id="submitBtn" onclick="submitForm()">
+      Submit Inquiry
+     </button>
+    </div>
+    <div id="formSuccess" style="display:none; text-align:center; padding: 2rem 0;">
+     <div style="width: 64px; height: 64px; border-radius: 50%; background: var(--sage-pale); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; border: 1px solid rgba(126, 175, 126, 0.3);">
+      <svg fill="none" height="28" stroke="var(--sage)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewbox="0 0 24 24" width="28">
+       <polyline points="20 6 9 17 4 12">
+       </polyline>
+      </svg>
+     </div>
+     <h3 class="text-gradient" style="font-family: var(--font-display); font-size: 1.75rem; margin-bottom: 0.5rem;">
+      Inquiry Received
+     </h3>
+     <p style="color: var(--ink-soft); font-size: 1rem;">
+      The executive team has been notified. We will be in touch shortly.
+     </p>
+    </div>
+   </div>
+  </div>
+  <script>
+   // Register GSAP ScrollTrigger
+    gsap.registerPlugin(ScrollTrigger);
+
+    window.onload = function() {
+      // Navbar scroll effect
+      const nav = document.getElementById('nav');
+      window.addEventListener('scroll', () => {
+        nav.classList.toggle('scrolled', window.scrollY > 50);
+      });
+
+      // Animate Hero Elements (Fade up stagger)
+      gsap.from(".hero-content > *", {
+        y: 40, opacity: 0, duration: 1, stagger: 0.15, ease: "power3.out"
+      });
+
+      // Simple Reveal Elements
+      gsap.utils.toArray('.gs-reveal').forEach((elem) => {
+        gsap.fromTo(elem, 
+          { y: 30, opacity: 0 },
+          {
+            y: 0, opacity: 1, duration: 1, ease: "power3.out",
+            scrollTrigger: {
+              trigger: elem,
+              start: "top 85%",
+              toggleActions: "play none none none"
+            }
+          }
+        );
+      });
+
+      // Reveal from bottom up
+      gsap.utils.toArray('.gs-reveal-up').forEach((elem) => {
+        gsap.fromTo(elem, 
+          { y: 50, opacity: 0 },
+          {
+            y: 0, opacity: 1, duration: 1, ease: "power3.out",
+            scrollTrigger: {
+              trigger: elem,
+              start: "top 80%",
+              toggleActions: "play none none none"
+            }
+          }
+        );
+      });
+
+      // Number Count-Up Animation
+      gsap.utils.toArray('.count-up').forEach((elem) => {
+        const targetVal = parseFloat(elem.getAttribute('data-val'));
+        const prefix = elem.getAttribute('data-prefix') || '';
+        const suffix = elem.getAttribute('data-suffix') || '';
+        
+        ScrollTrigger.create({
+          trigger: elem,
+          start: "top 85%",
+          once: true,
+          onEnter: () => {
+            let obj = { val: 0 };
+            gsap.to(obj, {
+              val: targetVal,
+              duration: 2,
+              ease: "power2.out",
+              onUpdate: () => {
+                elem.innerHTML = `${prefix}${Math.floor(obj.val)}${suffix}`;
+              }
+            });
+          }
+        });
+      });
+    };
+
+    // Contact Modal logic
+    function openModal() {
+      const overlay = document.getElementById('modalOverlay');
+      overlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      document.getElementById('f-name').focus();
+    }
+    function closeModal() {
+      document.getElementById('modalOverlay').classList.remove('open');
+      document.body.style.overflow = '';
+      
+      // Reset after close
+      setTimeout(() => {
+        document.getElementById('formContainer').style.display = 'block';
+        document.getElementById('formSuccess').style.display = 'none';
+        document.getElementById('submitBtn').textContent = 'Submit Inquiry';
+        document.getElementById('submitBtn').style.opacity = '1';
+        document.getElementById('f-name').value = '';
+        document.getElementById('f-email').value = '';
+      }, 400);
+    }
+    
+    // Setup modal overlay listener
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+    document.getElementById('modalOverlay').addEventListener('click', function(e) {
+      if (e.target === this) closeModal();
+    });
+
+    // Mock form submission
+    function submitForm() {
+      const name = document.getElementById('f-name').value;
+      const email = document.getElementById('f-email').value;
+      if (!name || !email.includes('@')) return;
+      
+      const btn = document.getElementById('submitBtn');
+      btn.textContent = 'Processing...';
+      btn.style.opacity = '0.7';
+      
+      setTimeout(() => {
+        document.getElementById('formContainer').style.display = 'none';
+        document.getElementById('formSuccess').style.display = 'block';
+      }, 1000);
+    }
+  </script>
+ </body>
+</html>
