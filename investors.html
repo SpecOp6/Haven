@@ -13,7 +13,7 @@
 <body class="dark-page">
 
 <!-- LEAD CAPTURE WALL -->
-<div class="hm-overlay visible" id="modalLeadCapture" style="z-index: 9999;" role="dialog" aria-modal="true">
+<div class="hm-overlay visible" id="modalLeadCapture" style="z-index: 9999; overflow-y: auto; padding: 2rem 0; align-items: flex-start;" role="dialog" aria-modal="true">
   <div class="hm-box">
     <div id="lcForm">
       <div class="eyebrow">Investor Access</div>
@@ -546,16 +546,17 @@
     const ENDPOINT_URL = 'https://formsubmit.co/ajax/nick@havenhomewellness.ai';
     
     try {
-      await fetch(ENDPOINT_URL, {
+      // Send data in background (catches local file:// CORS errors so they don't block the UI)
+      fetch(ENDPOINT_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         },
         body: JSON.stringify(Object.fromEntries(formData))
-      });
+      }).catch(err => console.log('Form submission non-fatal error:', err));
       
-      // Show success screen and remove wall
+      // Show success screen and remove wall immediately
       document.getElementById('lcForm').style.display = 'none';
       document.getElementById('lcSuccess').style.display = 'flex';
       
@@ -567,9 +568,8 @@
       }, 1500);
 
     } catch (error) {
-      console.error('Error submitting form', error);
-      btn.textContent = 'Error. Try Again.';
-      btn.style.opacity = '1';
+      console.error('Error in submission logic', error);
+      document.body.style.overflow = ''; // Ensure scroll is restored on fatal error
     }
   }
 
