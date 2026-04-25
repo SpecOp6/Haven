@@ -1285,20 +1285,32 @@ footer.surface-dark a:hover, .footer-col a:hover { color: var(--sage) !important
 /* ── White Paper ── */
 .wp{padding:4rem 0 6rem}
 .wp-grid{display:grid;grid-template-columns:2fr 1fr;gap:4rem;align-items:start}
-.wp-main h2{color:var(--ink);margin-top:2.5rem;margin-bottom:0.75rem;font-size:1.3rem}
+.wp-main h2{color:var(--cream);margin-top:2.5rem;margin-bottom:0.75rem;font-size:1.3rem}
 .wp-main h2:first-child{margin-top:0}
-.wp-main p{color:var(--slate);margin-bottom:1rem}
+.wp-main p{color:rgba(249,248,244,0.7);margin-bottom:1rem}
 .wp-sidebar{position:sticky;top:calc(var(--nav-height) + 2rem)}
-.wp-card{background:rgba(126,175,126,0.08);border:1px solid rgba(126,175,126,0.2);color:var(--ink);padding:2.5rem 2rem;border-radius:var(--r)}
-.wp-card h3{color:var(--ink);margin-bottom:0.5rem;font-size:1.4rem}
-.wp-card>p{color:var(--slate);font-size:15px;margin-bottom:1.5rem}
-.wp-card .detail{font-size:14px;color:var(--graphite);text-align:center;margin-top:1rem}
+.wp-card{background:rgba(126,175,126,0.08);border:1px solid rgba(126,175,126,0.2);color:var(--cream);padding:2.5rem 2rem;border-radius:12px}
+.wp-card h3{color:var(--cream);margin-bottom:0.5rem;font-size:1.4rem}
+.wp-card>p{color:rgba(249,248,244,0.7);font-size:15px;margin-bottom:1.5rem}
+.wp-card .detail{font-size:14px;color:rgba(249,248,244,0.45);text-align:center;margin-top:1rem}
+
+/* White Paper Stats & TOC */
+.wp-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin:3rem 0}
+.wp-stat{background:rgba(126,175,126,0.08);padding:1.5rem;border-radius:8px;text-align:center}
+.wp-stat .val{font-family:var(--font-display);font-size:1.8rem;font-weight:600;color:var(--sage)}
+.wp-stat .lbl{font-size:14px;color:rgba(249,248,244,0.45);margin-top:0.25rem}
+
+.wp-toc{background:rgba(249,248,244,0.04);border:1px solid rgba(249,248,244,0.08);border-radius:8px;padding:1.5rem 2rem;margin-top:1.5rem}
+.wp-toc h4{font-family:var(--font-body);font-weight:600;font-size:14px;text-transform:uppercase;letter-spacing:0.1em;color:var(--sage);margin-bottom:0.75rem}
+.wp-toc ol{margin:0;padding-left:1.25rem;font-size:14px;color:rgba(249,248,244,0.45)}
+.wp-toc ol li{margin-bottom:0.35rem;line-height:1.4}
+
 .form-group{margin-bottom:1rem}
 .form-group label{display:block;font-size:14px;font-weight:600;color:var(--sage-deep);margin-bottom:0.4rem;letter-spacing:0.05em}
 .form-group input{
     width:100%;padding:0.85rem 1rem;font-size:15px;font-family:var(--font-body);
     border:1px solid var(--hairline-strong);border-radius:var(--radius-xs);
-    background:rgba(249,248,244,0.06);color:var(--ink);
+    background:rgba(249,248,244,0.06);color:var(--cream);
     transition:all 0.3s;outline:none
 }
 .form-group input:focus{border-color:var(--sage);box-shadow:0 0 0 3px rgba(126,175,126,0.1)}
