@@ -1306,7 +1306,7 @@ footer.surface-dark a:hover, .footer-col a:hover { color: var(--sage) !important
 .wp-toc ol li{margin-bottom:0.35rem;line-height:1.4}
 
 .form-group{margin-bottom:1rem}
-.form-group label{display:block;font-size:14px;font-weight:600;color:var(--sage-deep);margin-bottom:0.4rem;letter-spacing:0.05em}
+.form-group label{display:block;font-size:14px;font-weight:600;color:var(--sage);margin-bottom:0.4rem;letter-spacing:0.05em}
 .form-group input{
     width:100%;padding:0.85rem 1rem;font-size:15px;font-family:var(--font-body);
     border:1px solid var(--hairline-strong);border-radius:var(--radius-xs);
