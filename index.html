@@ -667,5 +667,161 @@
     }, 3500);
   }
 </script>
+<!-- ═══ FLOATING FALL COUNTER ═══ -->
+<div class="fall-counter" id="fallCounter" aria-live="polite" aria-label="Senior fall counter">
+  <button class="fall-counter-close" id="fallCounterClose" aria-label="Close fall counter">✕</button>
+  <div class="fall-counter-pulse"></div>
+  <div class="fall-counter-inner">
+    <div class="fall-counter-eyebrow">Since you opened this page</div>
+    <div class="fall-counter-number" id="fallCount">0</div>
+    <div class="fall-counter-label">seniors have fallen in the U.S.</div>
+    <div class="fall-counter-source">Based on CDC data · 14M falls/year</div>
+  </div>
+</div>
+
+<style>
+  .fall-counter {
+    position: fixed;
+    bottom: 24px;
+    left: 24px;
+    z-index: 900;
+    background: rgba(14, 26, 48, 0.45);
+    backdrop-filter: blur(24px) saturate(1.4);
+    -webkit-backdrop-filter: blur(24px) saturate(1.4);
+    border: 1px solid rgba(249, 248, 244, 0.1);
+    border-top-color: rgba(249, 248, 244, 0.18);
+    border-left-color: rgba(249, 248, 244, 0.13);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+    min-width: 200px;
+    font-family: var(--font-body);
+    color: var(--cream);
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fallCounterIn 0.6s var(--ease-out) 2s forwards;
+    box-shadow:
+      0 16px 48px -12px rgba(0, 0, 0, 0.35),
+      0 4px 12px rgba(0, 0, 0, 0.15),
+      inset 0 1px 0 rgba(249, 248, 244, 0.06),
+      inset 0 0 20px rgba(14, 26, 48, 0.15);
+  }
+  @keyframes fallCounterIn {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .fall-counter-close {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    background: none;
+    border: none;
+    color: rgba(249, 248, 244, 0.35);
+    font-size: 13px;
+    cursor: pointer;
+    padding: 4px 6px;
+    line-height: 1;
+    transition: color 0.2s;
+  }
+  .fall-counter-close:hover { color: var(--cream); }
+  .fall-counter-pulse {
+    position: absolute;
+    top: 16px;
+    left: 18px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--sage);
+    box-shadow: 0 0 0 0 rgba(126, 175, 126, 0.5);
+    animation: counterPulse 2s ease-in-out infinite;
+  }
+  @keyframes counterPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(126, 175, 126, 0.45); }
+    50%      { box-shadow: 0 0 0 6px rgba(126, 175, 126, 0); }
+  }
+  .fall-counter-eyebrow {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 0.35rem;
+    padding-left: 16px;
+  }
+  .fall-counter-number {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 2.6rem);
+    font-weight: 600;
+    line-height: 1;
+    color: var(--cream);
+    letter-spacing: -0.02em;
+    margin-bottom: 0.2rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .fall-counter-label {
+    font-size: 13px;
+    font-weight: 400;
+    color: rgba(249, 248, 244, 0.7);
+    line-height: 1.3;
+  }
+  .fall-counter-source {
+    font-size: 10px;
+    color: rgba(249, 248, 244, 0.3);
+    margin-top: 0.6rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid rgba(249, 248, 244, 0.06);
+  }
+
+  /* Dismiss state */
+  .fall-counter.dismissed {
+    opacity: 0 !important;
+    transform: translateY(20px) !important;
+    pointer-events: none;
+    transition: opacity 0.35s ease, transform 0.35s ease;
+  }
+
+  /* Mobile: smaller, tighter */
+  @media (max-width: 600px) {
+    .fall-counter {
+      bottom: 16px;
+      left: 12px;
+      right: 12px;
+      min-width: unset;
+      padding: 1rem 1.25rem;
+    }
+    .fall-counter-number { font-size: 1.8rem; }
+  }
+</style>
+
+<script>
+  // Real-time fall counter based on CDC data
+  // ~14M falls/year among adults 65+ = ~0.4438 falls/second
+  (function() {
+    var FALLS_PER_SECOND = 14000000 / (365.25 * 24 * 3600); // ≈ 0.4438
+    var startTime = Date.now();
+    var counterEl = document.getElementById('fallCount');
+    var widgetEl = document.getElementById('fallCounter');
+    var closeBtn = document.getElementById('fallCounterClose');
+    var currentDisplay = 0;
+
+    function updateCount() {
+      var elapsed = (Date.now() - startTime) / 1000;
+      var falls = Math.floor(elapsed * FALLS_PER_SECOND);
+      if (falls !== currentDisplay) {
+        currentDisplay = falls;
+        counterEl.textContent = falls.toLocaleString();
+      }
+      requestAnimationFrame(updateCount);
+    }
+
+    requestAnimationFrame(updateCount);
+
+    // Dismiss
+    if (closeBtn) {
+      closeBtn.addEventListener('click', function() {
+        widgetEl.classList.add('dismissed');
+      });
+    }
+  })();
+</script>
+
 </body>
 </html>
