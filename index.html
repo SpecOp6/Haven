@@ -529,9 +529,17 @@
   var closeMenuGlobal = function() {};
 
   (function() {
-    // expose closeMenu to global scope for mobile nav button
     var menuEl = document.getElementById('mobileNav');
     var btnEl = document.getElementById('burgerBtn');
+
+    function openMenu() {
+      if (btnEl) btnEl.classList.add('open');
+      if (menuEl) menuEl.classList.add('open');
+      if (btnEl) btnEl.setAttribute('aria-expanded','true');
+      if (menuEl) menuEl.setAttribute('aria-hidden','false');
+      document.body.style.overflow = 'hidden';
+    }
+
     closeMenuGlobal = function() {
       if (btnEl) btnEl.classList.remove('open');
       if (menuEl) menuEl.classList.remove('open');
@@ -539,6 +547,28 @@
       if (menuEl) menuEl.setAttribute('aria-hidden','true');
       document.body.style.overflow = '';
     };
+
+    // Toggle on burger click
+    if (btnEl) {
+      btnEl.addEventListener('click', function() {
+        var isOpen = btnEl.classList.contains('open');
+        if (isOpen) { closeMenuGlobal(); } else { openMenu(); }
+      });
+    }
+
+    // Close mobile nav on Escape
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && menuEl && menuEl.classList.contains('open')) {
+        closeMenuGlobal();
+      }
+    });
+
+    // Close when a nav link is clicked
+    if (menuEl) {
+      menuEl.querySelectorAll('a').forEach(function(link) {
+        link.addEventListener('click', function() { closeMenuGlobal(); });
+      });
+    }
   })();
 
   function openModal(type) {
