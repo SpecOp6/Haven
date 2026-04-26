@@ -1145,18 +1145,34 @@ section.hw { background:var(--surface-dark-2); padding: 7rem 0; text-align: cent
 .mobile-nav.open .mobile-nav-cta { opacity: 1; transform: translateX(0); }
 .mobile-nav-cta .btn { border: none !important; margin-bottom: 1rem; justify-content: center; }
 
-/* Animated Burger Toggle Fixes */
-.nav-toggle {
+/* Burger Menu Button */
+.burger {
+  display: none;
   background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
   border-radius: var(--radius-xs);
   transition: background 0.2s;
-  padding: 8px;
+  z-index: 1001;
 }
-.nav-toggle:hover { background: rgba(249, 248, 244, 0.08); }
-.nav-toggle span { transition: transform 0.3s var(--ease-out), opacity 0.2s ease, width 0.3s ease; }
-.nav-toggle.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
-.nav-toggle.open span:nth-child(2) { opacity: 0; width: 0; }
-.nav-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+.burger:hover { background: rgba(249, 248, 244, 0.08); }
+.burger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--ink, #1A1A18);
+  border-radius: 2px;
+  transition: transform 0.3s var(--ease-out), opacity 0.2s ease, width 0.3s ease;
+}
+.burger span + span { margin-top: 5px; }
+.burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.burger.open span:nth-child(2) { opacity: 0; width: 0; }
+.burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+@media (max-width: 860px) {
+  .burger { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+}
 
 @media (max-width: 860px) {
   .desktop-only { display: none !important; }
