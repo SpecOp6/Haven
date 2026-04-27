@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Haven Home Wellness — Predictive Fall Prevention</title>
+  <meta name="description" content="Haven uses passive RF sensing and AI-driven gait analysis to predict falls before they happen. No pendants. No cameras. Just peace of mind.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* ═══════════════════════════════════════════════════════════
+       RESET & TOKENS
+       ═══════════════════════════════════════════════════════════ */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --navy: #1B3A6B;
+      --navy-deep: #122647;
+      --navy-mid: #2A5298;
+      --sage: #7EAF7E;
+      --sage-light: #A8C9A8;
+      --sage-pale: #EDF5ED;
+      --cream: #F9F8F4;
+      --ink: #1A1A18;
+      --surface-dark: #0E1A30;
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body: 'Jost', system-ui, sans-serif;
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+      --radius: 12px;
+    }
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+      background: var(--surface-dark);
+    }
+    body {
+      font-family: var(--font-body);
+      color: var(--cream);
+      background: var(--surface-dark);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* ═══════════════════════════════════════════════════════════
+       NAV
+       ═══════════════════════════════════════════════════════════ */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      padding: 0 2rem;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background 0.4s ease, backdrop-filter 0.4s ease;
+    }
+    .nav.scrolled {
+      background: rgba(14, 26, 48, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      z-index: 1001;
+    }
+    .nav-logo span {
+      font-weight: 400;
+      font-style: italic;
+      color: var(--sage);
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+    }
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: rgba(249,248,244,0.55);
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--cream); }
+    .nav-cta-btn {
+      background: var(--sage);
+      color: var(--ink);
+      border: none;
+      padding: 0.55rem 1.4rem;
+      border-radius: 100px;
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s var(--ease-out);
+    }
+    .nav-cta-btn:hover {
+      background: var(--sage-light);
+      transform: translateY(-1px);
+    }
+    .burger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      z-index: 1001;
+    }
+    .burger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--cream);
+      border-radius: 2px;
+      transition: all 0.3s var(--ease-out);
+    }
+    .burger span + span { margin-top: 5px; }
+    .burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .burger.open span:nth-child(2) { opacity: 0; }
+    .burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Mobile nav */
+    .mobile-nav {
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      background: rgba(14, 26, 48, 0.97);
+      backdrop-filter: blur(30px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+    .mobile-nav.open { opacity: 1; pointer-events: auto; }
+    .mobile-nav a {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 400;
+      color: rgba(249,248,244,0.7);
+      transition: color 0.3s;
+    }
+    .mobile-nav a:hover { color: var(--cream); }
+
+    @media (max-width: 860px) {
+      .nav-links { display: none; }
+      .burger { display: flex; flex-direction: column; }
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       SECTIONS — FULL VIEWPORT PANELS
+       ═══════════════════════════════════════════════════════════ */
+    .panel {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      padding: 6rem 2rem;
+    }
+    .panel-inner {
+      max-width: 1100px;
+      width: 100%;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* ── Scroll reveal system ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(60px);
+      transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
+    }
+    .reveal.vis {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal.d1 { transition-delay: 0.12s; }
+    .reveal.d2 { transition-delay: 0.24s; }
+    .reveal.d3 { transition-delay: 0.36s; }
+    .reveal.d4 { transition-delay: 0.48s; }
+    .reveal.d5 { transition-delay: 0.60s; }
+
+    /* Parallax layers */
+    .parallax-bg {
+      position: absolute;
+      inset: -20% 0;
+      z-index: 0;
+      will-change: transform;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       HERO
+       ═══════════════════════════════════════════════════════════ */
+    .hero {
+      min-height: 100vh;
+      background:
+        radial-gradient(ellipse 70% 50% at 50% 45%, rgba(42,82,152,0.15) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 70% 60%, rgba(126,175,126,0.06) 0%, transparent 60%),
+        var(--surface-dark);
+    }
+    .hero-content {
+      text-align: center;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 1.2rem;
+      background: rgba(126,175,126,0.08);
+      border: 1px solid rgba(126,175,126,0.15);
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--sage);
+      margin-bottom: 2.5rem;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--sage);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%,100% { box-shadow: 0 0 0 0 rgba(126,175,126,0.4); }
+      50% { box-shadow: 0 0 0 5px rgba(126,175,126,0); }
+    }
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 500;
+      line-height: 1.05;
+      letter-spacing: -0.035em;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--sage);
+    }
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      font-weight: 300;
+      color: rgba(249,248,244,0.55);
+      line-height: 1.7;
+      max-width: 600px;
+      margin: 0 auto 3rem;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 5rem;
+    }
+    .btn-p {
+      background: var(--sage);
+      color: var(--ink);
+      padding: 0.85rem 2rem;
+      border-radius: 100px;
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s var(--ease-out);
+    }
+    .btn-p:hover { background: var(--sage-light); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(126,175,126,0.2); }
+    .btn-o {
+      background: transparent;
+      color: var(--cream);
+      padding: 0.85rem 2rem;
+      border-radius: 100px;
+      border: 1px solid rgba(249,248,244,0.15);
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: 400;
+      cursor: pointer;
+      transition: all 0.3s var(--ease-out);
+    }
+    .btn-o:hover { border-color: rgba(249,248,244,0.4); background: rgba(249,248,244,0.04); }
+
+    /* Hero stats */
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: rgba(249,248,244,0.05);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .hero-stat {
+      padding: 2rem 1.5rem;
+      background: var(--surface-dark);
+      text-align: center;
+    }
+    .hero-stat-val {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      font-weight: 600;
+      color: var(--cream);
+      margin-bottom: 0.3rem;
+    }
+    .hero-stat-val.sage { color: var(--sage); }
+    .hero-stat-label {
+      font-size: 12px;
+      color: rgba(249,248,244,0.4);
+      line-height: 1.5;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       LIVE COUNTER SECTION
+       ═══════════════════════════════════════════════════════════ */
+    .counter-panel {
+      background:
+        radial-gradient(ellipse 80% 50% at 50% 50%, rgba(126,175,126,0.08) 0%, transparent 60%),
+        var(--surface-dark);
+      border-top: 1px solid rgba(126,175,126,0.06);
+      border-bottom: 1px solid rgba(126,175,126,0.06);
+    }
+    .counter-stage {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .counter-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 1rem 0.4rem 0.75rem;
+      background: rgba(126,175,126,0.1);
+      border: 1px solid rgba(126,175,126,0.2);
+      border-radius: 100px;
+      margin-bottom: 2rem;
+    }
+    .counter-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #6fbf6f;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+    .counter-badge-text {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--sage);
+    }
+    .counter-number {
+      font-family: var(--font-display);
+      font-size: clamp(5rem, 15vw, 11rem);
+      font-weight: 600;
+      line-height: 1;
+      color: var(--cream);
+      letter-spacing: -0.04em;
+      font-variant-numeric: tabular-nums;
+      text-shadow: 0 0 120px rgba(126,175,126,0.12);
+      margin-bottom: 1rem;
+    }
+    .counter-caption {
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      font-weight: 300;
+      color: rgba(249,248,244,0.55);
+      margin-bottom: 3rem;
+    }
+    .counter-caption em {
+      font-family: var(--font-display);
+      font-style: italic;
+      color: rgba(249,248,244,0.85);
+    }
+    .counter-facts {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      padding: 1.5rem 2.5rem;
+      background: rgba(249,248,244,0.03);
+      border: 1px solid rgba(249,248,244,0.06);
+      border-radius: var(--radius);
+    }
+    .counter-fact-div {
+      width: 1px; height: 36px;
+      background: rgba(249,248,244,0.08);
+    }
+    .counter-fact {
+      display: flex; flex-direction: column; gap: 0.2rem;
+    }
+    .counter-fact-val {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--cream);
+    }
+    .counter-fact-lbl {
+      font-size: 11px;
+      color: rgba(249,248,244,0.3);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .counter-src {
+      font-size: 11px;
+      color: rgba(249,248,244,0.15);
+      margin-top: 2rem;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       PROBLEM SECTION — SPLIT CARDS
+       ═══════════════════════════════════════════════════════════ */
+    .problem-panel {
+      background: var(--surface-dark);
+    }
+    .section-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--sage);
+      margin-bottom: 1.5rem;
+    }
+    .section-h {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4.5vw, 3.2rem);
+      font-weight: 500;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      max-width: 20ch;
+      margin-bottom: 1.5rem;
+    }
+    .section-p {
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: rgba(249,248,244,0.55);
+      line-height: 1.7;
+      max-width: 56ch;
+      margin-bottom: 4rem;
+    }
+    .split-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    .split-card {
+      padding: 2.5rem;
+      border-radius: var(--radius);
+      border: 1px solid rgba(249,248,244,0.06);
+    }
+    .split-card.old {
+      background: rgba(217,119,119,0.04);
+      border-color: rgba(217,119,119,0.1);
+    }
+    .split-card.new {
+      background: rgba(126,175,126,0.04);
+      border-color: rgba(126,175,126,0.1);
+    }
+    .split-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+    }
+    .split-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .split-card li {
+      font-size: 15px;
+      font-weight: 300;
+      color: rgba(249,248,244,0.65);
+      padding-left: 1.75rem;
+      position: relative;
+      line-height: 1.5;
+    }
+    .split-card li::before {
+      position: absolute;
+      left: 0;
+    }
+    .split-card.old li::before { content: "✕"; color: #d97777; }
+    .split-card.new li::before { content: "✓"; color: var(--sage); }
+
+    /* ═══════════════════════════════════════════════════════════
+       HARDWARE — STICKY SCROLL REVEAL
+       ═══════════════════════════════════════════════════════════ */
+    .hw-panel {
+      background: var(--surface-dark);
+      border-top: 1px solid rgba(249,248,244,0.04);
+    }
+    .hw-intro {
+      text-align: center;
+      margin-bottom: 5rem;
+    }
+    .hw-intro .section-h {
+      max-width: none;
+      margin: 0 auto 1rem;
+    }
+    .hw-intro .section-p {
+      margin: 0 auto 0;
+      text-align: center;
+    }
+    .hw-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .hw-card {
+      background: rgba(249,248,244,0.02);
+      border: 1px solid rgba(249,248,244,0.06);
+      border-radius: var(--radius);
+      padding: 2.5rem 2rem;
+      transition: all 0.5s var(--ease-out);
+      position: relative;
+      overflow: hidden;
+    }
+    .hw-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--sage), transparent);
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+    .hw-card:hover::before { opacity: 1; }
+    .hw-card:hover {
+      background: rgba(249,248,244,0.04);
+      border-color: rgba(126,175,126,0.15);
+      transform: translateY(-4px);
+    }
+    .hw-icon {
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      background: rgba(126,175,126,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+    .hw-icon svg { width: 24px; height: 24px; stroke: var(--sage); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+    .hw-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+    .hw-card-sub {
+      font-size: 12px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--sage);
+      margin-bottom: 1rem;
+    }
+    .hw-card p {
+      font-size: 14px;
+      font-weight: 300;
+      color: rgba(249,248,244,0.5);
+      line-height: 1.65;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       QUIZ SECTION
+       ═══════════════════════════════════════════════════════════ */
+    .quiz-panel {
+      background:
+        radial-gradient(ellipse 60% 50% at 50% 50%, rgba(42,82,152,0.08) 0%, transparent 60%),
+        var(--surface-dark);
+      border-top: 1px solid rgba(249,248,244,0.04);
+    }
+    .quiz-box {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 3rem;
+      background: rgba(249,248,244,0.02);
+      border: 1px solid rgba(249,248,244,0.06);
+      border-radius: var(--radius);
+    }
+    .quiz-progress {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 2.5rem;
+    }
+    .qp-bar {
+      flex: 1;
+      height: 3px;
+      border-radius: 3px;
+      background: rgba(249,248,244,0.08);
+      transition: background 0.4s var(--ease-out);
+    }
+    .qp-bar.active { background: var(--sage); }
+    .quiz-q {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      color: var(--cream);
+      margin-bottom: 2rem;
+      line-height: 1.4;
+    }
+    .quiz-opts {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .quiz-opt {
+      display: block;
+      width: 100%;
+      padding: 1.1rem 1.5rem;
+      background: rgba(249,248,244,0.04);
+      border: 1.5px solid rgba(249,248,244,0.08);
+      border-radius: 8px;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      color: var(--cream);
+      cursor: pointer;
+      transition: all 0.25s;
+      text-align: left;
+    }
+    .quiz-opt:hover {
+      background: rgba(126,175,126,0.1);
+      border-color: var(--sage);
+    }
+    .quiz-result {
+      text-align: center;
+      padding: 2rem 0;
+    }
+    .quiz-result-icon { font-size: 3rem; margin-bottom: 1rem; }
+    .quiz-result h3 {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: var(--cream);
+    }
+    .quiz-result p {
+      color: rgba(249,248,244,0.6);
+      max-width: 500px;
+      margin: 0 auto 2rem;
+      line-height: 1.7;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       CTA SECTION
+       ═══════════════════════════════════════════════════════════ */
+    .cta-panel {
+      background:
+        radial-gradient(ellipse 60% 40% at 50% 60%, rgba(126,175,126,0.06) 0%, transparent 60%),
+        var(--navy-deep);
+      border-top: 1px solid rgba(126,175,126,0.06);
+    }
+    .cta-inner {
+      text-align: center;
+      max-width: 650px;
+      margin: 0 auto;
+    }
+    .cta-inner .section-h {
+      max-width: none;
+      margin: 0 auto 1.5rem;
+    }
+    .cta-inner .section-p {
+      margin: 0 auto 3rem;
+      text-align: center;
+    }
+    .cta-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .tagline {
+      margin-top: 4rem;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1.1rem;
+      color: rgba(126,175,126,0.5);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       FOOTER
+       ═══════════════════════════════════════════════════════════ */
+    footer {
+      background: var(--surface-dark);
+      border-top: 1px solid rgba(249,248,244,0.04);
+      padding: 4rem 2rem 2rem;
+      font-size: 13px;
+      color: rgba(249,248,244,0.35);
+    }
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 3rem;
+    }
+    .footer-brand-name {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--cream);
+      margin-bottom: 1rem;
+    }
+    .footer-brand-name span { font-weight: 400; font-style: italic; color: var(--sage); }
+    .footer-col h4 {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(249,248,244,0.5);
+      margin-bottom: 1rem;
+    }
+    .footer-col a {
+      display: block;
+      margin-bottom: 0.6rem;
+      color: rgba(249,248,244,0.35);
+      transition: color 0.2s;
+    }
+    .footer-col a:hover { color: var(--cream); }
+    .footer-bottom {
+      max-width: 1100px;
+      margin: 3rem auto 0;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(249,248,244,0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 12px;
+    }
+    .footer-bottom a { color: rgba(249,248,244,0.3); transition: color 0.2s; }
+    .footer-bottom a:hover { color: var(--cream); }
+
+    /* ═══════════════════════════════════════════════════════════
+       MODALS
+       ═══════════════════════════════════════════════════════════ */
+    .hm-overlay {
+      position: fixed; inset: 0; z-index: 2000;
+      background: rgba(14,26,48,0.85);
+      backdrop-filter: blur(16px);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.35s ease;
+      padding: 2rem;
+    }
+    .hm-overlay.active { opacity: 1; pointer-events: auto; }
+    .hm-box {
+      background: var(--surface-dark);
+      border: 1px solid rgba(249,248,244,0.08);
+      border-radius: var(--radius);
+      padding: 3rem;
+      max-width: 520px;
+      width: 100%;
+      position: relative;
+      transform: translateY(20px);
+      transition: transform 0.4s var(--ease-out);
+    }
+    .hm-overlay.active .hm-box { transform: translateY(0); }
+    .hm-close {
+      position: absolute;
+      top: 1rem; right: 1rem;
+      background: none; border: none;
+      color: rgba(249,248,244,0.4);
+      font-size: 18px;
+      cursor: pointer;
+      padding: 4px 8px;
+      transition: color 0.2s;
+    }
+    .hm-close:hover { color: var(--cream); }
+    .hm-box .section-eyebrow { margin-bottom: 0.5rem; }
+    .hm-box h2 {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+    .hm-sub {
+      font-size: 14px;
+      color: rgba(249,248,244,0.45);
+      margin-bottom: 2rem;
+    }
+    .hm-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .hm-field { margin-bottom: 1.25rem; }
+    .hm-field label {
+      display: block;
+      font-size: 12px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: rgba(249,248,244,0.5);
+      margin-bottom: 0.4rem;
+    }
+    .hm-field input,
+    .hm-field select,
+    .hm-field textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      background: rgba(249,248,244,0.04);
+      border: 1px solid rgba(249,248,244,0.08);
+      border-radius: 8px;
+      color: var(--cream);
+      font-family: var(--font-body);
+      font-size: 14px;
+      transition: border-color 0.2s;
+      outline: none;
+    }
+    .hm-field input:focus,
+    .hm-field select:focus,
+    .hm-field textarea:focus {
+      border-color: var(--sage);
+    }
+    .hm-field select { cursor: pointer; }
+    .hm-field textarea { resize: vertical; }
+    .hm-submit {
+      width: 100%;
+      padding: 0.9rem;
+      background: var(--sage);
+      color: var(--ink);
+      border: none;
+      border-radius: 100px;
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s var(--ease-out);
+      margin-top: 0.5rem;
+    }
+    .hm-submit:hover { background: var(--sage-light); }
+    .hm-success { display: none; text-align: center; padding: 2rem 0; }
+    .hm-success-icon { margin-bottom: 1rem; }
+    .hm-success h3 { font-family: var(--font-display); font-size: 1.4rem; margin-bottom: 0.5rem; }
+    .hm-success p { color: rgba(249,248,244,0.5); font-size: 14px; line-height: 1.6; }
+
+    /* ═══════════════════════════════════════════════════════════
+       SCROLL PROGRESS INDICATOR
+       ═══════════════════════════════════════════════════════════ */
+    .scroll-progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--sage), var(--sage-light));
+      z-index: 1100;
+      width: 0%;
+      transition: width 0.1s linear;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       RESPONSIVE
+       ═══════════════════════════════════════════════════════════ */
+    @media (max-width: 860px) {
+      .panel { padding: 5rem 1.5rem; }
+      .hero-stats { grid-template-columns: 1fr 1fr; }
+      .split-cards { grid-template-columns: 1fr; }
+      .hw-grid { grid-template-columns: 1fr; }
+      .footer-inner { grid-template-columns: 1fr; gap: 2rem; }
+      .counter-facts { flex-direction: column; gap: 1.25rem; padding: 1.5rem 2rem; }
+      .counter-fact-div { width: 40px; height: 1px; }
+      .hm-row { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .panel { padding: 4rem 1.25rem; }
+      .hero-stats { grid-template-columns: 1fr; }
+      .quiz-box { padding: 2rem 1.5rem; }
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       SMOOTH SCROLL LENIS-STYLE (CSS ONLY FALLBACK)
+       ═══════════════════════════════════════════════════════════ */
+    @media (prefers-reduced-motion: no-preference) {
+      html { scroll-behavior: smooth; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- SCROLL PROGRESS -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- NAV -->
+<nav class="nav" id="mainNav">
+  <a href="index.html" class="nav-logo">Haven <span>Home Wellness</span></a>
+  <div class="nav-links">
+    <a href="technology.html">Technology</a>
+    <a href="about.html">About</a>
+    <a href="white-paper.html">White Paper</a>
+    <button class="nav-cta-btn" onclick="openModal('contact')">Contact Us</button>
+  </div>
+  <button class="burger" id="burgerBtn" aria-label="Menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="technology.html">Technology</a>
+  <a href="about.html">About</a>
+  <a href="white-paper.html">White Paper</a>
+  <a href="terms.html">Terms</a>
+  <button class="btn-p" onclick="openModal('contact');closeMobile();">Contact Us</button>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 1 — HERO
+     ═══════════════════════════════════════════════════════════ -->
+<section class="panel hero" id="hero">
+  <div class="panel-inner hero-content">
+    <div class="hero-eyebrow reveal">Predictive Fall Prevention</div>
+    <h1 class="reveal d1">Predicting falls<br><em>before</em> they happen</h1>
+    <p class="hero-sub reveal d2">Passive in-home sensing and wearable intelligence detect subtle changes in how your loved one moves — weeks before a fall occurs.</p>
+    <div class="hero-actions reveal d3">
+      <a href="technology.html" class="btn-p">How it works →</a>
+      <a href="#hardware" class="btn-o">See the hardware</a>
+    </div>
+    <div class="hero-stats reveal d4">
+      <div class="hero-stat">
+        <div class="hero-stat-val">14M</div>
+        <div class="hero-stat-label">Adults 65+ fall every year in the U.S.</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-val sage">$80B</div>
+        <div class="hero-stat-label">Annual healthcare cost of non-fatal falls</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-val">41k+</div>
+        <div class="hero-stat-label">Annual deaths from falls in adults 65+</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-val sage">95%</div>
+        <div class="hero-stat-label">Gait analysis sensitivity in predicting fall risk</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 2 — LIVE COUNTER
+     ═══════════════════════════════════════════════════════════ -->
+<section class="panel counter-panel" id="liveCounterSection">
+  <div class="panel-inner counter-stage">
+    <div class="counter-badge reveal">
+      <span class="counter-dot"></span>
+      <span class="counter-badge-text">Counting live</span>
+    </div>
+    <div class="counter-number reveal d1" id="liveFallCount">0</div>
+    <div class="counter-caption reveal d2">seniors have fallen <em>since you opened this page.</em></div>
+    <div class="counter-facts reveal d3">
+      <div class="counter-fact">
+        <span class="counter-fact-val">14M</span>
+        <span class="counter-fact-lbl">falls per year</span>
+      </div>
+      <div class="counter-fact-div"></div>
+      <div class="counter-fact">
+        <span class="counter-fact-val">1 every 2.25s</span>
+        <span class="counter-fact-lbl">right now, in the U.S.</span>
+      </div>
+      <div class="counter-fact-div"></div>
+      <div class="counter-fact">
+        <span class="counter-fact-val">#1 cause</span>
+        <span class="counter-fact-lbl">of injury death, 65+</span>
+      </div>
+    </div>
+    <div class="counter-src reveal d4">Source: CDC National Center for Injury Prevention</div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 3 — THE PROBLEM
+     ═══════════════════════════════════════════════════════════ -->
+<section class="panel problem-panel">
+  <div class="panel-inner">
+    <div class="section-eyebrow reveal">The Problem</div>
+    <h2 class="section-h reveal d1">Falls are the #1 killer of older adults.<br>Current solutions only react.</h2>
+    <p class="section-p reveal d2">By the time a fall happens, the window to prevent it has already closed. Every existing product works the same way: wait for someone to hit the ground, then send an alert. That's not prevention.</p>
+    <div class="split-cards">
+      <div class="split-card old reveal d3">
+        <h3>Today's solutions</h3>
+        <ul>
+          <li>Wearable panic buttons users forget or refuse to wear</li>
+          <li>Camera systems that invade privacy</li>
+          <li>Motion sensors that can't distinguish a fall from sitting down</li>
+          <li>React <em>after</em> the damage is done</li>
+        </ul>
+      </div>
+      <div class="split-card new reveal d4">
+        <h3>The Haven approach</h3>
+        <ul>
+          <li>Passive plug-in sensors — nothing to wear, nothing to press</li>
+          <li>Works with the watch they already own</li>
+          <li>Detects gait deterioration weeks before a fall</li>
+          <li>Predicts and <em>prevents</em> — not just detects</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 4 — HARDWARE
+     ═══════════════════════════════════════════════════════════ -->
+<section class="panel hw-panel" id="hardware">
+  <div class="panel-inner">
+    <div class="hw-intro">
+      <div class="section-eyebrow reveal">The Hardware</div>
+      <h2 class="section-h reveal d1">Designed for your home,<br>not a hospital</h2>
+      <p class="section-p reveal d2">Three devices. One unified ecosystem. Every piece designed to disappear into your home while keeping your loved ones safe.</p>
+    </div>
+    <div class="hw-grid">
+      <div class="hw-card reveal d2">
+        <div class="hw-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l2 2"/></svg>
+        </div>
+        <h3>Steadfast</h3>
+        <div class="hw-card-sub">Passive RF Sensor</div>
+        <p>Plug-in sensors that read subtle body motion through walls using radio-frequency sensing. No cameras. No wearables. Invisible protection.</p>
+      </div>
+      <div class="hw-card reveal d3">
+        <div class="hw-icon">
+          <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9l6 6M15 9l-6 6"/></svg>
+        </div>
+        <h3>Anchor</h3>
+        <div class="hw-card-sub">Edge AI Hub</div>
+        <p>The brain of the system. Processes all sensor data locally inside the home — raw data never leaves. Runs gait analysis in real-time on the edge.</p>
+      </div>
+      <div class="hw-card reveal d4">
+        <div class="hw-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <h3>Beacon</h3>
+        <div class="hw-card-sub">Family Dashboard</div>
+        <p>A real-time dashboard for family and caregivers. Gait trends, risk scores, and alerts — all accessible from any device, anywhere.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 5 — QUIZ
+     ═══════════════════════════════════════════════════════════ -->
+<section class="panel quiz-panel">
+  <div class="panel-inner">
+    <div class="hw-intro">
+      <div class="section-eyebrow reveal">Risk Assessment</div>
+      <h2 class="section-h reveal d1">How safe is your parent at home?</h2>
+      <p class="section-p reveal d2">Answer a few quick questions. No sign-up required.</p>
+    </div>
+    <div class="quiz-box reveal d3">
+      <div class="quiz-progress">
+        <div class="qp-bar active"></div>
+        <div class="qp-bar"></div>
+        <div class="qp-bar"></div>
+        <div class="qp-bar"></div>
+        <div class="qp-bar"></div>
+      </div>
+      <div id="quizQuestion">
+        <h3 class="quiz-q" id="qText"></h3>
+        <div class="quiz-opts" id="qOptions"></div>
+      </div>
+      <div class="quiz-result" id="quizResult" style="display:none">
+        <div class="quiz-result-icon" id="resultIcon"></div>
+        <h3 id="resultTitle"></h3>
+        <p id="resultText"></p>
+        <a href="technology.html" class="btn-p">See how Haven helps →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 6 — CTA
+     ═══════════════════════════════════════════════════════════ -->
+<section class="panel cta-panel">
+  <div class="panel-inner cta-inner">
+    <div class="section-eyebrow reveal">Stay Informed</div>
+    <h2 class="section-h reveal d1">Join the waitlist</h2>
+    <p class="section-p reveal d2">Haven is currently in development. Be the first to know when we launch — and give your parents the safety they deserve.</p>
+    <div class="cta-buttons reveal d3">
+      <button class="btn-p" onclick="openModal('waitlist')">Join the waitlist →</button>
+      <a href="technology.html" class="btn-o">Learn more</a>
+    </div>
+    <div class="tagline reveal d4">"Where home feels safe again."</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand-name">Haven <span>Home Wellness</span></div>
+      <p>Predictive fall prevention for aging adults. Passive in-home sensing. Wearable intelligence. Zero pendants.</p>
+      <p style="font-family:var(--font-display);font-style:italic;color:var(--sage);margin-top:1rem">"Stay home, on your terms."</p>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="about.html">About Us</a>
+      <a href="technology.html">Technology</a>
+      <a href="white-paper.html">White Paper</a>
+    </div>
+    <div class="footer-col">
+      <h4>Connect</h4>
+      <a href="mailto:info@havenhomewellness.ai">info@havenhomewellness.ai</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Haven Home Wellness, Inc. All rights reserved.</span>
+    <a href="terms.html">Terms of Service</a>
+  </div>
+</footer>
+
+<!-- ═══ MODALS ═══ -->
+<div class="hm-overlay" id="modalWaitlist" role="dialog" aria-modal="true" aria-labelledby="wlTitle">
+  <div class="hm-box">
+    <button class="hm-close" onclick="closeModal('waitlist')" aria-label="Close">✕</button>
+    <div id="wlForm">
+      <div class="section-eyebrow">Early access</div>
+      <h2 id="wlTitle">Join the waitlist</h2>
+      <p class="hm-sub">Be the first to know when Haven launches. No spam — just the updates that matter.</p>
+      <div class="hm-row">
+        <div class="hm-field"><label for="wlFirst">First name</label><input type="text" id="wlFirst" placeholder="Sarah" required></div>
+        <div class="hm-field"><label for="wlLast">Last name</label><input type="text" id="wlLast" placeholder="Johnson" required></div>
+      </div>
+      <div class="hm-field"><label for="wlEmail">Email address</label><input type="email" id="wlEmail" placeholder="sarah@example.com" required></div>
+      <div class="hm-field">
+        <label for="wlRole">I am a…</label>
+        <select id="wlRole"><option value="">Select your role</option><option>Adult child / family caregiver</option><option>Senior living in my own home</option><option>Healthcare professional</option><option>Senior living community operator</option><option>Home health agency</option><option>Investor / partner</option><option>Other</option></select>
+      </div>
+      <div class="hm-field"><label for="wlNote">Anything you'd like us to know? <span style="opacity:0.4;font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label><textarea id="wlNote" rows="3" placeholder="e.g. my dad had a fall last year and I need something better…"></textarea></div>
+      <button class="hm-submit" onclick="submitModal('waitlist')">Get early access →</button>
+    </div>
+    <div class="hm-success" id="wlSuccess">
+      <div class="hm-success-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#7EAF7E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <h3>You're on the list.</h3>
+      <p>We'll be in touch at the email you provided. Thank you for believing in what we're building.</p>
+    </div>
+  </div>
+</div>
+
+<div class="hm-overlay" id="modalContact" role="dialog" aria-modal="true" aria-labelledby="ctTitle">
+  <div class="hm-box">
+    <button class="hm-close" onclick="closeModal('contact')" aria-label="Close">✕</button>
+    <div id="ctForm">
+      <div class="section-eyebrow">Get in touch</div>
+      <h2 id="ctTitle">Contact us</h2>
+      <p class="hm-sub">Questions, partnerships, press — we read everything.</p>
+      <div class="hm-row">
+        <div class="hm-field"><label for="ctFirst">First name</label><input type="text" id="ctFirst" placeholder="Alex" required></div>
+        <div class="hm-field"><label for="ctLast">Last name</label><input type="text" id="ctLast" placeholder="Rivera" required></div>
+      </div>
+      <div class="hm-field"><label for="ctEmail">Email address</label><input type="email" id="ctEmail" placeholder="alex@example.com" required></div>
+      <div class="hm-field">
+        <label for="ctSubject">Subject</label>
+        <select id="ctSubject"><option value="">What's this about?</option><option>General inquiry</option><option>Partnership opportunity</option><option>Clinical / research inquiry</option><option>Product question</option><option>Other</option></select>
+      </div>
+      <div class="hm-field"><label for="ctMessage">Message</label><textarea id="ctMessage" rows="4" placeholder="Tell us what's on your mind…" required></textarea></div>
+      <button class="hm-submit" onclick="submitModal('contact')">Send message →</button>
+    </div>
+    <div class="hm-success" id="ctSuccess">
+      <div class="hm-success-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#7EAF7E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <h3>Message sent.</h3>
+      <p>We'll get back to you at the email you provided. Usually within one business day.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SCRIPTS
+     ═══════════════════════════════════════════════════════════ -->
+<script>
+(function() {
+  // ── SCROLL PROGRESS ──
+  var progressBar = document.getElementById('scrollProgress');
+  function updateProgress() {
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    var s = window.scrollY;
+    progressBar.style.width = (h > 0 ? (s / h) * 100 : 0) + '%';
+  }
+  window.addEventListener('scroll', updateProgress, { passive: true });
+
+  // ── NAV SCROLL EFFECT ──
+  var nav = document.getElementById('mainNav');
+  window.addEventListener('scroll', function() {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+
+  // ── BURGER MENU ──
+  var burgerBtn = document.getElementById('burgerBtn');
+  var mobileNav = document.getElementById('mobileNav');
+
+  function closeMobile() {
+    burgerBtn.classList.remove('open');
+    mobileNav.classList.remove('open');
+    burgerBtn.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+  window.closeMobile = closeMobile;
+
+  burgerBtn.addEventListener('click', function() {
+    var isOpen = burgerBtn.classList.contains('open');
+    if (isOpen) {
+      closeMobile();
+    } else {
+      burgerBtn.classList.add('open');
+      mobileNav.classList.add('open');
+      burgerBtn.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    }
+  });
+
+  mobileNav.querySelectorAll('a').forEach(function(link) {
+    link.addEventListener('click', closeMobile);
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      closeMobile();
+      closeModal('waitlist');
+      closeModal('contact');
+    }
+  });
+
+  // ── SCROLL REVEAL (IntersectionObserver) ──
+  var revealEls = document.querySelectorAll('.reveal');
+  var revealObs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('vis');
+        revealObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+
+  revealEls.forEach(function(el) { revealObs.observe(el); });
+
+  // ── LIVE FALL COUNTER ──
+  var FALLS_PER_SECOND = 14000000 / (365.25 * 24 * 3600);
+  var counterEl = document.getElementById('liveFallCount');
+  var counterSection = document.getElementById('liveCounterSection');
+  var counterStart = null;
+  var counterRunning = false;
+  var counterDisplay = 0;
+
+  function counterTick() {
+    if (!counterRunning) return;
+    var elapsed = (Date.now() - counterStart) / 1000;
+    var falls = Math.floor(elapsed * FALLS_PER_SECOND);
+    if (falls !== counterDisplay) {
+      counterDisplay = falls;
+      counterEl.textContent = falls.toLocaleString();
+    }
+    requestAnimationFrame(counterTick);
+  }
+
+  var counterObs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting && !counterRunning) {
+        counterStart = Date.now();
+        counterRunning = true;
+        requestAnimationFrame(counterTick);
+      }
+    });
+  }, { threshold: 0.3 });
+  counterObs.observe(counterSection);
+
+  // ── QUIZ ──
+  var questions = [
+    { q: "Has your parent had a fall — or a near-fall — in the past year?", opts: ["Yes, at least once", "No, but I worry about it", "I'm not sure — I live far away"] },
+    { q: "Have you noticed changes in how they walk or move around?", opts: ["Yes — they seem slower or less steady", "Occasionally, after a long day", "I haven't been able to observe them recently"] },
+    { q: "Does your parent live alone?", opts: ["Yes, completely on their own", "With a spouse or partner", "With a caregiver or family member"] },
+    { q: "How would you describe their current fall prevention setup?", opts: ["They wear a medical alert pendant", "Nothing — we just hope for the best", "Basic modifications like grab bars"] },
+    { q: "How often do you check in on their safety?", opts: ["Multiple times a day — it's always on my mind", "A few times a week", "Less than I'd like to"] }
+  ];
+  var qResults = [
+    { min:0, max:5, icon:"🟢", title:"Looking good — but don't get complacent.", text:"Your parent seems relatively stable right now, but falls can happen without warning. Gait deterioration is invisible to the naked eye — by the time you notice something, the risk window may already be closing." },
+    { min:6, max:10, icon:"🟡", title:"There are warning signs. Don't ignore them.", text:"The patterns you're describing — living alone, subtle changes in movement, distance — are exactly the conditions where a preventable fall turns into a life-changing event. Haven was built for families like yours." },
+    { min:11, max:15, icon:"🔴", title:"Your parent is at elevated risk.", text:"Everything you've described points to a family that needs better visibility into what's happening at home. Haven's passive sensors and wearable gait intelligence can detect the subtle changes you can't see." }
+  ];
+  var qScores = [[3,2,2],[3,2,2],[3,1,0],[1,3,1],[2,1,3]];
+  var currentQ = 0, totalScore = 0;
+  var bars = document.querySelectorAll('.qp-bar');
+
+  function renderQ() {
+    var q = questions[currentQ];
+    document.getElementById('qText').textContent = q.q;
+    var container = document.getElementById('qOptions');
+    container.innerHTML = '';
+    q.opts.forEach(function(opt, i) {
+      var btn = document.createElement('button');
+      btn.className = 'quiz-opt';
+      btn.textContent = opt;
+      btn.addEventListener('click', function() {
+        totalScore += qScores[currentQ][i];
+        currentQ++;
+        if (currentQ < questions.length) {
+          bars[currentQ].classList.add('active');
+          renderQ();
+        } else {
+          document.getElementById('quizQuestion').style.display = 'none';
+          var rd = document.getElementById('quizResult');
+          rd.style.display = 'block';
+          var r = qResults.find(function(x) { return totalScore >= x.min && totalScore <= x.max; }) || qResults[2];
+          document.getElementById('resultIcon').textContent = r.icon;
+          document.getElementById('resultTitle').textContent = r.title;
+          document.getElementById('resultText').textContent = r.text;
+        }
+      });
+      container.appendChild(btn);
+    });
+  }
+  renderQ();
+
+  // ── MODALS ──
+  window.openModal = function(type) {
+    var id = type === 'waitlist' ? 'modalWaitlist' : 'modalContact';
+    document.getElementById(id).classList.add('active');
+    document.body.style.overflow = 'hidden';
+  };
+  window.closeModal = function(type) {
+    var id = type === 'waitlist' ? 'modalWaitlist' : 'modalContact';
+    document.getElementById(id).classList.remove('active');
+    document.body.style.overflow = '';
+  };
+  ['modalWaitlist','modalContact'].forEach(function(id) {
+    document.getElementById(id).addEventListener('click', function(e) {
+      if (e.target === this) closeModal(id === 'modalWaitlist' ? 'waitlist' : 'contact');
+    });
+  });
+
+  window.submitModal = function(type) {
+    var TO = 'info@havenhomewellness.ai';
+    var subject, body, valid;
+    if (type === 'waitlist') {
+      var first = document.getElementById('wlFirst').value.trim();
+      var last  = document.getElementById('wlLast').value.trim();
+      var email = document.getElementById('wlEmail').value.trim();
+      var role  = document.getElementById('wlRole').value;
+      var note  = document.getElementById('wlNote').value.trim();
+      valid = first && last && email;
+      if (!valid) { alert('Please fill in your name and email.'); return; }
+      subject = 'Waitlist: ' + first + ' ' + last;
+      body = ['New waitlist signup from havenhomewellness.ai','','Name: '+first+' '+last,'Email: '+email,'Role: '+(role||'Not specified'),'Note: '+(note||'—')].join('\n');
+      document.getElementById('wlForm').style.display = 'none';
+      document.getElementById('wlSuccess').style.display = 'block';
+    } else {
+      var first = document.getElementById('ctFirst').value.trim();
+      var last  = document.getElementById('ctLast').value.trim();
+      var email = document.getElementById('ctEmail').value.trim();
+      var subj  = document.getElementById('ctSubject').value;
+      var msg   = document.getElementById('ctMessage').value.trim();
+      valid = first && last && email && msg;
+      if (!valid) { alert('Please fill in your name, email, and message.'); return; }
+      subject = 'Contact: ' + (subj||'General') + ' — ' + first + ' ' + last;
+      body = ['New contact from havenhomewellness.ai','','Name: '+first+' '+last,'Email: '+email,'Subject: '+(subj||'—'),'','Message:',msg].join('\n');
+      document.getElementById('ctForm').style.display = 'none';
+      document.getElementById('ctSuccess').style.display = 'block';
+    }
+    window.location.href = 'mailto:' + TO + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+    setTimeout(function() {
+      closeModal(type);
+      if (type === 'waitlist') {
+        document.getElementById('wlForm').style.display = 'block';
+        document.getElementById('wlSuccess').style.display = 'none';
+        ['wlFirst','wlLast','wlEmail','wlNote'].forEach(function(id){document.getElementById(id).value='';});
+        document.getElementById('wlRole').selectedIndex = 0;
+      } else {
+        document.getElementById('ctForm').style.display = 'block';
+        document.getElementById('ctSuccess').style.display = 'none';
+        ['ctFirst','ctLast','ctEmail','ctMessage'].forEach(function(id){document.getElementById(id).value='';});
+        document.getElementById('ctSubject').selectedIndex = 0;
+      }
+    }, 3500);
+  };
+})();
+</script>
+
+<!-- JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Haven Home Wellness",
+  "url": "https://havenhomewellness.ai",
+  "description": "Predictive fall prevention for aging adults using passive RF sensing and AI-driven gait analysis.",
+  "foundingDate": "2025",
+  "founders": [
+    {"@type": "Person", "name": "Nick"},
+    {"@type": "Person", "name": "David A. Taylor"}
+  ]
+}
+</script>
+</body>
+</html>
