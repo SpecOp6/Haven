@@ -123,8 +123,6 @@
       <a href="technology.html">Technology</a>
       <a href="about.html">About</a>
       <a href="white-paper.html">White Paper</a>
-      <a href="privacy.html">Privacy</a>
-      <a href="investors.html">Investors</a>
       <button onclick="openModal('contact')" class="btn btn-primary nav-cta" style="cursor:pointer;border:none;font-family:var(--font-body);font-size:14px;">Contact Us</button>
     </div>
     <button class="burger" id="burgerBtn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileNav">
@@ -140,8 +138,6 @@
   <a href="technology.html">Technology</a>
   <a href="about.html">About Us</a>
   <a href="white-paper.html">White Paper</a>
-  <a href="investors.html">Investors</a>
-  <a href="privacy.html">Privacy Policy</a>
   <a href="terms.html">Terms of Service</a>
   <div class="mobile-nav-cta">
     <button onclick="openModal('contact');closeMenuGlobal();" class="btn btn-primary" style="cursor:pointer;border:none;font-family:var(--font-body);">Contact Us →</button>
@@ -163,6 +159,27 @@
       <div class="stat"><div class="stat-value text-sage">95%</div><div class="stat-label">Gait analysis sensitivity in predicting fall risk</div></div>
     </div>
     <div class="tagline-banner">"Where home feels safe again."</div>
+  </div>
+</section>
+
+<!-- ═══ LIVE FALL COUNTER ═══ -->
+<section class="live-counter-section surface-dark" id="liveCounterSection">
+  <div class="container">
+    <div class="live-counter-box">
+      <div class="live-counter-left">
+        <div class="live-counter-pulse-dot"></div>
+        <span class="live-counter-live-label">Live</span>
+        <span class="live-counter-eyebrow">Since you opened this page</span>
+      </div>
+      <div class="live-counter-center">
+        <div class="live-counter-number" id="liveFallCount">0</div>
+        <div class="live-counter-unit">seniors have fallen in the U.S.</div>
+      </div>
+      <div class="live-counter-right">
+        <div class="live-counter-stat">1 every <strong>2.25s</strong></div>
+        <div class="live-counter-source">CDC · 14 million falls/year among adults 65+</div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -261,14 +278,13 @@
         <p style="margin-top:1rem">Predictive fall prevention for aging adults. Passive in-home sensing. Wearable intelligence. Zero pendants.</p>
         <p style="font-family:var(--font-display);font-style:italic;color:var(--sage);margin-top:1rem;font-size:15px">"Stay home, on your terms."</p>
       </div>
-      <div class="footer-col"><h4>Company</h4><a href="about.html">About Us</a><a href="technology.html">Technology</a><a href="white-paper.html">White Paper</a><a href="investors.html">Investors</a></div>
-      <div class="footer-col"><h4>Legal</h4><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a></div>
+      <div class="footer-col"><h4>Company</h4><a href="about.html">About Us</a><a href="technology.html">Technology</a><a href="white-paper.html">White Paper</a></div>
+      <div class="footer-col"><h4>Legal</h4><a href="terms.html">Terms of Service</a></div>
       <div class="footer-col"><h4>Connect</h4><a href="mailto:info@havenhomewellness.ai">info@havenhomewellness.ai</a></div>
     </div>
     <div class="footer-bottom mt-6 pt-4 hairline">
       <span>© 2026 Haven Home Wellness, Inc. All rights reserved.</span>
       <div style="display:flex;gap:1.5rem">
-        <a href="privacy.html">Privacy Policy</a>
         <a href="terms.html">Terms of Service</a>
       </div>
     </div>
@@ -276,44 +292,6 @@
 </footer>
 
 <script>
-  (function() {
-    var btn = document.getElementById("burgerBtn");
-    var menu = document.getElementById("mobileNav");
-    var body = document.body;
-
-    function openMenu() {
-      btn.classList.add("open");
-      menu.classList.add("open");
-      btn.setAttribute("aria-expanded", "true");
-      menu.setAttribute("aria-hidden", "false");
-      body.style.overflow = "hidden";
-    }
-
-    function closeMenu() {
-      btn.classList.remove("open");
-      menu.classList.remove("open");
-      btn.setAttribute("aria-expanded", "false");
-      menu.setAttribute("aria-hidden", "true");
-      body.style.overflow = "";
-    }
-
-    btn.addEventListener("click", function() {
-      btn.classList.contains("open") ? closeMenu() : openMenu();
-    });
-
-    menu.querySelectorAll("a").forEach(function(link) {
-      link.addEventListener("click", closeMenu);
-    });
-
-    document.addEventListener("keydown", function(e) {
-      if (e.key === "Escape" && menu.classList.contains("open")) closeMenu();
-    });
-
-    window.addEventListener("resize", function() {
-      if (window.innerWidth > 768 && menu.classList.contains("open")) closeMenu();
-    });
-  })();
-
   // Fall Counter — 1 fall every 8 seconds
   (function() {
     var counter = document.getElementById('fallCounter');
@@ -667,247 +645,40 @@
     }, 3500);
   }
 </script>
-<!-- ═══ FLOATING FALL COUNTER ═══ -->
-<div class="fall-counter" id="fallCounter" aria-live="polite" aria-label="Senior fall counter">
-  <button class="fall-counter-close" id="fallCounterClose" aria-label="Close fall counter">✕</button>
-  <div class="fall-counter-pulse"></div>
-  <div class="fall-counter-inner">
-    <div class="fall-counter-eyebrow">Since you opened this page</div>
-    <div class="fall-counter-number" id="fallCount">0</div>
-    <div class="fall-counter-label">seniors have fallen in the U.S.</div>
-    <div class="fall-counter-source">Based on CDC data · 14M falls/year</div>
-  </div>
-</div>
-
-<style>
-  .fall-counter {
-    position: fixed;
-    left: 24px;
-    top: 0;
-    z-index: 900;
-    background: rgba(14, 26, 48, 0.45);
-    backdrop-filter: blur(24px) saturate(1.4);
-    -webkit-backdrop-filter: blur(24px) saturate(1.4);
-    border: 1px solid rgba(249, 248, 244, 0.1);
-    border-top-color: rgba(249, 248, 244, 0.18);
-    border-left-color: rgba(249, 248, 244, 0.13);
-    border-radius: var(--radius);
-    padding: 1.25rem 1.5rem;
-    min-width: 200px;
-    font-family: var(--font-body);
-    color: var(--cream);
-    will-change: transform;
-    box-shadow:
-      0 16px 48px -12px rgba(0, 0, 0, 0.35),
-      0 4px 12px rgba(0, 0, 0, 0.15),
-      inset 0 1px 0 rgba(249, 248, 244, 0.06),
-      inset 0 0 20px rgba(14, 26, 48, 0.15);
-    opacity: 0;
-    pointer-events: none;
-  }
-  .fall-counter.visible {
-    opacity: 1;
-    pointer-events: auto;
-    transition: opacity 0.6s ease;
-  }
-  .fall-counter-close {
-    position: absolute;
-    top: 8px;
-    right: 10px;
-    background: none;
-    border: none;
-    color: rgba(249, 248, 244, 0.35);
-    font-size: 13px;
-    cursor: pointer;
-    padding: 4px 6px;
-    line-height: 1;
-    transition: color 0.2s;
-  }
-  .fall-counter-close:hover { color: var(--cream); }
-  .fall-counter-pulse {
-    position: absolute;
-    top: 16px;
-    left: 18px;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--sage);
-    box-shadow: 0 0 0 0 rgba(126, 175, 126, 0.5);
-    animation: counterPulse 2s ease-in-out infinite;
-  }
-  @keyframes counterPulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(126, 175, 126, 0.45); }
-    50%      { box-shadow: 0 0 0 6px rgba(126, 175, 126, 0); }
-  }
-  .fall-counter-eyebrow {
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--sage);
-    margin-bottom: 0.35rem;
-    padding-left: 16px;
-  }
-  .fall-counter-number {
-    font-family: var(--font-display);
-    font-size: clamp(2rem, 5vw, 2.6rem);
-    font-weight: 600;
-    line-height: 1;
-    color: var(--cream);
-    letter-spacing: -0.02em;
-    margin-bottom: 0.2rem;
-    font-variant-numeric: tabular-nums;
-  }
-  .fall-counter-label {
-    font-size: 13px;
-    font-weight: 400;
-    color: rgba(249, 248, 244, 0.7);
-    line-height: 1.3;
-  }
-  .fall-counter-source {
-    font-size: 10px;
-    color: rgba(249, 248, 244, 0.3);
-    margin-top: 0.6rem;
-    padding-top: 0.5rem;
-    border-top: 1px solid rgba(249, 248, 244, 0.06);
-  }
-  .fall-counter.dismissed {
-    opacity: 0 !important;
-    pointer-events: none !important;
-    transition: opacity 0.4s ease;
-  }
-  @media (max-width: 600px) {
-    .fall-counter {
-      left: 12px;
-      right: 12px;
-      min-width: unset;
-      padding: 1rem 1.25rem;
-    }
-    .fall-counter-number { font-size: 1.8rem; }
-  }
-</style>
 
 <script>
+// Live fall counter — CDC: ~14M falls/year among 65+
 (function() {
-  var widget = document.getElementById('fallCounter');
-  var counterEl = document.getElementById('fallCount');
-  var closeBtn = document.getElementById('fallCounterClose');
-
-  // ── Fall counter ──
   var FALLS_PER_SECOND = 14000000 / (365.25 * 24 * 3600);
-  var startTime = Date.now();
+  var counterEl = document.getElementById('liveFallCount');
+  var section = document.getElementById('liveCounterSection');
+  var startTime = null;
   var currentDisplay = 0;
-
-  // ── Spring physics ──
-  var MARGIN = 24;
-  var MARGIN_MOBILE = 12;
-  var targetY = 0;
-  var currentY = 0;
-  var velocityY = 0;
-  var lastScrollY = window.scrollY;
-
-  // Spring tuning
-  var STIFFNESS = 0.045;
-  var DAMPING = 0.82;
-
-  // Idle hover
-  var idlePhase = Math.random() * Math.PI * 2;
-  var IDLE_AMP = 3.5;
-  var IDLE_SPEED = 0.001;
-
-  var dismissed = false;
-  var entered = false;
-
-  function getMargin() {
-    return window.innerWidth <= 600 ? MARGIN_MOBILE : MARGIN;
-  }
-
-  function getRestY() {
-    var wh = widget.offsetHeight || 140;
-    return window.innerHeight - wh - getMargin();
-  }
-
-  // Entrance — 2s delay, floats up from below
-  setTimeout(function() {
-    entered = true;
-    targetY = getRestY();
-    currentY = targetY + 80;
-    widget.classList.add('visible');
-  }, 2000);
+  var running = false;
 
   function tick() {
-    if (dismissed) { requestAnimationFrame(tick); return; }
-
-    if (entered) {
-      // Scroll velocity → inertia kick
-      var nowScroll = window.scrollY;
-      var scrollDelta = nowScroll - lastScrollY;
-      lastScrollY = nowScroll;
-
-      targetY = getRestY();
-
-      // Spring: F = -k * x
-      var displacement = currentY - targetY;
-      var springForce = -STIFFNESS * displacement;
-
-      // Scroll momentum pushes the widget
-      velocityY += springForce + scrollDelta * 0.4;
-      velocityY *= DAMPING;
-      currentY += velocityY;
-
-      // Idle float when settled
-      var idleOffset = 0;
-      if (Math.abs(velocityY) < 0.25 && Math.abs(displacement) < 0.5) {
-        idlePhase += IDLE_SPEED * 16;
-        idleOffset = Math.sin(idlePhase) * IDLE_AMP;
-      }
-
-      // Tilt based on velocity — catches the air
-      var tilt = Math.max(-2.5, Math.min(2.5, velocityY * 0.12));
-
-      // Dynamic shadow — stretches when moving fast
-      var speed = Math.abs(velocityY);
-      var shY = 16 + speed * 2;
-      var shBlur = 48 + speed * 4;
-      var shAlpha = Math.min(0.55, 0.35 + speed * 0.012);
-
-      widget.style.transform =
-        'translate3d(0,' + (currentY + idleOffset) + 'px,0) rotate(' + tilt.toFixed(2) + 'deg)';
-
-      widget.style.boxShadow =
-        '0 ' + shY.toFixed(0) + 'px ' + shBlur.toFixed(0) + 'px -12px rgba(0,0,0,' + shAlpha.toFixed(3) + '),' +
-        '0 4px 12px rgba(0,0,0,0.15),' +
-        'inset 0 1px 0 rgba(249,248,244,0.06),' +
-        'inset 0 0 20px rgba(14,26,48,0.15)';
-
-      // Responsive margins
-      widget.style.left = getMargin() + 'px';
-      widget.style.right = window.innerWidth <= 600 ? getMargin() + 'px' : 'auto';
-    }
-
-    // Fall count
+    if (!running) return;
     var elapsed = (Date.now() - startTime) / 1000;
     var falls = Math.floor(elapsed * FALLS_PER_SECOND);
     if (falls !== currentDisplay) {
       currentDisplay = falls;
       counterEl.textContent = falls.toLocaleString();
     }
-
     requestAnimationFrame(tick);
   }
 
-  requestAnimationFrame(tick);
-
-  // Dismiss
-  if (closeBtn) {
-    closeBtn.addEventListener('click', function() {
-      dismissed = true;
-      widget.classList.add('dismissed');
+  // Start counting when section enters viewport
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting && !running) {
+        startTime = Date.now();
+        running = true;
+        requestAnimationFrame(tick);
+      }
     });
-  }
+  }, { threshold: 0.3 });
 
-  // Recalc on resize
-  window.addEventListener('resize', function() { targetY = getRestY(); });
+  observer.observe(section);
 })();
 </script>
 
