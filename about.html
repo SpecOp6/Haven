@@ -2,13 +2,159 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About — Haven Home Wellness</title>
-  <meta name="description" content="Meet the team behind Haven Home Wellness. Two founders on a mission to make predictive fall prevention a reality for every aging adult.">
-  <link rel="stylesheet" href="styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400&family=Jost:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>About Haven Home Wellness — Two Founders, One Mission</title>
+  <meta name="description" content="Haven Home Wellness is building the first predictive fall prevention platform. Meet the founders, learn our mission, and see what drives us.">
+  <link rel="canonical" href="https://havenhomewellness.ai/about.html">
+  <meta property="og:title" content="About Haven Home Wellness">
+  <meta property="og:description" content="Two founders building predictive fall prevention because the people we love deserve better than a panic button.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    :root{--navy:#1B3A6B;--navy-deep:#122647;--navy-mid:#2A5298;--sage:#7EAF7E;--sage-light:#A8C9A8;--cream:#F9F8F4;--ink:#1A1A18;--surface-dark:#0E1A30;--font-display:'Playfair Display',Georgia,serif;--font-body:'Jost',system-ui,sans-serif;--ease-out:cubic-bezier(0.16,1,0.3,1);--radius:12px}
+    html{scroll-behavior:smooth;overflow-x:hidden;background:var(--surface-dark)}
+    body{font-family:var(--font-body);color:var(--cream);background:var(--surface-dark);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+    a{color:inherit;text-decoration:none}
+
+    /* NAV */
+    .nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:72px;display:flex;align-items:center;justify-content:space-between;transition:background .4s,backdrop-filter .4s}
+    .nav.scrolled{background:rgba(14,26,48,.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+    .nav-logo{font-family:var(--font-display);font-size:1.3rem;font-weight:600;letter-spacing:-.02em;z-index:1001}
+    .nav-logo span{font-weight:400;font-style:italic;color:var(--sage)}
+    .nav-links{display:flex;align-items:center;gap:2.5rem}
+    .nav-links a{font-size:13px;font-weight:400;letter-spacing:.04em;text-transform:uppercase;color:rgba(249,248,244,.55);transition:color .3s}
+    .nav-links a:hover,.nav-links a.active{color:var(--cream)}
+    .nav-cta-btn{background:var(--sage);color:var(--ink);border:none;padding:.55rem 1.4rem;border-radius:100px;font-family:var(--font-body);font-size:13px;font-weight:500;cursor:pointer;transition:all .3s var(--ease-out)}
+    .nav-cta-btn:hover{background:var(--sage-light);transform:translateY(-1px)}
+    .burger{display:none;background:none;border:none;cursor:pointer;padding:8px;z-index:1001}
+    .burger span{display:block;width:22px;height:2px;background:var(--cream);border-radius:2px;transition:all .3s var(--ease-out)}
+    .burger span+span{margin-top:5px}
+    .burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+    .burger.open span:nth-child(2){opacity:0}
+    .burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+    .mobile-nav{position:fixed;inset:0;z-index:999;background:rgba(14,26,48,.97);backdrop-filter:blur(30px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem;opacity:0;pointer-events:none;transition:opacity .4s}
+    .mobile-nav.open{opacity:1;pointer-events:auto}
+    .mobile-nav a{font-family:var(--font-display);font-size:2rem;font-weight:400;color:rgba(249,248,244,.7);transition:color .3s}
+    .mobile-nav a:hover{color:var(--cream)}
+    @media(max-width:860px){.nav-links{display:none}.burger{display:flex;flex-direction:column}}
+
+    .scroll-progress{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--sage),var(--sage-light));z-index:1100;width:0%;transition:width .1s linear}
+
+    /* REVEALS */
+    .reveal{opacity:0;transform:translateY(50px);transition:opacity .8s var(--ease-out),transform .8s var(--ease-out)}
+    .reveal.vis{opacity:1;transform:translateY(0)}
+    .reveal.d1{transition-delay:.12s}.reveal.d2{transition-delay:.24s}.reveal.d3{transition-delay:.36s}.reveal.d4{transition-delay:.48s}
+
+    /* PANELS */
+    .panel{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:6rem 2rem}
+    .panel-inner{max-width:1100px;width:100%;margin:0 auto;position:relative;z-index:2}
+    .section-eyebrow{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.16em;color:var(--sage);margin-bottom:1.5rem}
+    .section-h{font-family:var(--font-display);font-size:clamp(2rem,4.5vw,3.2rem);font-weight:500;line-height:1.1;letter-spacing:-.03em;margin-bottom:1.5rem}
+    .section-p{font-size:1.05rem;font-weight:300;color:rgba(249,248,244,.55);line-height:1.7;max-width:56ch}
+    .btn-p{background:var(--sage);color:var(--ink);padding:.85rem 2rem;border-radius:100px;font-family:var(--font-body);font-size:15px;font-weight:500;border:none;cursor:pointer;transition:all .3s var(--ease-out);display:inline-block}
+    .btn-p:hover{background:var(--sage-light);transform:translateY(-2px);box-shadow:0 12px 40px rgba(126,175,126,.2)}
+
+    /* HERO */
+    .hero{background:radial-gradient(ellipse 70% 50% at 50% 45%,rgba(42,82,152,.15) 0%,transparent 70%),var(--surface-dark)}
+    .hero-content{text-align:center;max-width:800px;margin:0 auto}
+    .hero h1{font-family:var(--font-display);font-size:clamp(2.8rem,6.5vw,5rem);font-weight:500;line-height:1.08;letter-spacing:-.035em;margin-bottom:1.5rem}
+    .hero h1 em{font-style:italic;color:var(--sage)}
+    .hero-sub{font-size:clamp(1rem,2vw,1.2rem);font-weight:300;color:rgba(249,248,244,.55);line-height:1.7;max-width:600px;margin:0 auto}
+
+    /* MISSION */
+    .mission-panel{background:var(--surface-dark);border-top:1px solid rgba(249,248,244,.04)}
+    .mission-content{text-align:center;max-width:700px;margin:0 auto}
+    .mission-content .section-p{margin:0 auto 2.5rem;text-align:center}
+    .mission-quote{font-family:var(--font-display);font-style:italic;font-size:clamp(1.3rem,3vw,1.8rem);color:var(--sage);margin-bottom:3rem}
+    .facts-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(249,248,244,.05);border-radius:var(--radius);overflow:hidden}
+    .fact{padding:1.5rem;background:var(--surface-dark);text-align:center}
+    .fact .val{font-family:var(--font-display);font-size:1.1rem;font-weight:600;color:var(--cream);margin-bottom:.3rem}
+    .fact .lbl{font-size:11px;color:rgba(249,248,244,.35);text-transform:uppercase;letter-spacing:.06em}
+
+    /* TEAM */
+    .team-panel{background:radial-gradient(ellipse 60% 50% at 50% 50%,rgba(42,82,152,.06) 0%,transparent 60%),var(--surface-dark);border-top:1px solid rgba(249,248,244,.04)}
+    .team-intro{text-align:center;margin-bottom:4rem}
+    .team-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem}
+    .team-card{background:rgba(249,248,244,.02);border:1px solid rgba(249,248,244,.06);border-radius:var(--radius);overflow:hidden;transition:all .5s var(--ease-out)}
+    .team-card:hover{border-color:rgba(126,175,126,.15);transform:translateY(-4px)}
+    .team-photo{position:relative;width:100%;aspect-ratio:4/3;background:rgba(249,248,244,.04);overflow:hidden}
+    .team-photo img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
+    .team-info{padding:2rem}
+    .team-info .role{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:var(--sage);margin-bottom:.5rem}
+    .team-info h3{font-family:var(--font-display);font-size:1.4rem;font-weight:500;margin-bottom:.75rem}
+    .team-info p{font-size:14px;font-weight:300;color:rgba(249,248,244,.5);line-height:1.7}
+    .team-info ul{margin-top:1rem;padding-left:1.2rem;font-size:14px;color:rgba(249,248,244,.45);line-height:1.8}
+
+    /* VALUES */
+    .values-panel{background:var(--surface-dark);border-top:1px solid rgba(249,248,244,.04)}
+    .values-intro{text-align:center;margin-bottom:4rem}
+    .values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+    .value-card{background:rgba(249,248,244,.02);border:1px solid rgba(249,248,244,.06);border-radius:var(--radius);padding:2.5rem 2rem;text-align:center;transition:all .5s var(--ease-out)}
+    .value-card:hover{background:rgba(249,248,244,.04);border-color:rgba(126,175,126,.12);transform:translateY(-3px)}
+    .value-icon{font-size:2rem;margin-bottom:1.25rem}
+    .value-card h3{font-family:var(--font-display);font-size:1.15rem;font-weight:500;margin-bottom:.75rem}
+    .value-card p{font-size:14px;font-weight:300;color:rgba(249,248,244,.45);line-height:1.7}
+
+    /* HIRING */
+    .hiring-panel{background:radial-gradient(ellipse 60% 40% at 50% 60%,rgba(126,175,126,.04) 0%,transparent 60%),var(--surface-dark);border-top:1px solid rgba(249,248,244,.04)}
+    .hiring-intro{text-align:center;margin-bottom:3rem}
+    .hiring-intro .section-p{margin:0 auto 0;text-align:center}
+    .hiring-roles{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-bottom:3rem}
+    .hiring-role{background:rgba(249,248,244,.02);border:1px solid rgba(249,248,244,.06);border-radius:var(--radius);padding:2rem}
+    .hiring-role h4{font-family:var(--font-display);font-size:1.05rem;font-weight:500;margin-bottom:.5rem}
+    .hiring-role p{font-size:13px;font-weight:300;color:rgba(249,248,244,.45);line-height:1.6}
+    .hiring-cta{text-align:center}
+
+    /* FOOTER */
+    footer{background:var(--surface-dark);border-top:1px solid rgba(249,248,244,.04);padding:4rem 2rem 2rem;font-size:13px;color:rgba(249,248,244,.35)}
+    .footer-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem}
+    .footer-brand-name{font-family:var(--font-display);font-size:1.2rem;font-weight:600;color:var(--cream);margin-bottom:1rem}
+    .footer-brand-name span{font-weight:400;font-style:italic;color:var(--sage)}
+    .footer-col h4{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:rgba(249,248,244,.5);margin-bottom:1rem}
+    .footer-col a{display:block;margin-bottom:.6rem;color:rgba(249,248,244,.35);transition:color .2s}
+    .footer-col a:hover{color:var(--cream)}
+    .footer-bottom{max-width:1100px;margin:3rem auto 0;padding-top:1.5rem;border-top:1px solid rgba(249,248,244,.05);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;font-size:12px}
+    .footer-bottom a{color:rgba(249,248,244,.3);transition:color .2s}
+    .footer-bottom a:hover{color:var(--cream)}
+
+    /* MODALS */
+    .hm-overlay{position:fixed;inset:0;z-index:2000;background:rgba(14,26,48,.85);backdrop-filter:blur(16px);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .35s;padding:2rem}
+    .hm-overlay.active{opacity:1;pointer-events:auto}
+    .hm-box{background:var(--surface-dark);border:1px solid rgba(249,248,244,.08);border-radius:var(--radius);padding:3rem;max-width:520px;width:100%;position:relative;transform:translateY(20px);transition:transform .4s var(--ease-out)}
+    .hm-overlay.active .hm-box{transform:translateY(0)}
+    .hm-close{position:absolute;top:1rem;right:1rem;background:none;border:none;color:rgba(249,248,244,.4);font-size:18px;cursor:pointer;padding:4px 8px;transition:color .2s}
+    .hm-close:hover{color:var(--cream)}
+    .hm-box h2{font-family:var(--font-display);font-size:1.6rem;font-weight:500;margin-bottom:.5rem}
+    .hm-sub{font-size:14px;color:rgba(249,248,244,.45);margin-bottom:2rem}
+    .hm-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+    .hm-field{margin-bottom:1.25rem}
+    .hm-field label{display:block;font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:rgba(249,248,244,.5);margin-bottom:.4rem}
+    .hm-field input,.hm-field select,.hm-field textarea{width:100%;padding:.75rem 1rem;background:rgba(249,248,244,.04);border:1px solid rgba(249,248,244,.08);border-radius:8px;color:var(--cream);font-family:var(--font-body);font-size:14px;transition:border-color .2s;outline:none}
+    .hm-field input:focus,.hm-field select:focus,.hm-field textarea:focus{border-color:var(--sage)}
+    .hm-field select{cursor:pointer}.hm-field textarea{resize:vertical}
+    .hm-submit{width:100%;padding:.9rem;background:var(--sage);color:var(--ink);border:none;border-radius:100px;font-family:var(--font-body);font-size:15px;font-weight:500;cursor:pointer;transition:all .3s var(--ease-out);margin-top:.5rem}
+    .hm-submit:hover{background:var(--sage-light)}
+    .hm-success{display:none;text-align:center;padding:2rem 0}
+    .hm-success h3{font-family:var(--font-display);font-size:1.4rem;margin-bottom:.5rem}
+    .hm-success p{color:rgba(249,248,244,.5);font-size:14px;line-height:1.6}
+
+    /* RESPONSIVE */
+    @media(max-width:860px){
+      .panel{padding:5rem 1.5rem}
+      .team-grid,.values-grid,.hiring-roles{grid-template-columns:1fr}
+      .facts-strip{grid-template-columns:1fr 1fr}
+      .footer-inner{grid-template-columns:1fr;gap:2rem}
+      .hm-row{grid-template-columns:1fr}
+    }
+    @media(max-width:480px){.panel{padding:4rem 1.25rem}.facts-strip{grid-template-columns:1fr}}
+  </style>
 </head>
-<body class="dark-page">
+<body>
+
+<div class="scroll-progress" id="scrollProgress"></div>
 
 <nav class="nav" id="mainNav">
   <a href="index.html" class="nav-logo">Haven <span>Home Wellness</span></a>
@@ -16,94 +162,76 @@
     <a href="technology.html">Technology</a>
     <a href="about.html" class="active">About</a>
     <a href="white-paper.html">White Paper</a>
-    <a href="investors.html">Investors</a>
     <button class="nav-cta-btn" onclick="openModal('contact')">Contact Us</button>
   </div>
-  <button class="burger" id="burgerBtn" aria-label="Menu" aria-expanded="false">
-    <span></span><span></span><span></span>
-  </button>
+  <button class="burger" id="burgerBtn" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </nav>
-
-<!-- MOBILE NAV -->
 <div class="mobile-nav" id="mobileNav">
+  <a href="index.html">Home</a>
   <a href="technology.html">Technology</a>
-  <a href="about.html" class="active">About</a>
+  <a href="about.html">About</a>
   <a href="white-paper.html">White Paper</a>
-  <a href="investors.html">Investors</a>
+  <a href="terms.html">Terms</a>
   <button class="btn-p" onclick="openModal('contact');closeMobile();">Contact Us</button>
 </div>
 
-
-<!-- ── NAV ── -->
-<!-- ── PAGE HERO ── -->
-<section class="page-hero surface-dark">
-  <div class="container">
-    <div class="eyebrow">About</div>
-    <h1>Two founders. One mission.</h1>
-    <p class="lede">We're building the future of fall prevention because the people we love deserve better than a panic button.</p>
+<!-- HERO -->
+<section class="panel hero">
+  <div class="panel-inner hero-content">
+    <div class="section-eyebrow reveal">About</div>
+    <h1 class="reveal d1">Two founders.<br><em>One mission.</em></h1>
+    <p class="hero-sub reveal d2">We're building the future of fall prevention because the people we love deserve better than a panic button.</p>
   </div>
 </section>
 
-<!-- ── MISSION ── -->
-<section class="mission-section surface-dark">
-  <div class="container">
-    <div class="section-label fade-up">Our mission</div>
-    <div class="section-title fade-up">Keep aging adults safe at home — on their terms.</div>
-    <div class="section-desc fade-up">Haven exists because falling shouldn't be an inevitability of aging. With the right technology — passive, predictive, and privacy-preserving — we can see risk before it becomes injury. We can intervene before the fall, not after. And we can do it without cameras, wearables, or compromising anyone's dignity.</div>
-    <div class="mission-quote fade-up">
-      Where home feels safe again.
-    </div>
-    <div class="facts-strip fade-up">
-      <div class="fact">
-        <div class="val">Delaware C-Corp</div>
-        <div class="lbl">Incorporation</div>
-      </div>
-      <div class="fact">
-        <div class="val">2025</div>
-        <div class="lbl">Founded</div>
-      </div>
-      <div class="fact">
-        <div class="val">Pre-seed</div>
-        <div class="lbl">Stage</div>
-      </div>
-      <div class="fact">
-        <div class="val">Leesburg, VA</div>
-        <div class="lbl">Headquarters</div>
-      </div>
+<!-- MISSION -->
+<section class="panel mission-panel">
+  <div class="panel-inner mission-content">
+    <div class="section-eyebrow reveal">Our mission</div>
+    <h2 class="section-h reveal d1">Keep aging adults safe at home — on their terms.</h2>
+    <p class="section-p reveal d2">Haven exists because falling shouldn't be an inevitability of aging. With the right technology — passive, predictive, and privacy-preserving — we can see risk before it becomes injury. We can intervene before the fall, not after. And we can do it without cameras, wearables, or compromising anyone's dignity.</p>
+    <div class="mission-quote reveal d3">"Where home feels safe again."</div>
+    <div class="facts-strip reveal d4">
+      <div class="fact"><div class="val">Delaware C-Corp</div><div class="lbl">Incorporation</div></div>
+      <div class="fact"><div class="val">2025</div><div class="lbl">Founded</div></div>
+      <div class="fact"><div class="val">Pre-seed</div><div class="lbl">Stage</div></div>
+      <div class="fact"><div class="val">Leesburg, VA</div><div class="lbl">Headquarters</div></div>
     </div>
   </div>
 </section>
 
-<!-- ── TEAM ── -->
-<section class="team-section surface-dark" style="background: var(--surface-4);">
-  <div class="container">
-    <div class="section-label fade-up">Founders</div>
-    <div class="section-title fade-up">We already built it.<br>Now we scale it.</div>
+<!-- TEAM -->
+<section class="panel team-panel">
+  <div class="panel-inner">
+    <div class="team-intro">
+      <div class="section-eyebrow reveal">Founders</div>
+      <h2 class="section-h reveal d1">We already built it.<br>Now we scale it.</h2>
+    </div>
     <div class="team-grid">
-      <div class="team-card fade-up">
+      <div class="team-card reveal d2">
         <div class="team-photo">
-          <img src="nick.jpeg" alt="Nick Whitehead" style="width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; position: absolute; inset: 0;">
+          <img src="nick.jpeg" alt="Nick Whitehead — Co-Founder & CEO of Haven Home Wellness">
         </div>
         <div class="team-info">
           <div class="role">Co-Founder & CEO</div>
           <h3>Nick Whitehead</h3>
           <p>Enterprise SaaS operator turned maker. Background selling complex software to Fortune 500 buyers. Hands-on technically — builds hardware prototypes, writes firmware, ships working systems.</p>
-          <ul style="margin-top: 1rem; padding-left: 1.2rem; color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">
+          <ul>
             <li>Currently at Typeface (Enterprise AI)</li>
             <li>Built Steadfast WiFi CSI mesh end-to-end</li>
-            <li>Owns GTM, fundraising, and investor relations</li>
+            <li>Owns GTM, fundraising, and partnerships</li>
           </ul>
         </div>
       </div>
-      <div class="team-card fade-up">
+      <div class="team-card reveal d3">
         <div class="team-photo">
-          <img src="david.jpeg" alt="David Taylor" style="width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; position: absolute; inset: 0;">
+          <img src="david.jpeg" alt="David Taylor — Co-Founder & CTO of Haven Home Wellness">
         </div>
         <div class="team-info">
           <div class="role">Co-Founder & CTO</div>
           <h3>David Taylor</h3>
           <p>Product architect and UX designer. Owns the technical roadmap, system architecture, and user experience layer. Brings deep product craft to a domain that has been neglected by design.</p>
-          <ul style="margin-top: 1rem; padding-left: 1.2rem; color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">
+          <ul>
             <li>Leads product architecture and UX</li>
             <li>Owns the Beacon dashboard and mobile experience</li>
             <li>Technical roadmap and platform integration</li>
@@ -114,23 +242,25 @@
   </div>
 </section>
 
-<!-- ── VALUES ── -->
-<section class="values-section surface-dark">
-  <div class="container">
-    <div class="section-label fade-up">What drives us</div>
-    <div class="section-title fade-up">Our principles</div>
+<!-- VALUES -->
+<section class="panel values-panel">
+  <div class="panel-inner">
+    <div class="values-intro">
+      <div class="section-eyebrow reveal">What drives us</div>
+      <h2 class="section-h reveal d1">Our principles</h2>
+    </div>
     <div class="values-grid">
-      <div class="value-card fade-up">
+      <div class="value-card reveal d2">
         <div class="value-icon">🛡️</div>
         <h3>Privacy by design</h3>
         <p>No cameras. No microphones. No cloud-first architecture. Haven processes data at the edge and only transmits anonymized, derived insights. Privacy isn't a feature — it's the foundation.</p>
       </div>
-      <div class="value-card fade-up">
+      <div class="value-card reveal d3">
         <div class="value-icon">🔬</div>
         <h3>Science over hype</h3>
         <p>Every claim we make is grounded in peer-reviewed research. RF-based gait analysis, predictive fall risk modeling, and passive sensing are validated technologies — not vaporware.</p>
       </div>
-      <div class="value-card fade-up">
+      <div class="value-card reveal d3">
         <div class="value-icon">💪</div>
         <h3>Dignity first</h3>
         <p>Aging adults aren't patients to be monitored. They're people who deserve to live independently, safely, and with full agency. Our technology is invisible because their life is what matters.</p>
@@ -139,316 +269,111 @@
   </div>
 </section>
 
-<!-- ── PLANNED HIRES ── -->
-<section class="hiring-section surface-dark">
-  <div class="container">
-    <div class="section-label fade-up">Growth</div>
-    <div class="section-title fade-up">Key hires — planned</div>
-    <div class="section-desc fade-up" style="margin: 0 auto;">Post-raise, Haven will recruit critical expertise across engineering, clinical science, and regulatory affairs.</div>
-    <div class="hiring-roles fade-up">
-      <div class="hiring-role">
+<!-- HIRING -->
+<section class="panel hiring-panel">
+  <div class="panel-inner">
+    <div class="hiring-intro">
+      <div class="section-eyebrow reveal">Growth</div>
+      <h2 class="section-h reveal d1">Key hires — planned</h2>
+      <p class="section-p reveal d2">Post-raise, Haven will recruit critical expertise across engineering, clinical science, and regulatory affairs.</p>
+    </div>
+    <div class="hiring-roles">
+      <div class="hiring-role reveal d2">
         <h4>VP of Engineering</h4>
         <p>RF/embedded systems lead with mmWave or Wi-Fi sensing experience</p>
       </div>
-      <div class="hiring-role">
+      <div class="hiring-role reveal d3">
         <h4>Clinical Advisor / CMO</h4>
         <p>Geriatrician or PT specializing in fall prevention and gait analysis</p>
       </div>
-      <div class="hiring-role">
+      <div class="hiring-role reveal d3">
         <h4>Regulatory Affairs</h4>
         <p>FDA 510(k) specialist with Class II medical device experience</p>
       </div>
     </div>
-    <a href="javascript:void(0)" onclick="openModal('contact')" class="btn btn-primary fade-up">Get in touch →</a>
+    <div class="hiring-cta reveal d4">
+      <button class="btn-p" onclick="openModal('contact')">Get in touch →</button>
+    </div>
   </div>
 </section>
 
-<!-- ── FOOTER ── -->
+<!-- FOOTER -->
 <footer>
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <a href="index.html" class="logo">Haven <span>Home Wellness</span></a>
-        <p style="margin-top:1rem">Predictive fall prevention for aging adults. Passive in-home sensing. Wearable intelligence. Zero pendants.</p>
-        <p style="font-family:var(--font-display);font-style:italic;color:var(--sage);margin-top:1rem;font-size:15px">"Stay home, on your terms."</p>
-      </div>
-      <div class="footer-col"><h4>Company</h4><a href="about.html">About Us</a><a href="technology.html">Technology</a><a href="white-paper.html">White Paper</a><a href="investors.html">Investors</a></div>
-      <div class="footer-col"><h4>Legal</h4><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a></div>
-      <div class="footer-col"><h4>Connect</h4><a href="mailto:info@havenhomewellness.ai">info@havenhomewellness.ai</a></div>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand-name">Haven <span>Home Wellness</span></div>
+      <p>Predictive fall prevention for aging adults. Passive in-home sensing. Wearable intelligence. Zero pendants.</p>
+      <p style="font-family:var(--font-display);font-style:italic;color:var(--sage);margin-top:1rem">"Stay home, on your terms."</p>
     </div>
-    <div class="footer-bottom mt-6 pt-4 hairline">
-      <span>© 2026 Haven Home Wellness, Inc. All rights reserved.</span>
-      <div style="display:flex;gap:1.5rem">
-        <a href="privacy.html">Privacy Policy</a>
-        <a href="terms.html">Terms of Service</a>
-      </div>
-    </div>
+    <div class="footer-col"><h4>Company</h4><a href="about.html">About Us</a><a href="technology.html">Technology</a><a href="white-paper.html">White Paper</a></div>
+    <div class="footer-col"><h4>Connect</h4><a href="mailto:info@havenhomewellness.ai">info@havenhomewellness.ai</a></div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Haven Home Wellness, Inc. All rights reserved.</span>
+    <a href="terms.html">Terms of Service</a>
   </div>
 </footer>
 
-<script>
-  (function() {
-    var btn = document.getElementById("burgerBtn");
-    var menu = document.getElementById("mobileNav");
-    var body = document.body;
-
-    function openMenu() {
-      btn.classList.add("open");
-      menu.classList.add("open");
-      btn.setAttribute("aria-expanded", "true");
-      menu.setAttribute("aria-hidden", "false");
-      body.style.overflow = "hidden";
-    }
-
-    function closeMenu() {
-      btn.classList.remove("open");
-      menu.classList.remove("open");
-      btn.setAttribute("aria-expanded", "false");
-      menu.setAttribute("aria-hidden", "true");
-      body.style.overflow = "";
-    }
-
-    if (btn) {
-      btn.addEventListener("click", function() {
-        btn.classList.contains("open") ? closeMenu() : openMenu();
-      });
-    }
-
-    if (menu) {
-      menu.querySelectorAll("a").forEach(function(link) {
-        link.addEventListener("click", closeMenu);
-      });
-    }
-
-    document.addEventListener("keydown", function(e) {
-      if (e.key === "Escape" && menu && menu.classList.contains("open")) closeMenu();
-    });
-
-    window.addEventListener("resize", function() {
-      if (window.innerWidth > 768 && menu && menu.classList.contains("open")) closeMenu();
-    });
-  })();
-
-  // Scroll Reveal Observer
-  (function() {
-    var elements = document.querySelectorAll('.eyebrow, .section-title, .section-desc, .team-card, .value-card, .hiring-role, .mission-quote, .facts-strip, .btn, .fade-up');
-    elements.forEach(function(el, index) {
-      if (!el.closest('.page-hero')) {
-        el.classList.add('fade-up');
-      }
-    });
-
-    var observer = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
-
-    document.querySelectorAll('.fade-up').forEach(function(el) {
-      observer.observe(el);
-    });
-  })();
-</script>
-
-<!-- ===== CONTACT / WAITLIST MODALS ===== -->
-
-<!-- WAITLIST MODAL -->
-<div class="hm-overlay" id="modalWaitlist" role="dialog" aria-modal="true" aria-labelledby="wlTitle">
+<!-- MODALS -->
+<div class="hm-overlay" id="modalWaitlist" role="dialog" aria-modal="true">
   <div class="hm-box">
     <button class="hm-close" onclick="closeModal('waitlist')" aria-label="Close">✕</button>
     <div id="wlForm">
-      <div class="eyebrow">Early access</div>
-      <h2 id="wlTitle">Join the waitlist</h2>
-      <p class="hm-sub">Be the first to know when Haven launches. No spam — just the updates that matter.</p>
+      <div class="section-eyebrow">Early access</div>
+      <h2>Join the waitlist</h2>
+      <p class="hm-sub">Be the first to know when Haven launches.</p>
       <div class="hm-row">
         <div class="hm-field"><label for="wlFirst">First name</label><input type="text" id="wlFirst" placeholder="Sarah" required></div>
         <div class="hm-field"><label for="wlLast">Last name</label><input type="text" id="wlLast" placeholder="Johnson" required></div>
       </div>
-      <div class="hm-field"><label for="wlEmail">Email address</label><input type="email" id="wlEmail" placeholder="sarah@example.com" required></div>
-      <div class="hm-field">
-        <label for="wlRole">I am a…</label>
-        <select id="wlRole">
-          <option value="">Select your role</option>
-          <option>Adult child / family caregiver</option>
-          <option>Senior living in my own home</option>
-          <option>Healthcare professional</option>
-          <option>Senior living community operator</option>
-          <option>Home health agency</option>
-          <option>Investor / partner</option>
-          <option>Other</option>
-        </select>
-      </div>
-      <div class="hm-field"><label for="wlNote">Anything you'd like us to know? <span style="opacity:0.4;font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label><textarea id="wlNote" rows="3" placeholder="e.g. my dad had a fall last year and I need something better…"></textarea></div>
-      <button class="bp hm-submit" onclick="submitModal('waitlist')">Get early access →</button>
+      <div class="hm-field"><label for="wlEmail">Email</label><input type="email" id="wlEmail" placeholder="sarah@example.com" required></div>
+      <div class="hm-field"><label for="wlRole">I am a…</label><select id="wlRole"><option value="">Select</option><option>Adult child / family caregiver</option><option>Senior living in my own home</option><option>Healthcare professional</option><option>Senior living community operator</option><option>Home health agency</option><option>Other</option></select></div>
+      <button class="hm-submit" onclick="submitModal('waitlist')">Get early access →</button>
     </div>
-    <div class="hm-success" id="wlSuccess">
-      <div class="hm-success-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#7EAF7E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <h3>You're on the list.</h3>
-      <p>We'll be in touch at the email you provided. Thank you for believing in what we're building.</p>
-    </div>
+    <div class="hm-success" id="wlSuccess"><h3>You're on the list.</h3><p>We'll be in touch shortly.</p></div>
   </div>
 </div>
-
-<!-- CONTACT MODAL -->
-<div class="hm-overlay" id="modalContact" role="dialog" aria-modal="true" aria-labelledby="ctTitle">
+<div class="hm-overlay" id="modalContact" role="dialog" aria-modal="true">
   <div class="hm-box">
     <button class="hm-close" onclick="closeModal('contact')" aria-label="Close">✕</button>
     <div id="ctForm">
-      <div class="eyebrow">Get in touch</div>
-      <h2 id="ctTitle">Contact us</h2>
-      <p class="hm-sub">Questions, partnerships, press, or investor inquiries — we read everything.</p>
+      <div class="section-eyebrow">Get in touch</div>
+      <h2>Contact us</h2>
+      <p class="hm-sub">Questions, partnerships, press — we read everything.</p>
       <div class="hm-row">
         <div class="hm-field"><label for="ctFirst">First name</label><input type="text" id="ctFirst" placeholder="Alex" required></div>
         <div class="hm-field"><label for="ctLast">Last name</label><input type="text" id="ctLast" placeholder="Rivera" required></div>
       </div>
-      <div class="hm-field"><label for="ctEmail">Email address</label><input type="email" id="ctEmail" placeholder="alex@example.com" required></div>
-      <div class="hm-field">
-        <label for="ctSubject">Subject</label>
-        <select id="ctSubject">
-          <option value="">What's this about?</option>
-          <option>General inquiry</option>
-          <option>Partnership opportunity</option>
-          <option>Investor / media inquiry</option>
-          <option>Clinical / research inquiry</option>
-          <option>Product question</option>
-          <option>Other</option>
-        </select>
-      </div>
+      <div class="hm-field"><label for="ctEmail">Email</label><input type="email" id="ctEmail" placeholder="alex@example.com" required></div>
+      <div class="hm-field"><label for="ctSubject">Subject</label><select id="ctSubject"><option value="">What's this about?</option><option>General inquiry</option><option>Partnership</option><option>Clinical / research</option><option>Product question</option><option>Other</option></select></div>
       <div class="hm-field"><label for="ctMessage">Message</label><textarea id="ctMessage" rows="4" placeholder="Tell us what's on your mind…" required></textarea></div>
-      <button class="bp hm-submit" onclick="submitModal('contact')">Send message →</button>
+      <button class="hm-submit" onclick="submitModal('contact')">Send message →</button>
     </div>
-    <div class="hm-success" id="ctSuccess">
-      <div class="hm-success-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#7EAF7E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <h3>Message sent.</h3>
-      <p>We'll get back to you at the email you provided. Usually within one business day.</p>
-    </div>
+    <div class="hm-success" id="ctSuccess"><h3>Message sent.</h3><p>Usually within one business day.</p></div>
   </div>
 </div>
 
 <script>
-  // Modal controls
-  var closeMenuGlobal = function() {};
-
-  (function() {
-    // expose closeMenu to global scope for mobile nav button
-    var menuEl = document.getElementById('mobileNav');
-    var btnEl = document.getElementById('burgerBtn');
-    closeMenuGlobal = function() {
-      if (btnEl) btnEl.classList.remove('open');
-      if (menuEl) menuEl.classList.remove('open');
-      if (btnEl) btnEl.setAttribute('aria-expanded','false');
-      if (menuEl) menuEl.setAttribute('aria-hidden','true');
-      document.body.style.overflow = '';
-    };
-  })();
-
-  function openModal(type) {
-    var id = type === 'waitlist' ? 'modalWaitlist' : 'modalContact';
-    var modal = document.getElementById(id);
-    if(modal) {
-      modal.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-  }
-
-  function closeModal(type) {
-    var id = type === 'waitlist' ? 'modalWaitlist' : 'modalContact';
-    var modal = document.getElementById(id);
-    if(modal) {
-      modal.classList.remove('active');
-      document.body.style.overflow = '';
-    }
-  }
-
-  // Close on overlay click
-  ['modalWaitlist','modalContact'].forEach(function(id) {
-    var modal = document.getElementById(id);
-    if(modal) {
-      modal.addEventListener('click', function(e) {
-        if (e.target === this) closeModal(id === 'modalWaitlist' ? 'waitlist' : 'contact');
-      });
-    }
-  });
-
-  // Close on Escape
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-      closeModal('waitlist');
-      closeModal('contact');
-    }
-  });
-
-  function submitModal(type) {
-    var TO = 'info@havenhomewellness.ai';
-    var subject, body, valid;
-
-    if (type === 'waitlist') {
-      var first = document.getElementById('wlFirst').value.trim();
-      var last  = document.getElementById('wlLast').value.trim();
-      var email = document.getElementById('wlEmail').value.trim();
-      var role  = document.getElementById('wlRole').value;
-      var note  = document.getElementById('wlNote').value.trim();
-      valid = first && last && email;
-      if (!valid) { alert('Please fill in your name and email.'); return; }
-      subject = 'Waitlist: ' + first + ' ' + last;
-      body = [
-        'New waitlist signup from havenhomewellness.ai',
-        '',
-        'Name:  ' + first + ' ' + last,
-        'Email: ' + email,
-        'Role:  ' + (role || 'Not specified'),
-        'Note:  ' + (note || '—')
-      ].join('\n');
-      document.getElementById('wlForm').style.display = 'none';
-      document.getElementById('wlSuccess').style.display = 'block';
-    } else {
-      var first = document.getElementById('ctFirst').value.trim();
-      var last  = document.getElementById('ctLast').value.trim();
-      var email = document.getElementById('ctEmail').value.trim();
-      var subj  = document.getElementById('ctSubject').value;
-      var msg   = document.getElementById('ctMessage').value.trim();
-      valid = first && last && email && msg;
-      if (!valid) { alert('Please fill in your name, email, and message.'); return; }
-      subject = 'Contact: ' + (subj || 'General Inquiry') + ' — ' + first + ' ' + last;
-      body = [
-        'New contact form submission from havenhomewellness.ai',
-        '',
-        'Name:    ' + first + ' ' + last,
-        'Email:   ' + email,
-        'Subject: ' + (subj || 'Not specified'),
-        '',
-        'Message:',
-        msg
-      ].join('\n');
-      document.getElementById('ctForm').style.display = 'none';
-      document.getElementById('ctSuccess').style.display = 'block';
-    }
-
-    // Fire mailto
-    window.location.href = 'mailto:' + TO
-      + '?subject=' + encodeURIComponent(subject)
-      + '&body=' + encodeURIComponent(body);
-
-    // Auto-close modal after 3.5s
-    setTimeout(function() {
-      closeModal(type);
-      // Reset form state
-      if (type === 'waitlist') {
-        document.getElementById('wlForm').style.display = 'block';
-        document.getElementById('wlSuccess').style.display = 'none';
-        ['wlFirst','wlLast','wlEmail','wlNote'].forEach(function(id){document.getElementById(id).value='';});
-        document.getElementById('wlRole').selectedIndex = 0;
-      } else {
-        document.getElementById('ctForm').style.display = 'block';
-        document.getElementById('ctSuccess').style.display = 'none';
-        ['ctFirst','ctLast','ctEmail','ctMessage'].forEach(function(id){document.getElementById(id).value='';});
-        document.getElementById('ctSubject').selectedIndex = 0;
-      }
-    }, 3500);
-  }
+(function(){
+  var bar=document.getElementById('scrollProgress');
+  function up(){var h=document.documentElement.scrollHeight-window.innerHeight;bar.style.width=(h>0?(window.scrollY/h)*100:0)+'%'}
+  window.addEventListener('scroll',up,{passive:true});
+  var nav=document.getElementById('mainNav');
+  window.addEventListener('scroll',function(){nav.classList.toggle('scrolled',window.scrollY>60)},{passive:true});
+  var b=document.getElementById('burgerBtn'),m=document.getElementById('mobileNav');
+  function closeMobile(){b.classList.remove('open');m.classList.remove('open');b.setAttribute('aria-expanded','false');document.body.style.overflow=''}
+  window.closeMobile=closeMobile;
+  b.addEventListener('click',function(){if(b.classList.contains('open')){closeMobile()}else{b.classList.add('open');m.classList.add('open');b.setAttribute('aria-expanded','true');document.body.style.overflow='hidden'}});
+  m.querySelectorAll('a').forEach(function(l){l.addEventListener('click',closeMobile)});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeMobile();closeModal('waitlist');closeModal('contact')}});
+  var els=document.querySelectorAll('.reveal');
+  var obs=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -60px 0px'});
+  els.forEach(function(el){obs.observe(el)});
+  window.openModal=function(t){document.getElementById(t==='waitlist'?'modalWaitlist':'modalContact').classList.add('active');document.body.style.overflow='hidden'};
+  window.closeModal=function(t){document.getElementById(t==='waitlist'?'modalWaitlist':'modalContact').classList.remove('active');document.body.style.overflow=''};
+  ['modalWaitlist','modalContact'].forEach(function(id){document.getElementById(id).addEventListener('click',function(e){if(e.target===this)closeModal(id==='modalWaitlist'?'waitlist':'contact')})});
+  window.submitModal=function(t){var TO='info@havenhomewellness.ai',s,bd;if(t==='waitlist'){var f=document.getElementById('wlFirst').value.trim(),l=document.getElementById('wlLast').value.trim(),e=document.getElementById('wlEmail').value.trim(),r=document.getElementById('wlRole').value;if(!f||!l||!e){alert('Please fill in required fields.');return}s='Waitlist: '+f+' '+l;bd=['Waitlist signup','','Name: '+f+' '+l,'Email: '+e,'Role: '+(r||'—')].join('\n');document.getElementById('wlForm').style.display='none';document.getElementById('wlSuccess').style.display='block'}else{var f=document.getElementById('ctFirst').value.trim(),l=document.getElementById('ctLast').value.trim(),e=document.getElementById('ctEmail').value.trim(),su=document.getElementById('ctSubject').value,ms=document.getElementById('ctMessage').value.trim();if(!f||!l||!e||!ms){alert('Please fill in required fields.');return}s='Contact: '+(su||'General')+' — '+f+' '+l;bd=['Contact','','Name: '+f+' '+l,'Email: '+e,'Subject: '+(su||'—'),'','Message:',ms].join('\n');document.getElementById('ctForm').style.display='none';document.getElementById('ctSuccess').style.display='block'}window.location.href='mailto:'+TO+'?subject='+encodeURIComponent(s)+'&body='+encodeURIComponent(bd);setTimeout(function(){closeModal(t);if(t==='waitlist'){document.getElementById('wlForm').style.display='block';document.getElementById('wlSuccess').style.display='none';['wlFirst','wlLast','wlEmail'].forEach(function(id){document.getElementById(id).value=''});document.getElementById('wlRole').selectedIndex=0}else{document.getElementById('ctForm').style.display='block';document.getElementById('ctSuccess').style.display='none';['ctFirst','ctLast','ctEmail','ctMessage'].forEach(function(id){document.getElementById(id).value=''});document.getElementById('ctSubject').selectedIndex=0}},3500)};
+})();
 </script>
 </body>
 </html>
