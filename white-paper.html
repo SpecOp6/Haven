@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Predictive Fall Prevention White Paper | Haven Home Wellness</title>
+  <meta name="description" content="A comprehensive analysis of Haven's technology, market opportunity, and the science behind predictive fall prevention.">
+  <link rel="canonical" href="https://havenhomewellness.ai/white-paper.html">
+  <meta property="og:title" content="Predictive Fall Prevention White Paper — Haven Home Wellness">
+  <meta property="og:description" content="42-page white paper covering Haven's five-platform architecture, $22B+ market, competitive landscape, regulatory pathway, and financial projections.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://havenhomewellness.ai/white-paper.html">
+  <meta property="og:site_name" content="Haven Home Wellness">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebPage","name":"Haven Home Wellness — Predictive Fall Prevention White Paper","description":"Comprehensive white paper on Haven's five-platform ecosystem for predictive fall prevention.","url":"https://havenhomewellness.ai/white-paper.html","publisher":{"@type":"Organization","name":"Haven Home Wellness, Inc.","url":"https://havenhomewellness.ai"}}
+  </script>
+
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    :root{--navy:#1B3A6B;--navy-deep:#122647;--navy-mid:#2A5298;--sage:#7EAF7E;--sage-light:#A8C9A8;--cream:#F9F8F4;--ink:#1A1A18;--surface-dark:#0E1A30;--font-display:'Playfair Display',Georgia,serif;--font-body:'Jost',system-ui,sans-serif;--ease-out:cubic-bezier(0.16,1,0.3,1);--radius:12px}
+    html{scroll-behavior:smooth;overflow-x:hidden;background:var(--surface-dark)}
+    body{font-family:var(--font-body);color:var(--cream);background:var(--surface-dark);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+    a{color:inherit;text-decoration:none}
+
+    /* NAV */
+    .nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:72px;display:flex;align-items:center;justify-content:space-between;transition:background .4s,backdrop-filter .4s}
+    .nav.scrolled{background:rgba(14,26,48,.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+    .nav-logo{font-family:var(--font-display);font-size:1.3rem;font-weight:600;letter-spacing:-.02em;z-index:1001}
+    .nav-logo span{font-weight:400;font-style:italic;color:var(--sage)}
+    .nav-links{display:flex;align-items:center;gap:2.5rem}
+    .nav-links a{font-size:13px;font-weight:400;letter-spacing:.04em;text-transform:uppercase;color:rgba(249,248,244,.55);transition:color .3s}
+    .nav-links a:hover,.nav-links a.active{color:var(--cream)}
+    .nav-cta-btn{background:var(--sage);color:var(--ink);border:none;padding:.55rem 1.4rem;border-radius:100px;font-family:var(--font-body);font-size:13px;font-weight:500;cursor:pointer;transition:all .3s var(--ease-out)}
+    .nav-cta-btn:hover{background:var(--sage-light);transform:translateY(-1px)}
+    .burger{display:none;background:none;border:none;cursor:pointer;padding:8px;z-index:1001}
+    .burger span{display:block;width:22px;height:2px;background:var(--cream);border-radius:2px;transition:all .3s var(--ease-out)}
+    .burger span+span{margin-top:5px}
+    .burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+    .burger.open span:nth-child(2){opacity:0}
+    .burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+    .mobile-nav{position:fixed;inset:0;z-index:999;background:rgba(14,26,48,.97);backdrop-filter:blur(30px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem;opacity:0;pointer-events:none;transition:opacity .4s}
+    .mobile-nav.open{opacity:1;pointer-events:auto}
+    .mobile-nav a{font-family:var(--font-display);font-size:2rem;font-weight:400;color:rgba(249,248,244,.7);transition:color .3s}
+    .mobile-nav a:hover{color:var(--cream)}
+    @media(max-width:860px){.nav-links{display:none}.burger{display:flex;flex-direction:column}}
+
+    /* SCROLL PROGRESS */
+    .scroll-progress{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--sage),var(--sage-light));z-index:1100;width:0%;transition:width .1s linear}
+
+    /* REVEALS */
+    .reveal{opacity:0;transform:translateY(50px);transition:opacity .8s var(--ease-out),transform .8s var(--ease-out)}
+    .reveal.vis{opacity:1;transform:translateY(0)}
+    .reveal.d1{transition-delay:.1s}.reveal.d2{transition-delay:.2s}.reveal.d3{transition-delay:.3s}.reveal.d4{transition-delay:.4s}
+
+    /* SHARED */
+    .section-eyebrow{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.16em;color:var(--sage);margin-bottom:1.5rem}
+    .btn-p{background:var(--sage);color:var(--ink);padding:.85rem 2rem;border-radius:100px;font-family:var(--font-body);font-size:15px;font-weight:500;border:none;cursor:pointer;transition:all .3s var(--ease-out);display:inline-block}
+    .btn-p:hover{background:var(--sage-light);transform:translateY(-2px)}
+
+    /* HERO */
+    .hero{min-height:60vh;display:flex;align-items:center;padding:8rem 2rem 5rem;background:radial-gradient(ellipse 70% 50% at 50% 45%,rgba(42,82,152,.15) 0%,transparent 70%),var(--surface-dark)}
+    .hero-inner{max-width:800px;margin:0 auto;text-align:center}
+    .hero h1{font-family:var(--font-display);font-size:clamp(2.5rem,6vw,4rem);font-weight:500;line-height:1.1;letter-spacing:-.03em;margin-bottom:1.5rem}
+    .hero-sub{font-size:clamp(1rem,2vw,1.2rem);font-weight:300;color:rgba(249,248,244,.55);line-height:1.7;max-width:600px;margin:0 auto}
+
+    /* WHITE PAPER BODY */
+    .wp-body{padding:4rem 2rem 6rem;max-width:1200px;margin:0 auto}
+    .wp-grid{display:grid;grid-template-columns:1fr 340px;gap:4rem;align-items:start}
+
+    /* ARTICLE */
+    .wp-main h2{font-family:var(--font-display);font-size:clamp(1.6rem,3vw,2rem);font-weight:500;letter-spacing:-.02em;margin:3rem 0 1rem;padding-top:1rem;border-top:1px solid rgba(249,248,244,.06)}
+    .wp-main h2:first-child{margin-top:0;padding-top:0;border-top:none}
+    .wp-main h3{font-family:var(--font-display);font-size:1.15rem;font-weight:500;color:var(--sage);margin:2rem 0 .75rem}
+    .wp-main p{font-size:1rem;font-weight:300;color:rgba(249,248,244,.6);line-height:1.8;margin-bottom:1.25rem}
+    .wp-main em{font-family:var(--font-display);font-style:italic;color:rgba(249,248,244,.75)}
+
+    /* STATS ROW */
+    .wp-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(249,248,244,.05);border-radius:var(--radius);overflow:hidden;margin:2rem 0 2.5rem}
+    .wp-stat{padding:1.5rem;background:var(--surface-dark);text-align:center}
+    .wp-stat .val{font-family:var(--font-display);font-size:clamp(1.6rem,3vw,2rem);font-weight:600;color:var(--sage);margin-bottom:.3rem}
+    .wp-stat .lbl{font-size:12px;color:rgba(249,248,244,.4);line-height:1.4}
+
+    /* FAQ */
+    .faq-item{border-top:1px solid rgba(249,248,244,.06);padding:1.5rem 0}
+    .faq-item h3{font-family:var(--font-display);font-size:1.05rem;font-weight:500;color:var(--cream);margin-bottom:.75rem;cursor:pointer}
+    .faq-item p{font-size:.95rem}
+
+    /* SIDEBAR */
+    .wp-sidebar{position:sticky;top:96px}
+    .wp-card{background:rgba(249,248,244,.03);border:1px solid rgba(249,248,244,.06);border-radius:var(--radius);padding:2rem;margin-bottom:2rem}
+    .wp-card h3{font-family:var(--font-display);font-size:1.3rem;font-weight:500;margin-bottom:.75rem}
+    .wp-card>p{font-size:14px;color:rgba(249,248,244,.45);line-height:1.6;margin-bottom:1.5rem}
+    .form-group{margin-bottom:1rem}
+    .form-group label{display:block;font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:rgba(249,248,244,.5);margin-bottom:.4rem}
+    .form-group input{width:100%;padding:.7rem 1rem;background:rgba(249,248,244,.04);border:1px solid rgba(249,248,244,.08);border-radius:8px;color:var(--cream);font-family:var(--font-body);font-size:14px;outline:none;transition:border-color .2s}
+    .form-group input:focus{border-color:var(--sage)}
+    .wp-card .btn-p{width:100%;text-align:center;margin-top:.5rem}
+    .form-success{display:none;text-align:center;padding:1rem 0}
+    .form-success .check{width:40px;height:40px;border-radius:50%;background:rgba(126,175,126,.12);color:var(--sage);font-size:20px;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem}
+    .form-success h4{font-family:var(--font-display);font-size:1.1rem;margin-bottom:.5rem}
+    .form-success p{font-size:13px;color:rgba(249,248,244,.45)}
+    .detail{font-size:11px;color:rgba(249,248,244,.25);text-align:center;margin-top:1.5rem}
+    .wp-toc{background:rgba(249,248,244,.02);border:1px solid rgba(249,248,244,.05);border-radius:var(--radius);padding:1.5rem 2rem}
+    .wp-toc h4{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:rgba(249,248,244,.5);margin-bottom:1rem}
+    .wp-toc ol{padding-left:1.25rem;counter-reset:toc}
+    .wp-toc li{font-size:14px;color:rgba(249,248,244,.4);line-height:2;list-style:decimal}
+
+    /* RESEARCH SECTION */
+    .research-section{padding:6rem 2rem;border-top:1px solid rgba(249,248,244,.04);background:radial-gradient(ellipse 60% 40% at 50% 50%,rgba(42,82,152,.06) 0%,transparent 60%),var(--surface-dark)}
+    .research-section .section-title{font-family:var(--font-display);font-size:clamp(1.8rem,4vw,2.5rem);font-weight:500;letter-spacing:-.03em;margin-bottom:1rem;max-width:600px}
+    .research-section .section-desc{font-size:1rem;font-weight:300;color:rgba(249,248,244,.5);line-height:1.7;max-width:600px;margin-bottom:3rem}
+    .research-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.5rem;max-width:1100px}
+    .research-card{display:block;padding:2rem;background:rgba(249,248,244,.02);border:1px solid rgba(249,248,244,.06);border-radius:var(--radius);transition:all .4s var(--ease-out)}
+    .research-card:hover{background:rgba(249,248,244,.04);border-color:rgba(126,175,126,.15);transform:translateY(-3px)}
+    .research-card-tag{display:block;font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.08em;color:var(--sage);margin-bottom:.75rem}
+    .research-card-title{display:block;font-family:var(--font-display);font-size:1.1rem;font-weight:500;color:var(--cream);line-height:1.35;margin-bottom:.75rem}
+    .research-card-desc{display:block;font-size:13px;font-weight:300;color:rgba(249,248,244,.4);line-height:1.6}
+
+    /* FOOTER */
+    footer{background:var(--surface-dark);border-top:1px solid rgba(249,248,244,.04);padding:4rem 2rem 2rem;font-size:13px;color:rgba(249,248,244,.35)}
+    .footer-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem}
+    .footer-brand-name{font-family:var(--font-display);font-size:1.2rem;font-weight:600;color:var(--cream);margin-bottom:1rem}
+    .footer-brand-name span{font-weight:400;font-style:italic;color:var(--sage)}
+    .footer-col h4{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:rgba(249,248,244,.5);margin-bottom:1rem}
+    .footer-col a{display:block;margin-bottom:.6rem;color:rgba(249,248,244,.35);transition:color .2s}
+    .footer-col a:hover{color:var(--cream)}
+    .footer-bottom{max-width:1100px;margin:3rem auto 0;padding-top:1.5rem;border-top:1px solid rgba(249,248,244,.05);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;font-size:12px}
+    .footer-bottom a{color:rgba(249,248,244,.3);transition:color .2s}
+    .footer-bottom a:hover{color:var(--cream)}
+
+    /* MODALS */
+    .hm-overlay{position:fixed;inset:0;z-index:2000;background:rgba(14,26,48,.85);backdrop-filter:blur(16px);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .35s;padding:2rem}
+    .hm-overlay.active{opacity:1;pointer-events:auto}
+    .hm-box{background:var(--surface-dark);border:1px solid rgba(249,248,244,.08);border-radius:var(--radius);padding:3rem;max-width:520px;width:100%;position:relative;transform:translateY(20px);transition:transform .4s var(--ease-out)}
+    .hm-overlay.active .hm-box{transform:translateY(0)}
+    .hm-close{position:absolute;top:1rem;right:1rem;background:none;border:none;color:rgba(249,248,244,.4);font-size:18px;cursor:pointer;padding:4px 8px;transition:color .2s}
+    .hm-close:hover{color:var(--cream)}
+    .hm-box h2{font-family:var(--font-display);font-size:1.6rem;font-weight:500;margin-bottom:.5rem}
+    .hm-sub{font-size:14px;color:rgba(249,248,244,.45);margin-bottom:2rem}
+    .hm-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+    .hm-field{margin-bottom:1.25rem}
+    .hm-field label{display:block;font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:rgba(249,248,244,.5);margin-bottom:.4rem}
+    .hm-field input,.hm-field select,.hm-field textarea{width:100%;padding:.75rem 1rem;background:rgba(249,248,244,.04);border:1px solid rgba(249,248,244,.08);border-radius:8px;color:var(--cream);font-family:var(--font-body);font-size:14px;transition:border-color .2s;outline:none}
+    .hm-field input:focus,.hm-field select:focus,.hm-field textarea:focus{border-color:var(--sage)}
+    .hm-field select{cursor:pointer}
+    .hm-field textarea{resize:vertical}
+    .hm-submit{width:100%;padding:.9rem;background:var(--sage);color:var(--ink);border:none;border-radius:100px;font-family:var(--font-body);font-size:15px;font-weight:500;cursor:pointer;transition:all .3s var(--ease-out);margin-top:.5rem}
+    .hm-submit:hover{background:var(--sage-light)}
+    .hm-success{display:none;text-align:center;padding:2rem 0}
+    .hm-success-icon{margin-bottom:1rem}
+    .hm-success h3{font-family:var(--font-display);font-size:1.4rem;margin-bottom:.5rem}
+    .hm-success p{color:rgba(249,248,244,.5);font-size:14px;line-height:1.6}
+
+    /* RESPONSIVE */
+    @media(max-width:860px){
+      .wp-grid{grid-template-columns:1fr;gap:2rem}
+      .wp-sidebar{position:static}
+      .wp-stats{grid-template-columns:1fr}
+      .footer-inner{grid-template-columns:1fr;gap:2rem}
+      .hm-row{grid-template-columns:1fr}
+      .research-grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- NAV -->
+<nav class="nav" id="mainNav">
+  <a href="index.html" class="nav-logo">Haven <span>Home Wellness</span></a>
+  <div class="nav-links">
+    <a href="technology.html">Technology</a>
+    <a href="about.html">About</a>
+    <a href="white-paper.html" class="active">White Paper</a>
+    <button class="nav-cta-btn" onclick="openModal('contact')">Contact Us</button>
+  </div>
+  <button class="burger" id="burgerBtn" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html">Home</a>
+  <a href="technology.html">Technology</a>
+  <a href="about.html">About</a>
+  <a href="white-paper.html">White Paper</a>
+  <a href="terms.html">Terms</a>
+  <button class="btn-p" onclick="openModal('contact');closeMobile();">Contact Us</button>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="section-eyebrow reveal">Research</div>
+    <h1 class="reveal d1">Predictive Fall Prevention<br><em>White Paper</em></h1>
+    <p class="hero-sub reveal d2">A comprehensive analysis of Haven's technology, market opportunity, and the science behind predictive fall prevention.</p>
+  </div>
+</section>
+
+<!-- WHITE PAPER BODY -->
+<div class="wp-body">
+  <div class="wp-grid">
+
+    <!-- ARTICLE -->
+    <div class="wp-main reveal">
+
+      <h2>Executive Summary</h2>
+      <p>Falls are the leading cause of injury-related death among adults aged 65 and older, claiming over 38,000 lives annually and generating $80+ billion in direct healthcare costs (CDC, 2024). Despite decades of investment in fall detection technology, every commercial solution on the market today shares a fundamental flaw: they react to falls after they happen.</p>
+      <p>Haven Home Wellness is building the first predictive fall prevention platform — a passive, privacy-preserving sensor ecosystem that detects subtle gait deterioration weeks before a fall occurs, enabling proactive clinical intervention instead of emergency response.</p>
+      <p>This white paper presents the full technical architecture, market analysis, competitive landscape, regulatory strategy, and financial model behind Haven's five-platform ecosystem.</p>
+
+      <div class="wp-stats">
+        <div class="wp-stat"><div class="val">$22B+</div><div class="lbl">Total addressable market by 2033</div></div>
+        <div class="wp-stat"><div class="val">90–95%</div><div class="lbl">Gait analysis sensitivity (peer-reviewed)</div></div>
+        <div class="wp-stat"><div class="val">14.7M</div><div class="lbl">U.S. seniors living alone (Census Bureau)</div></div>
+      </div>
+
+      <h2>The Problem: Why Current Solutions Fail</h2>
+      <p>According to the CDC's WISQARS, one in four adults aged 65+ falls each year in the United States. Of those 14 million annual falls, approximately 3 million result in emergency department visits, 800,000 lead to hospitalizations, and more than 38,000 result in death.</p>
+      <p>The economic burden is staggering. The National Council on Aging estimates that fall-related medical costs exceed $80 billion annually, with Medicare shouldering approximately 75% of that cost. By 2030, these numbers are projected to nearly double.</p>
+      <p>Yet every commercially available solution — Life Alert, Medical Guardian, Apple Watch fall detection — operates on the same reactive model: wait for a fall to occur, detect the impact, and then alert someone. This approach addresses response time but does nothing to prevent the fall itself.</p>
+      <p>Research consistently shows that fall risk does not appear suddenly. A 2023 study published in <em>Gait &amp; Posture</em> demonstrated that measurable gait deterioration can be observed 2 to 6 weeks before a fall event. The data is there. The gap is that no consumer platform collects, analyzes, or acts on it continuously.</p>
+
+      <h2>The Technology: Five-Platform Ecosystem</h2>
+      <p>Haven's architecture is built on the principle that the most powerful health data is the data collected passively, continuously, and without requiring any action from the person being monitored.</p>
+
+      <h3>Steadfast™ — Passive Plug-in Sensors</h3>
+      <p>Small plug-in devices placed in the bedroom, bathroom, and kitchen — the three rooms where 78% of in-home falls occur. They detect movement patterns, room-to-room transitions, and presence without cameras, microphones, or any wearable component. Zero compliance required.</p>
+
+      <h3>Stride™ — Wearable Intelligence Overlay</h3>
+      <p>Stride integrates with the Apple Watch, Fitbit, or Garmin the senior already owns. It continuously monitors gait cadence, step symmetry, walking speed, activity levels, and sleep patterns to build a personalized movement baseline. Deviations trigger escalating risk indicators.</p>
+
+      <h3>Vigil™ — Optional Computer Vision</h3>
+      <p>For higher-risk individuals or institutional settings, Vigil adds pose estimation and gait analysis via computer vision. It delivers a three-tier risk score — Low, Watch, or Elevated — in real time. Entirely optional, privacy-tiered, and family-controlled.</p>
+
+      <h3>Anchor™ — Edge Computing Hub</h3>
+      <p>All sensor, wearable, and vision data flows to Anchor — a local edge computing hub inside the home. Anchor processes everything on-device. Raw data never leaves the home. Only derived insights are sent outbound to the family dashboard. This architecture satisfies HIPAA data handling principles by design.</p>
+
+      <h3>Beacon™ — Family Dashboard</h3>
+      <p>Available via the Haven app or any web browser, Beacon displays real-time risk scores, trend graphs, tiered alerts with AI-generated context, achievement milestones, and weekly health narratives written in human language — not clinical charts. Designed for the adult child, not the clinician.</p>
+
+      <h2>The Science: Why Gait Predicts Falls</h2>
+      <p>A 2024 study published in <em>Frontiers in Artificial Intelligence</em> demonstrated that machine learning models analyzing temporal gait features achieved 93.6% classification accuracy for fall risk in elderly populations.</p>
+      <p>Key gait parameters that correlate with elevated fall risk include reduced walking speed (below 0.8 m/s), shortened stride length, increased double-support time, greater step-to-step variability, and asymmetric gait patterns. These changes are often imperceptible to family members but are measurable by sensor systems operating continuously.</p>
+      <p>Research from the NIH National Institute on Aging further establishes that gait deterioration correlates with cognitive decline, cardiovascular events, and hospitalization risk — making continuous gait monitoring a potentially foundational health metric for aging populations.</p>
+
+      <h2>Market Opportunity</h2>
+      <p>The global elderly monitoring market is projected to reach $22+ billion by 2033, driven by three forces: the aging of the baby boomer generation (10,000 Americans turn 65 every day), the growing preference for aging in place (90% of seniors prefer to remain in their homes), and the escalating healthcare costs associated with falls.</p>
+      <p>Haven occupies a unique competitive position as the only platform combining predictive analytics with passive, privacy-preserving sensing and existing wearable integration.</p>
+      <p>The primary buyer is not the senior — it is the adult child, typically a 45-to-65-year-old professional managing care from a distance. Haven's product design, pricing, and marketing are built entirely around this buyer persona.</p>
+
+      <h2>Competitive Landscape</h2>
+      <p>The white paper provides a detailed competitive analysis across four categories: reactive fall detection devices, consumer wearables with fall features, institutional monitoring platforms, and emerging predictive startups. Haven's core differentiators — zero compliance, local-first privacy, existing wearable integration, and a compounding behavioral data moat — are evaluated against each.</p>
+
+      <h2>Regulatory Pathway &amp; Reimbursement</h2>
+      <p>The paper details Haven's FDA 510(k) regulatory pathway for Vigil as a Class II medical device, using BioSensics LEGSys as the predicate device. The 510(k) clearance is additive upside — not a gating dependency for the consumer launch.</p>
+      <p>Additionally, the paper covers the Medicare Remote Physiologic Monitoring (RPM) reimbursement opportunity under CPT codes 99454, 99457, and 99458 — a potentially significant recurring revenue stream.</p>
+
+      <h2>Financial Model &amp; Projections</h2>
+      <p>The white paper includes detailed five-year financial projections across three revenue models: direct-to-consumer subscription (DTC), B2B enterprise licensing, and OEM/ISP channel partnerships. Total capital required to reach sustained positive cash flow is estimated at $2.5–3M across the pre-seed and a subsequent Series A round.</p>
+
+      <h2>Frequently Asked Questions</h2>
+
+      <div itemscope itemtype="https://schema.org/FAQPage">
+        <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <h3 itemprop="name">What makes Haven different from Life Alert or Apple Watch fall detection?</h3>
+          <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <p itemprop="text">Life Alert and Apple Watch detect falls after they happen — they are reactive. Haven is predictive. It monitors subtle gait changes to identify increasing fall risk weeks before a fall occurs, requiring zero compliance from the senior.</p>
+          </div>
+        </div>
+        <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <h3 itemprop="name">Does Haven use cameras?</h3>
+          <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <p itemprop="text">Haven's core system uses no cameras. Vigil is an optional computer vision module for higher-risk situations, entirely family-controlled and privacy-tiered. All data processing happens locally inside the home.</p>
+          </div>
+        </div>
+        <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <h3 itemprop="name">How accurate is gait-based fall prediction?</h3>
+          <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <p itemprop="text">Peer-reviewed research demonstrates 90–95% sensitivity. A 2024 study in Frontiers in Artificial Intelligence reported 93.6% accuracy using temporal gait features from a single walking cycle.</p>
+          </div>
+        </div>
+        <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <h3 itemprop="name">Who is Haven designed for?</h3>
+          <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <p itemprop="text">Haven is designed for adult children caring for aging parents who want to live independently. The primary buyer and daily dashboard user is the family caregiver — typically a 45-to-65-year-old professional managing care from a distance.</p>
+          </div>
+        </div>
+        <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <h3 itemprop="name">What does the full white paper cover?</h3>
+          <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <p itemprop="text">The 42-page paper covers: the clinical problem and epidemiology, Haven's five-platform architecture, a $22B+ market analysis, competitive landscape mapping, FDA 510(k) pathway, Medicare RPM reimbursement strategy, go-to-market plan, team backgrounds, five-year financial projections, and technical references.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="wp-sidebar">
+      <div class="wp-card reveal d2">
+        <h3>Get the full paper</h3>
+        <p>42 pages covering technology, market, competition, financials, and regulatory strategy.</p>
+        <div id="wpForm">
+          <div class="form-group"><label for="wp-name">Full Name</label><input type="text" id="wp-name" placeholder="Jane Doe" required></div>
+          <div class="form-group"><label for="wp-email">Email</label><input type="email" id="wp-email" placeholder="jane@example.com" required></div>
+          <div class="form-group"><label for="wp-phone">Phone <span style="opacity:.4;font-weight:300;text-transform:none;letter-spacing:0">(optional)</span></label><input type="tel" id="wp-phone" placeholder="(555) 555-5555"></div>
+          <button class="btn-p" onclick="submitWP()">Send me the white paper →</button>
+        </div>
+        <div class="form-success" id="wpSuccess">
+          <div class="check">✓</div>
+          <h4>Request received</h4>
+          <p>The white paper will be sent to your email shortly.</p>
+        </div>
+        <div class="detail">Confidential · For qualified investors and partners</div>
+      </div>
+
+      <div class="wp-toc reveal d3">
+        <h4>Table of Contents</h4>
+        <ol>
+          <li>Executive Summary</li>
+          <li>The Problem: Falls in Aging Adults</li>
+          <li>Market Opportunity</li>
+          <li>Technology: Five-Platform Ecosystem</li>
+          <li>Product Ecosystem</li>
+          <li>Competitive Landscape</li>
+          <li>Regulatory Pathway</li>
+          <li>Go-to-Market Strategy</li>
+          <li>Team</li>
+          <li>Financial Projections</li>
+          <li>The Ask</li>
+          <li>Appendix: Technical References</li>
+        </ol>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- RESEARCH LIBRARY -->
+<section class="research-section">
+  <div style="max-width:1100px;margin:0 auto">
+    <div class="section-eyebrow reveal">Published Research</div>
+    <h2 class="section-title reveal d1">Explore Haven's Research Library</h2>
+    <p class="section-desc reveal d2">Peer-reviewed evidence and original research behind Haven's predictive fall prevention platform.</p>
+    <div class="research-grid">
+      <a href="predictability-of-falls-research.html" class="research-card reveal d2">
+        <span class="research-card-tag">Founding Research Report · March 2026</span>
+        <span class="research-card-title">The Predictability of Falls: What the Science Now Knows</span>
+        <span class="research-card-desc">Synthesizing CDC, NIH, and Frontiers in AI research on gait-based fall prediction.</span>
+      </a>
+      <a href="warning-signs-fall-prevention.html" class="research-card reveal d3">
+        <span class="research-card-tag">Family Guide · April 2026</span>
+        <span class="research-card-title">The Warning Signs You Can't See</span>
+        <span class="research-card-desc">How subtle gait changes predict falls weeks before they happen — a guide for families.</span>
+      </a>
+      <a href="economic-burden-falls-aging-adults.html" class="research-card reveal d3">
+        <span class="research-card-tag">Economic Analysis · April 2026</span>
+        <span class="research-card-title">The $80 Billion Problem</span>
+        <span class="research-card-desc">CDC data shows non-fatal falls cost $80 billion annually, projected to exceed $101 billion by 2030.</span>
+      </a>
+      <a href="passive-monitoring-vs-wearables.html" class="research-card reveal d4">
+        <span class="research-card-tag">Technology Comparison · April 2026</span>
+        <span class="research-card-title">Passive Monitoring vs. Wearable-Only Systems</span>
+        <span class="research-card-desc">80% of seniors forget to press their fall alert button. Why passive monitoring outperforms.</span>
+      </a>
+      <a href="gait-speed-vital-sign-aging.html" class="research-card reveal d4">
+        <span class="research-card-tag">Clinical Evidence Review · April 2026</span>
+        <span class="research-card-title">Gait Speed: The Sixth Vital Sign</span>
+        <span class="research-card-desc">Walking speed below 0.8 m/s predicts falls, hospitalization, cognitive decline, and mortality.</span>
+      </a>
+      <a href="edge-computing-privacy-health-monitoring.html" class="research-card reveal d4">
+        <span class="research-card-tag">Technical Architecture · April 2026</span>
+        <span class="research-card-title">Edge Computing and Privacy in Home Health</span>
+        <span class="research-card-desc">Why raw health data should never leave the home. How edge computing makes monitoring safe.</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand-name">Haven <span>Home Wellness</span></div>
+      <p>Predictive fall prevention for aging adults. Passive in-home sensing. Wearable intelligence. Zero pendants.</p>
+      <p style="font-family:var(--font-display);font-style:italic;color:var(--sage);margin-top:1rem">"Stay home, on your terms."</p>
+    </div>
+    <div class="footer-col"><h4>Company</h4><a href="about.html">About Us</a><a href="technology.html">Technology</a><a href="white-paper.html">White Paper</a></div>
+    <div class="footer-col"><h4>Connect</h4><a href="mailto:info@havenhomewellness.ai">info@havenhomewellness.ai</a></div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Haven Home Wellness, Inc. All rights reserved.</span>
+    <a href="terms.html">Terms of Service</a>
+  </div>
+</footer>
+
+<!-- MODALS -->
+<div class="hm-overlay" id="modalWaitlist" role="dialog" aria-modal="true">
+  <div class="hm-box">
+    <button class="hm-close" onclick="closeModal('waitlist')" aria-label="Close">✕</button>
+    <div id="wlForm">
+      <div class="section-eyebrow">Early access</div>
+      <h2>Join the waitlist</h2>
+      <p class="hm-sub">Be the first to know when Haven launches.</p>
+      <div class="hm-row">
+        <div class="hm-field"><label for="wlFirst">First name</label><input type="text" id="wlFirst" placeholder="Sarah" required></div>
+        <div class="hm-field"><label for="wlLast">Last name</label><input type="text" id="wlLast" placeholder="Johnson" required></div>
+      </div>
+      <div class="hm-field"><label for="wlEmail">Email</label><input type="email" id="wlEmail" placeholder="sarah@example.com" required></div>
+      <div class="hm-field"><label for="wlRole">I am a…</label><select id="wlRole"><option value="">Select</option><option>Adult child / family caregiver</option><option>Senior living in my own home</option><option>Healthcare professional</option><option>Senior living community operator</option><option>Investor / partner</option><option>Other</option></select></div>
+      <button class="hm-submit" onclick="submitModal('waitlist')">Get early access →</button>
+    </div>
+    <div class="hm-success" id="wlSuccess">
+      <div class="hm-success-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#7EAF7E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <h3>You're on the list.</h3><p>We'll be in touch shortly.</p>
+    </div>
+  </div>
+</div>
+<div class="hm-overlay" id="modalContact" role="dialog" aria-modal="true">
+  <div class="hm-box">
+    <button class="hm-close" onclick="closeModal('contact')" aria-label="Close">✕</button>
+    <div id="ctForm">
+      <div class="section-eyebrow">Get in touch</div>
+      <h2>Contact us</h2>
+      <p class="hm-sub">Questions, partnerships, press — we read everything.</p>
+      <div class="hm-row">
+        <div class="hm-field"><label for="ctFirst">First name</label><input type="text" id="ctFirst" placeholder="Alex" required></div>
+        <div class="hm-field"><label for="ctLast">Last name</label><input type="text" id="ctLast" placeholder="Rivera" required></div>
+      </div>
+      <div class="hm-field"><label for="ctEmail">Email</label><input type="email" id="ctEmail" placeholder="alex@example.com" required></div>
+      <div class="hm-field"><label for="ctSubject">Subject</label><select id="ctSubject"><option value="">What's this about?</option><option>General inquiry</option><option>Partnership</option><option>Clinical / research</option><option>Product question</option><option>Other</option></select></div>
+      <div class="hm-field"><label for="ctMessage">Message</label><textarea id="ctMessage" rows="4" placeholder="Tell us what's on your mind…" required></textarea></div>
+      <button class="hm-submit" onclick="submitModal('contact')">Send message →</button>
+    </div>
+    <div class="hm-success" id="ctSuccess">
+      <div class="hm-success-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#7EAF7E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <h3>Message sent.</h3><p>Usually within one business day.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var bar=document.getElementById('scrollProgress');
+  function up(){var h=document.documentElement.scrollHeight-window.innerHeight;bar.style.width=(h>0?(window.scrollY/h)*100:0)+'%'}
+  window.addEventListener('scroll',up,{passive:true});
+  var nav=document.getElementById('mainNav');
+  window.addEventListener('scroll',function(){nav.classList.toggle('scrolled',window.scrollY>60)},{passive:true});
+  var b=document.getElementById('burgerBtn'),m=document.getElementById('mobileNav');
+  function closeMobile(){b.classList.remove('open');m.classList.remove('open');b.setAttribute('aria-expanded','false');document.body.style.overflow=''}
+  window.closeMobile=closeMobile;
+  b.addEventListener('click',function(){if(b.classList.contains('open')){closeMobile()}else{b.classList.add('open');m.classList.add('open');b.setAttribute('aria-expanded','true');document.body.style.overflow='hidden'}});
+  m.querySelectorAll('a').forEach(function(l){l.addEventListener('click',closeMobile)});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeMobile();closeModal('waitlist');closeModal('contact')}});
+  var els=document.querySelectorAll('.reveal');
+  var obs=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target)}})},{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+  els.forEach(function(el){obs.observe(el)});
+  window.openModal=function(t){var id=t==='waitlist'?'modalWaitlist':'modalContact';document.getElementById(id).classList.add('active');document.body.style.overflow='hidden'};
+  window.closeModal=function(t){var id=t==='waitlist'?'modalWaitlist':'modalContact';document.getElementById(id).classList.remove('active');document.body.style.overflow=''};
+  ['modalWaitlist','modalContact'].forEach(function(id){document.getElementById(id).addEventListener('click',function(e){if(e.target===this)closeModal(id==='modalWaitlist'?'waitlist':'contact')})});
+  window.submitModal=function(t){var TO='info@havenhomewellness.ai',s,b,v;if(t==='waitlist'){var f=document.getElementById('wlFirst').value.trim(),l=document.getElementById('wlLast').value.trim(),e=document.getElementById('wlEmail').value.trim(),r=document.getElementById('wlRole').value;v=f&&l&&e;if(!v){alert('Please fill in required fields.');return}s='Waitlist: '+f+' '+l;b=['Waitlist signup','','Name: '+f+' '+l,'Email: '+e,'Role: '+(r||'—')].join('\n');document.getElementById('wlForm').style.display='none';document.getElementById('wlSuccess').style.display='block'}else{var f=document.getElementById('ctFirst').value.trim(),l=document.getElementById('ctLast').value.trim(),e=document.getElementById('ctEmail').value.trim(),su=document.getElementById('ctSubject').value,ms=document.getElementById('ctMessage').value.trim();v=f&&l&&e&&ms;if(!v){alert('Please fill in required fields.');return}s='Contact: '+(su||'General')+' — '+f+' '+l;b=['Contact','','Name: '+f+' '+l,'Email: '+e,'Subject: '+(su||'—'),'','Message:',ms].join('\n');document.getElementById('ctForm').style.display='none';document.getElementById('ctSuccess').style.display='block'}window.location.href='mailto:'+TO+'?subject='+encodeURIComponent(s)+'&body='+encodeURIComponent(b);setTimeout(function(){closeModal(t);if(t==='waitlist'){document.getElementById('wlForm').style.display='block';document.getElementById('wlSuccess').style.display='none';['wlFirst','wlLast','wlEmail'].forEach(function(id){document.getElementById(id).value=''});document.getElementById('wlRole').selectedIndex=0}else{document.getElementById('ctForm').style.display='block';document.getElementById('ctSuccess').style.display='none';['ctFirst','ctLast','ctEmail','ctMessage'].forEach(function(id){document.getElementById(id).value=''});document.getElementById('ctSubject').selectedIndex=0}},3500)};
+  window.submitWP=function(){var TO='info@havenhomewellness.ai',n=document.getElementById('wp-name').value.trim(),e=document.getElementById('wp-email').value.trim(),p=document.getElementById('wp-phone').value.trim();if(!n||!e){alert('Please enter your name and email.');return}var s='White Paper Request: '+n;var b=['White paper request from havenhomewellness.ai','','Name: '+n,'Email: '+e,'Phone: '+(p||'—')].join('\n');window.location.href='mailto:'+TO+'?subject='+encodeURIComponent(s)+'&body='+encodeURIComponent(b);document.getElementById('wpForm').style.display='none';document.getElementById('wpSuccess').style.display='block';setTimeout(function(){document.getElementById('wpForm').style.display='block';document.getElementById('wpSuccess').style.display='none';['wp-name','wp-email','wp-phone'].forEach(function(id){document.getElementById(id).value=''})},5000)};
+})();
+</script>
+</body>
+</html>
