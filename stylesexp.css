@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Haven Home Wellness | AI Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Jost:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #1B3A6B;
+            --navy-deep: #122647;
+            --sage: #7EAF7E;
+            --sage-light: #A8C9A8;
+            --sage-pale: #EDF5ED;
+            --cream: #F9F8F4;
+            --ink: #1A1A18;
+            --gold: #C9A84C;
+            --white: #FFFFFF;
+            --transition-smooth: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Jost', sans-serif;
+            background-color: var(--cream);
+            color: var(--ink);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- Navigation --- */
+        nav {
+            position: fixed;
+            top: 0; width: 100%; height: 80px;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 5%;
+            background: rgba(249, 248, 244, 0.8);
+            backdrop-filter: blur(15px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(27, 58, 107, 0.05);
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            font-size: 1.2rem;
+            color: var(--navy);
+            letter-spacing: -0.02em;
+        }
+
+        .nav-links { display: flex; gap: 40px; list-style: none; }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--ink);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            font-weight: 600;
+            transition: var(--transition-smooth);
+        }
+        .nav-links a:hover { color: var(--sage); }
+
+        /* --- Hero Section --- */
+        .hero {
+            padding: 160px 5% 80px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero-eyebrow {
+            color: var(--sage);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            font-size: 0.7rem;
+            margin-bottom: 20px;
+            display: block;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            line-height: 1.1;
+            color: var(--navy-deep);
+            margin-bottom: 30px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero h1 em { font-style: italic; font-weight: 400; color: var(--sage); }
+
+        /* --- Dashboard Grid --- */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            padding: 40px 5%;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .tile {
+            background: var(--white);
+            border-radius: 24px;
+            padding: 40px;
+            border: 1px solid rgba(0,0,0,0.03);
+            transition: var(--transition-smooth);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+        }
+
+        .tile:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(27, 58, 107, 0.08);
+            border-color: var(--sage-light);
+        }
+
+        .tile::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; width: 100%; height: 4px;
+            background: var(--sage);
+            transform: scaleX(0);
+            transition: var(--transition-smooth);
+        }
+
+        .tile:hover::after { transform: scaleX(1); }
+
+        .tile-icon { font-size: 2rem; margin-bottom: 20px; }
+        .tile-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--sage); font-weight: 700; }
+        .tile-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--navy); margin: 10px 0; }
+        .tile-value { font-size: 2.5rem; font-weight: 200; color: var(--navy-deep); }
+        .tile-status { font-size: 0.85rem; color: #6B6B64; margin-top: 15px; display: flex; align-items: center; gap: 8px; }
+
+        .status-dot { width: 8px; height: 8px; background: var(--sage); border-radius: 50%; }
+
+        /* --- AI Feature Section --- */
+        .ai-feature {
+            background: var(--navy-deep);
+            color: var(--white);
+            padding: 100px 10%;
+            margin-top: 80px;
+            border-radius: 0 100px 0 0;
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            flex-wrap: wrap;
+        }
+
+        .ai-content { flex: 1; min-width: 300px; }
+        .ai-content h2 { font-family: 'Playfair Display', serif; font-size: 3rem; margin-bottom: 20px; }
+        .ai-content p { font-weight: 300; opacity: 0.8; font-size: 1.1rem; margin-bottom: 30px; }
+
+        .btn {
+            display: inline-block;
+            padding: 18px 40px;
+            background: var(--sage);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 100px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            letter-spacing: 0.1em;
+            transition: var(--transition-smooth);
+        }
+
+        .btn:hover {
+            background: var(--white);
+            color: var(--navy);
+            transform: scale(1.05);
+        }
+
+        /* --- Animations --- */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Responsive --- */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero { text-align: center; padding-top: 120px; }
+            .ai-feature { border-radius: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="logo">HAVEN</div>
+    <ul class="nav-links">
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#platforms">Platforms</a></li>
+        <li><a href="#intelligence">AI Intelligence</a></li>
+        <li><a href="#account">Portal</a></li>
+    </ul>
+</nav>
+
+<header class="hero">
+    <span class="hero-eyebrow">Intelligent Protection</span>
+    <h1>Where <em>home feels</em><br>safe again.</h1>
+</header>
+
+<section class="dashboard-grid">
+    <!-- Steadfast Tile -->
+    <div class="tile">
+        <div class="tile-icon">📡</div>
+        <div class="tile-label">Steadfast™</div>
+        <div class="tile-title">Home Motion</div>
+        <div class="tile-value">Passive</div>
+        <div class="tile-status"><span class="status-dot"></span> 3 Sensors Online</div>
+    </div>
+
+    <!-- Stride Tile -->
+    <div class="tile">
+        <div class="tile-icon">👣</div>
+        <div class="tile-label">Stride™</div>
+        <div class="tile-title">Gait Balance</div>
+        <div class="tile-value">98%</div>
+        <div class="tile-status"><span class="status-dot"></span> Optimal Baseline</div>
+    </div>
+
+    <!-- Beacon Tile -->
+    <div class="tile">
+        <div class="tile-icon">📊</div>
+        <div class="tile-label">Beacon™</div>
+        <div class="tile-title">Risk Score</div>
+        <div class="tile-value">12</div>
+        <div class="tile-status"><span class="status-dot" style="background: var(--sage);"></span> Low Risk Level</div>
+    </div>
+</section>
+
+<section class="ai-feature">
+    <div class="ai-content">
+        <h2>Predictive Harmony.</h2>
+        <p>Our proprietary AI doesn't just watch—it understands. By learning the subtle rhythms of your daily life, Haven anticipates risks before they become emergencies.</p>
+        <a href="#" class="btn">DISCOVER VIGIL™</a>
+    </div>
+    <div style="flex: 1; min-width: 300px; text-align: right;">
+        <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&q=80&w=1000" alt="Sophisticated Home" style="width: 100%; border-radius: 20px; filter: grayscale(0.5) contrast(1.1);">
+    </div>
+</section>
+
+<footer style="padding: 60px 5%; text-align: center; color: var(--ink); opacity: 0.6; font-size: 0.8rem;">
+    &copy; 2026 Haven Home Wellness — Internal Use Only — Version 1.0
+</footer>
+
+</body>
+</html>
