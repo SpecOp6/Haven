@@ -1464,22 +1464,6 @@ window.submitModal = function(type) {
     }, 3500);
   }
 };
-    window.location.href = 'mailto:' + TO + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-    setTimeout(function() {
-      closeModal(type);
-      if (type === 'waitlist') {
-        document.getElementById('wlForm').style.display = 'block';
-        document.getElementById('wlSuccess').style.display = 'none';
-        ['wlFirst','wlLast','wlEmail','wlNote'].forEach(function(id){document.getElementById(id).value='';});
-        document.getElementById('wlRole').selectedIndex = 0;
-      } else {
-        document.getElementById('ctForm').style.display = 'block';
-        document.getElementById('ctSuccess').style.display = 'none';
-        ['ctFirst','ctLast','ctEmail','ctMessage'].forEach(function(id){document.getElementById(id).value='';});
-        document.getElementById('ctSubject').selectedIndex = 0;
-      }
-    }, 3500);
-  };
 })();
 </script>
 
