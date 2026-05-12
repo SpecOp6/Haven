@@ -1382,34 +1382,88 @@
     });
   });
 
-  window.submitModal = function(type) {
-    var TO = 'info@havenhomewellness.ai';
-    var subject, body, valid;
-    if (type === 'waitlist') {
-      var first = document.getElementById('wlFirst').value.trim();
-      var last  = document.getElementById('wlLast').value.trim();
-      var email = document.getElementById('wlEmail').value.trim();
-      var role  = document.getElementById('wlRole').value;
-      var note  = document.getElementById('wlNote').value.trim();
-      valid = first && last && email;
-      if (!valid) { alert('Please fill in your name and email.'); return; }
-      subject = 'Waitlist: ' + first + ' ' + last;
-      body = ['New waitlist signup from havenhomewellness.ai','','Name: '+first+' '+last,'Email: '+email,'Role: '+(role||'Not specified'),'Note: '+(note||'—')].join('\n');
-      document.getElementById('wlForm').style.display = 'none';
-      document.getElementById('wlSuccess').style.display = 'block';
-    } else {
-      var first = document.getElementById('ctFirst').value.trim();
-      var last  = document.getElementById('ctLast').value.trim();
-      var email = document.getElementById('ctEmail').value.trim();
-      var subj  = document.getElementById('ctSubject').value;
-      var msg   = document.getElementById('ctMessage').value.trim();
-      valid = first && last && email && msg;
-      if (!valid) { alert('Please fill in your name, email, and message.'); return; }
-      subject = 'Contact: ' + (subj||'General') + ' — ' + first + ' ' + last;
-      body = ['New contact from havenhomewellness.ai','','Name: '+first+' '+last,'Email: '+email,'Subject: '+(subj||'—'),'','Message:',msg].join('\n');
-      document.getElementById('ctForm').style.display = 'none';
-      document.getElementById('ctSuccess').style.display = 'block';
+window.submitModal = function(type) {
+  var ENDPOINT = 'https://script.google.com/macros/s/AKfycbw8iP_KLF7n9UTeUHQJ1fweQRtusMyiIzWI-SVVaMWygQ708-lAqqO4l_gawuurBryDCQ/exec';
+
+  if (type === 'waitlist') {
+    var first = document.getElementById('wlFirst').value.trim();
+    var last  = document.getElementById('wlLast').value.trim();
+    var email = document.getElementById('wlEmail').value.trim();
+    var role  = document.getElementById('wlRole').value;
+    var note  = document.getElementById('wlNote').value.trim();
+
+    if (!first || !last || !email) {
+      alert('Please fill in your name and email.');
+      return;
     }
+
+    document.getElementById('wlForm').style.display = 'none';
+    document.getElementById('wlSuccess').style.display = 'block';
+
+    fetch(ENDPOINT, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        type:  'waitlist',
+        first: first,
+        last:  last,
+        email: email,
+        role:  role,
+        note:  note
+      })
+    });
+
+    setTimeout(function() {
+      closeModal('waitlist');
+      document.getElementById('wlForm').style.display = 'block';
+      document.getElementById('wlSuccess').style.display = 'none';
+      ['wlFirst','wlLast','wlEmail','wlNote'].forEach(function(id) {
+        document.getElementById(id).value = '';
+      });
+      document.getElementById('wlRole').selectedIndex = 0;
+    }, 3500);
+
+  } else {
+    var first = document.getElementById('ctFirst').value.trim();
+    var last  = document.getElementById('ctLast').value.trim();
+    var email = document.getElementById('ctEmail').value.trim();
+    var subj  = document.getElementById('ctSubject').value;
+    var msg   = document.getElementById('ctMessage').value.trim();
+
+    if (!first || !last || !email || !msg) {
+      alert('Please fill in your name, email, and message.');
+      return;
+    }
+
+    document.getElementById('ctForm').style.display = 'none';
+    document.getElementById('ctSuccess').style.display = 'block';
+
+    fetch(ENDPOINT, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        type:    'contact',
+        first:   first,
+        last:    last,
+        email:   email,
+        subject: subj,
+        message: msg
+      })
+    });
+
+    setTimeout(function() {
+      closeModal('contact');
+      document.getElementById('ctForm').style.display = 'block';
+      document.getElementById('ctSuccess').style.display = 'none';
+      ['ctFirst','ctLast','ctEmail','ctMessage'].forEach(function(id) {
+        document.getElementById(id).value = '';
+      });
+      document.getElementById('ctSubject').selectedIndex = 0;
+    }, 3500);
+  }
+};
     window.location.href = 'mailto:' + TO + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
     setTimeout(function() {
       closeModal(type);
